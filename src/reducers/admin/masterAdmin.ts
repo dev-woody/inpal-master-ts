@@ -57,7 +57,7 @@ const masterAdmin = createSlice({
     ...createAsyncReducers({
       actionName: "signIn",
       reducerName: "signIn",
-    })<any, DataForm, string>(),
+    })<any, DataForm, any>(),
     ...createAsyncReducers({
       actionName: "signUp",
       reducerName: "signUp",

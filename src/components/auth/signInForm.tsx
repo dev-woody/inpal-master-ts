@@ -6,9 +6,12 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import PageHeader from "lib/pages/pageHeader";
 import { DataObj, response } from "types/globalTypes";
+import IconLogo from "logo-row.png";
+import LogoTypo from "logo-typo.png";
 
 import { BiUser, BiLock } from "react-icons/bi";
 import { ResponseData } from "reducers/createAsyncReducers";
+import { Link } from "react-router-dom";
 
 const SignInBlock = styled.div`
   width: 100%;
@@ -85,7 +88,17 @@ const SignInForm = ({ isSignIn, onSubmit }: SignInProps) => {
   return (
     <SignInBlock>
       <SignInFormBlock>
-        <PageHeader title="인테리어 팔레트" subTitle="마스터 관리자" />
+        <Link
+          to="/"
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            marginBottom: "1rem",
+          }}
+        >
+          <img src={LogoTypo} width={"65%"} />
+        </Link>
         <StyledForm onSubmit={handleSubmit((data) => onSubmit(data))}>
           <StyledInput
             placeholder="아이디"

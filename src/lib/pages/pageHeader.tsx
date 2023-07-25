@@ -42,7 +42,7 @@ const TitleSpan = styled.span`
 const SubTitleSpan = styled.span`
   margin-left: 12px;
   color: #00000073;
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   line-height: 1.5;
   overflow: hidden;
   white-space: nowrap;
@@ -75,7 +75,7 @@ const PageHeader = ({
   breadCrumb,
   extra,
 }: {
-  title?: string;
+  title?: string | ReactElement;
   subTitle?: string | ReactElement;
   undo?: boolean;
   url?: string;

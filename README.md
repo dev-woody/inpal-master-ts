@@ -17,10 +17,6 @@ yarn start
 
 ## 패치노트
 
-### `07.14 Update`
+### `07.25 Update`
 
-1. vendor approve 추가
-
-2. category 등록 에러 수정
-
-3. 품목 수정일 삭제
+1. change redux

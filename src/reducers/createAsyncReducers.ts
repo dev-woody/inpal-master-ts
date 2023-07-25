@@ -12,6 +12,11 @@ export interface DataForm {
   message: string | null;
 }
 
+type AsyncEntity<T, R> = {
+  data: T | null; // 데이터 없는 경우에는 명시적으로 null
+  error: R | null;
+};
+
 export interface ResponseData {
   [key: string]: any;
 }
@@ -32,7 +37,7 @@ const createAsyncReducers =
       // start reducer 함수
       [`${actionName}`]: (state: State, action: PayloadAction<Start>) => {
         if (cleanDataWhenStart) {
-          (state[reducerName] as DataForm).data = null;
+          (state[reducerName] as AsyncEntity<Success, Failure>).data = null;
         }
       },
       // success reducer 함수
@@ -40,18 +45,21 @@ const createAsyncReducers =
         state: State,
         action: PayloadAction<Success>
       ) => {
-        (state[reducerName] as DataForm).data = action.payload.data;
-        (state[reducerName] as DataForm).success = action.payload.success;
-        (state[reducerName] as DataForm).message = action.payload.message;
+        (state[reducerName] as AsyncEntity<Success, Failure>).data =
+          action.payload;
+        // (state[reducerName] as AsyncEntity<Success, Failure>).success =
+        //   action.payload.success;
+        // (state[reducerName] as AsyncEntity<Success, Failure>).message =
+        //   action.payload.message;
       },
       // fail reducer 함수
       [`${actionName}Failure`]: (
         state: State,
-        action: PayloadAction<Success>
+        action: PayloadAction<Failure>
       ) => {
-        (state[reducerName] as DataForm).data = action.payload.data;
-        (state[reducerName] as DataForm).success = action.payload.success;
-        (state[reducerName] as DataForm).message = action.payload.message;
+        (state[reducerName] as AsyncEntity<Success, Failure>).error =
+          action.payload;
+        console.log(action.payload);
       },
     };
     return result;

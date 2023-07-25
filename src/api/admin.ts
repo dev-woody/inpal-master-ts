@@ -10,7 +10,7 @@ export const signIn = async (data: object) => {
       );
       localStorage.setItem("user", JSON.stringify(res.data.data.adminInfo));
     }
-    return res.data;
+    return res;
   });
 };
 
