@@ -7,6 +7,7 @@ import createAsyncReducers, {
   ResponseData,
   createSingleReducers,
 } from "reducers/createAsyncReducers";
+import { adminInfo, signInfo } from "types/adminTypes";
 
 const initialState: ResponseData = {
   signIn: {},
@@ -57,7 +58,7 @@ const masterAdmin = createSlice({
     ...createAsyncReducers({
       actionName: "signIn",
       reducerName: "signIn",
-    })<any, DataForm, any>(),
+    })<any, adminInfo, string>(),
     ...createAsyncReducers({
       actionName: "signUp",
       reducerName: "signUp",

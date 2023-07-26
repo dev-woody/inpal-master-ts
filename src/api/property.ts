@@ -3,13 +3,13 @@ import { accessClient, client } from "./createAPI";
 export const register = async (data: object) => {
   return accessClient
     .post(`/master/product/property/register`, { ...data })
-    .then((res) => res.data);
+    .then((res) => res);
 };
 
 export const update = async (data: object) => {
   return accessClient
     .post(`/master/product/property/update`, { ...data })
-    .then((res) => res.data);
+    .then((res) => res);
 };
 
 export const propertySetOpenStatus = async (data: object) => {
@@ -19,19 +19,19 @@ export const propertySetOpenStatus = async (data: object) => {
         ...data,
       },
     })
-    .then((res) => res.data);
+    .then((res) => res);
 };
 
 export const findAll = async (isDesc: boolean) => {
   return client
     .get(`/store/product/property/findAll/${isDesc}`)
-    .then((res) => res.data);
+    .then((res) => res);
 };
 
 export const findById = async (id: string) => {
   return client
     .get(`/store/product/property/findById/${id}`)
-    .then((res) => res.data);
+    .then((res) => res);
 };
 
 export const findAllByProductId = async (data: object) => {
@@ -41,5 +41,5 @@ export const findAllByProductId = async (data: object) => {
         ...data,
       },
     })
-    .then((res) => res.data);
+    .then((res) => res);
 };

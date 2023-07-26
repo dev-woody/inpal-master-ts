@@ -17,6 +17,6 @@ yarn start
 
 ## 패치노트
 
-### `07.25 Update`
+### `07.26 Update`
 
-1. change redux
+1. change redux util function

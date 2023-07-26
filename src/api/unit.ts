@@ -5,25 +5,23 @@ export const findAllByProductId = async (data: object) => {
     .get(`/store/product/unit/findAllByProductId`, {
       params: { ...data },
     })
-    .then((res) => res.data);
+    .then((res) => res);
 };
 
 export const findById = async (id: string) => {
-  return client
-    .get(`/store/product/unit/findById/${id}`)
-    .then((res) => res.data);
+  return client.get(`/store/product/unit/findById/${id}`).then((res) => res);
 };
 
 export const register = async (data: object) => {
   return accessClient
     .post(`/master/product/unit/register`, { ...data })
-    .then((res) => res.data);
+    .then((res) => res);
 };
 
 export const update = async (data: object) => {
   return accessClient
     .post(`/master/product/unit/update`, { ...data })
-    .then((res) => res.data);
+    .then((res) => res);
 };
 
 export const setOpenStatus = async (data: object) => {
@@ -31,5 +29,5 @@ export const setOpenStatus = async (data: object) => {
     .get(`/master/product/unit/setOpenStatus`, {
       params: { ...data },
     })
-    .then((res) => res.data);
+    .then((res) => res);
 };

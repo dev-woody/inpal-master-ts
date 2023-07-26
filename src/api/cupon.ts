@@ -7,18 +7,18 @@ export const uploadImage = async (formData: FormData) => {
         "Content-Type": "multipart/form-data",
       },
     })
-    .then((res) => res.data);
+    .then((res) => res);
 };
 
 export const register = async (data: object) => {
   return accessClient
     .post(`/master/coupon/register`, { ...data })
-    .then((res) => res.data);
+    .then((res) => res);
 };
 
 export const update = async (data: object) => {
   return accessClient.post(`/master/coupon/update`, { ...data }).then((res) => {
-    return res.data;
+    return res;
   });
 };
 
@@ -29,17 +29,17 @@ export const setStatus = async (data: object) => {
         ...data,
       },
     })
-    .then((res) => res.data);
+    .then((res) => res);
 };
 
 export const findById = async (id: string) => {
   return accessClient.get(`/master/coupon/findById/${id}`).then((res) => {
-    return res.data;
+    return res;
   });
 };
 
 export const findAll = async (isDesc: boolean) => {
   return accessClient.get(`/store/coupon/findAll/${isDesc}`).then((res) => {
-    return res.data;
+    return res;
   });
 };

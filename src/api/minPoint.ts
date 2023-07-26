@@ -7,7 +7,7 @@ export const findAllByVId = async (data: object) => {
         ...data,
       },
     })
-    .then((res) => res.data);
+    .then((res) => res);
 };
 
 export const findById = async (data: object) => {
@@ -17,7 +17,7 @@ export const findById = async (data: object) => {
         ...data,
       },
     })
-    .then((res) => res.data);
+    .then((res) => res);
 };
 
 export const register = async (data: object) => {
@@ -25,7 +25,7 @@ export const register = async (data: object) => {
     .post(`/master/construction/vendor/payment/minPoint/register`, {
       ...data,
     })
-    .then((res) => res.data);
+    .then((res) => res);
 };
 
 export const update = async (data: object) => {
@@ -33,5 +33,5 @@ export const update = async (data: object) => {
     .post(`/master/construction/vendor/payment/minPoint/update`, {
       ...data,
     })
-    .then((res) => res.data);
+    .then((res) => res);
 };

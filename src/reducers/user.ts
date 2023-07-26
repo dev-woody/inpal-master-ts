@@ -16,12 +16,12 @@ const user = createSlice({
   },
   reducers: {
     saveUser(state, action) {
-      state.signInfo.userId = action.payload.adminInfo.signInfo.userId;
-      state.name = action.payload.adminInfo.name;
-      state.phone = action.payload.adminInfo.phone;
-      state.email = action.payload.adminInfo.email;
-      state.loginAt = action.payload.adminInfo.loginAt;
-      state.isTopLevel = action.payload.adminInfo.isTopLevel;
+      state.signInfo = action.payload.signInfo;
+      state.name = action.payload.name;
+      state.phone = action.payload.phone;
+      state.email = action.payload.email;
+      state.loginAt = action.payload.loginAt;
+      state.isTopLevel = action.payload.isTopLevel;
     },
     reset(state, action) {
       Object.assign(state, {

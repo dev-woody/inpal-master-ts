@@ -14,6 +14,7 @@ export interface DataForm {
 
 type AsyncEntity<T, R> = {
   data: T | null; // 데이터 없는 경우에는 명시적으로 null
+  status: "idle" | "success" | "fail";
   error: R | null;
 };
 
@@ -22,12 +23,12 @@ export interface ResponseData {
 }
 
 const createAsyncReducers =
-  <State extends ResponseData>({
+  <State extends { [key: string]: any }>({
     actionName,
     reducerName,
     cleanDataWhenStart = false,
   }: CreateAsyncReducersParams) =>
-  <Start, Success extends DataForm, Failure>() => {
+  <Start, Success, Failure>() => {
     const result: {
       [key: string]:
         | ((state: State, action: PayloadAction<Start>) => void)
@@ -39,6 +40,7 @@ const createAsyncReducers =
         if (cleanDataWhenStart) {
           (state[reducerName] as AsyncEntity<Success, Failure>).data = null;
         }
+        (state[reducerName] as AsyncEntity<Success, Failure>).status = "idle";
       },
       // success reducer 함수
       [`${actionName}Success`]: (
@@ -47,10 +49,8 @@ const createAsyncReducers =
       ) => {
         (state[reducerName] as AsyncEntity<Success, Failure>).data =
           action.payload;
-        // (state[reducerName] as AsyncEntity<Success, Failure>).success =
-        //   action.payload.success;
-        // (state[reducerName] as AsyncEntity<Success, Failure>).message =
-        //   action.payload.message;
+        (state[reducerName] as AsyncEntity<Success, Failure>).status =
+          "success";
       },
       // fail reducer 함수
       [`${actionName}Failure`]: (
@@ -59,7 +59,8 @@ const createAsyncReducers =
       ) => {
         (state[reducerName] as AsyncEntity<Success, Failure>).error =
           action.payload;
-        console.log(action.payload);
+
+        (state[reducerName] as AsyncEntity<Success, Failure>).status = "fail";
       },
     };
     return result;
@@ -74,8 +75,6 @@ export const createSingleReducers =
       [`${actionName}`]: (state: any, action: PayloadAction<Start>) => {
         const reducerName = action.payload;
         (state[reducerName] as DataForm).data = null;
-        (state[reducerName] as DataForm).success = false;
-        (state[reducerName] as DataForm).message = null;
       },
     };
     return result;

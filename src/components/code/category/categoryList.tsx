@@ -171,7 +171,7 @@ const CategoryList = ({
                             : undefined
                         }
                       >
-                        {list.category1st.description}
+                        {list.category1st.info.description}
                         <Button
                           type="button"
                           onClick={(e) => {
@@ -208,7 +208,7 @@ const CategoryList = ({
                                       : undefined
                                   }
                                 >
-                                  {list2nd.category2nd.description}
+                                  {list2nd.category2nd.info.description}
                                   <Button
                                     type="button"
                                     onClick={(e) => {
@@ -246,7 +246,7 @@ const CategoryList = ({
                                               : undefined
                                           }
                                         >
-                                          {list3rd.category3rd.description}
+                                          {list3rd.category3rd.info.description}
                                         </CategoryBlock>
                                       );
                                     }

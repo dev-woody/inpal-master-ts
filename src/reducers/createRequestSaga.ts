@@ -10,11 +10,10 @@ export default function createRequestSaga(type: string, request: any) {
     yield put(startLoading(type));
     try {
       const response: AxiosResponse = yield call(request, action.payload);
-      console.log(response);
       if (response.data?.success) {
         yield put({
           type: SUCCESS,
-          payload: response,
+          payload: response.data?.data,
         });
       } else {
         yield put({ type: FALIURE, payload: response.data?.message });

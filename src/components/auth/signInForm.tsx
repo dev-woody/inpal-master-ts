@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Button, StyledForm, StyledInput, PassShowBlock } from "lib/styles";
+import {
+  Button,
+  StyledForm,
+  StyledInput,
+  PassShowBlock,
+  ErrorMsg,
+} from "lib/styles";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -12,6 +18,7 @@ import LogoTypo from "logo-typo.png";
 import { BiUser, BiLock } from "react-icons/bi";
 import { ResponseData } from "reducers/createAsyncReducers";
 import { Link } from "react-router-dom";
+import { ErrorMessage } from "@hookform/error-message";
 
 const SignInBlock = styled.div`
   width: 100%;
@@ -56,34 +63,34 @@ const SignInForm = ({ isSignIn, onSubmit }: SignInProps) => {
     },
   });
 
-  useEffect(() => {
-    switch (isSignIn.message) {
-      case "사용자 아이디가 존재하지 않습니다. 로그인을 확인하세요.":
-        setError(
-          "userId",
-          { type: "focus", message: "존재하지않는 아이디입니다." },
-          { shouldFocus: true }
-        );
-        break;
-      case "관리자 비밀번호가 다릅니다.\n비밀번호를 확인해 주세요.!":
-        setError(
-          "password",
-          { type: "focus", message: "잘못된 비밀번호입니다." },
-          { shouldFocus: true }
-        );
-        break;
-      case "사용자 비밀번호는 대문자가 최소 1개 존재 해야 합니다.!":
-        setError(
-          "password",
-          {
-            type: "focus",
-            message: "비밀번호는 대문자가 최소 1개 존재 해야 합니다.",
-          },
-          { shouldFocus: true }
-        );
-        break;
-    }
-  }, [isSignIn, errors]);
+  // useEffect(() => {
+  //   switch (isSignIn.message) {
+  //     case "사용자 아이디가 존재하지 않습니다. 로그인을 확인하세요.":
+  //       setError(
+  //         "userId",
+  //         { type: "focus", message: "존재하지않는 아이디입니다." },
+  //         { shouldFocus: true }
+  //       );
+  //       break;
+  //     case "관리자 비밀번호가 다릅니다.\n비밀번호를 확인해 주세요.!":
+  //       setError(
+  //         "password",
+  //         { type: "focus", message: "잘못된 비밀번호입니다." },
+  //         { shouldFocus: true }
+  //       );
+  //       break;
+  //     case "사용자 비밀번호는 대문자가 최소 1개 존재 해야 합니다.!":
+  //       setError(
+  //         "password",
+  //         {
+  //           type: "focus",
+  //           message: "비밀번호는 대문자가 최소 1개 존재 해야 합니다.",
+  //         },
+  //         { shouldFocus: true }
+  //       );
+  //       break;
+  //   }
+  // }, [isSignIn, errors]);
 
   return (
     <SignInBlock>
@@ -125,6 +132,7 @@ const SignInForm = ({ isSignIn, onSubmit }: SignInProps) => {
             errors={errors}
             status={errors.password}
           />
+          <ErrorMsg>{isSignIn?.error}</ErrorMsg>
           <Button
             type="submit"
             status="primary"

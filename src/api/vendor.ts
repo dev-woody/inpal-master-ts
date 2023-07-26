@@ -1,25 +1,25 @@
 import { client, accessClient } from "./createAPI";
 
 export const findById = async (id: string) => {
-  return client.get(`/store/biz/vendor/findById/${id}`).then((res) => res.data);
+  return client.get(`/store/biz/vendor/findById/${id}`).then((res) => res);
 };
 
 export const findByName = async (name: string) => {
   return accessClient
     .get(`/master/biz/vendor/findByName/${name}`)
-    .then((res) => res.data);
+    .then((res) => res);
 };
 
 export const findAll = async (isDesc: boolean) => {
   return client.get(`/store/biz/vendor/findAll/${isDesc}`).then((res) => {
-    return res.data;
+    return res;
   });
 };
 
 export const approve = async (id: string) => {
   return accessClient
     .get(`/master/biz/vendor/approve/${id}`)
-    .then((res) => res.data);
+    .then((res) => res);
 };
 
 export const setBizStatus = async (data: object) => {
@@ -27,7 +27,7 @@ export const setBizStatus = async (data: object) => {
     .get(`/master/biz/vendor/setBizStatus`, {
       params: { ...data },
     })
-    .then((res) => res.data);
+    .then((res) => res);
 };
 
 //* order
@@ -35,13 +35,13 @@ export const setBizStatus = async (data: object) => {
 export const orderFindAll = async (isDesc: boolean) => {
   return accessClient
     .get(`/master/construction/vendor/order/findAll/${isDesc}`)
-    .then((res) => res.data);
+    .then((res) => res);
 };
 
 export const orderFindById = async (id: string) => {
   return accessClient
     .get(`/master/construction/vendor/order/findById/${id}`)
-    .then((res) => res.data);
+    .then((res) => res);
 };
 
 //* payment
@@ -59,7 +59,7 @@ export const paymentRegister = async (
       masterPayment,
       memo,
     })
-    .then((res) => res.data);
+    .then((res) => res);
 };
 
 export const paymentFindById = async (vendorId: string, isDesc: boolean) => {
@@ -70,7 +70,7 @@ export const paymentFindById = async (vendorId: string, isDesc: boolean) => {
         isDesc,
       },
     })
-    .then((res) => res.data);
+    .then((res) => res);
 };
 
 export const findAllByVendorId = async (vendorId: string, isDesc: boolean) => {
@@ -81,5 +81,5 @@ export const findAllByVendorId = async (vendorId: string, isDesc: boolean) => {
         isDesc,
       },
     })
-    .then((res) => res.data);
+    .then((res) => res);
 };

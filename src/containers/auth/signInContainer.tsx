@@ -18,11 +18,17 @@ function SignInContainer() {
   };
 
   useEffect(() => {
-    if (isSignIn.success) {
-      dispatch(userActions.saveUser(isSignIn.data));
+    if (isSignIn.status === "success") {
+      dispatch(userActions.saveUser(isSignIn));
+      localStorage.setItem("access_token", isSignIn.data.tokenInfo.token);
+      localStorage.setItem(
+        "refresh_token",
+        isSignIn.data.tokenInfo.refreshToken
+      );
+      localStorage.setItem("user", JSON.stringify(isSignIn.data.adminInfo));
       navigate("/");
     }
-  }, [isSignIn, dispatch]);
+  }, [isSignIn]);
 
   useEffect(() => {
     dispatch(masterAdminActions.reset("signIn"));

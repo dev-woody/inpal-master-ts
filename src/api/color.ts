@@ -2,13 +2,13 @@ import { accessClient, client } from "./createAPI";
 
 export const colorFindAll = async (isDesc: boolean) => {
   return client.get(`/store/color_code/findAll/${isDesc}`).then((res) => {
-    return res.data;
+    return res;
   });
 };
 
 export const colorFindByName = async (name: string) => {
   return client.get(`/store/color_code/findByName/${name}`).then((res) => {
-    return res.data;
+    return res;
   });
 };
 
@@ -25,7 +25,7 @@ export const colorRegister = async (
       // name,
       // kind,
     })
-    .then((res) => res.data);
+    .then((res) => res);
 };
 
 export const colorUpdate = async (
@@ -42,7 +42,7 @@ export const colorUpdate = async (
       // id,
       // updateInfo,
     })
-    .then((res) => res.data);
+    .then((res) => res);
 };
 
 export const setOpenStatus = async (id: string, openStatus: string) => {
@@ -53,5 +53,5 @@ export const setOpenStatus = async (id: string, openStatus: string) => {
         openStatus,
       },
     })
-    .then((res) => res.data);
+    .then((res) => res);
 };

@@ -267,12 +267,12 @@ export const StyledUpload = (props: propsTypes) => {
       .then((res) => {
         e.target.value = "";
         let newSrcList = [...isSrc];
-        newSrcList?.push({ imageId: res.data.data.base.id });
+        newSrcList?.push({ imageId: res.data.base.id });
         setIsSrc(newSrcList);
         // client
         //   .post(`/common/image/display`, null, {
         //     params: {
-        //       id: res.data.data.base.id,
+        //       id: res.data.base.id,
         //       isThumbnail: false,
         //     },
         //     responseType: "blob",
@@ -284,7 +284,7 @@ export const StyledUpload = (props: propsTypes) => {
         //       })
         //     );
         //     let newSrcList = [...isSrc];
-        //     newSrcList?.push({ url, imageId: res.data.data.base.id });
+        //     newSrcList?.push({ url, imageId: res.data.base.id });
         //     setIsSrc(newSrcList);
         // });
       });

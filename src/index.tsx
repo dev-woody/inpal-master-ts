@@ -10,7 +10,7 @@ function loadUser() {
   try {
     const user = localStorage.getItem("user");
     if (!user) return;
-    store.dispatch(userActions.saveUser({ adminInfo: JSON.parse(user) }));
+    store.dispatch(userActions.saveUser(JSON.parse(user)));
   } catch (e) {
     console.log(e);
   }
