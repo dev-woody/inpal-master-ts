@@ -1,5 +1,11 @@
 import { accessClient, client } from "./createAPI";
 
+export const goodsGroupFindAll = async (isDesc: boolean) => {
+  return client
+    .get(`/store/construction/good/group/findAll/${isDesc}`)
+    .then((res) => res);
+};
+
 export const searchByKeyword = async (keyword: string, isDesc: boolean) => {
   const res = await client.get(
     `/construction/common/good/group/searchByKeyword`,
@@ -14,9 +20,7 @@ export const searchByKeyword = async (keyword: string, isDesc: boolean) => {
 };
 
 export const findById = async (id: string) => {
-  const res = await client.get(
-    `/construction/common/good/group/findById/${id}`
-  );
+  const res = await client.get(`/store/construction/good/group/findById/${id}`);
   return res;
 };
 

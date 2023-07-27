@@ -3,7 +3,9 @@ import {
   BreadCrumb,
   Description,
   DescriptionContent,
+  ErrorMsg,
   Modal,
+  PassShowBlock,
   Responsive,
   StyledForm,
   StyledInput,
@@ -14,25 +16,30 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
-import { response } from "types/globalTypes";
+import { DataObj, response } from "types/globalTypes";
 import { changeDays } from "lib/functions/changeInput";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const PropertyDetailBlock = styled(Responsive)``;
 
 type propertyProps = {
   propertyDetail: response;
-  onSubmit: (data: object) => void;
+  propertyEdit: response;
+  checkPassword: response;
+  onSubmit: (data: DataObj<string>) => void;
   modalVisible: boolean;
   setModalVisible: (status: boolean) => void;
 };
 
 const schema = yup.object({
   property: yup.string().required("상품속성을 입력해주세요."),
+  password: yup.string().required("비밀번호를 입력해주세요."),
 });
 
 const PropertyDetail = ({
   propertyDetail,
+  propertyEdit,
+  checkPassword,
   onSubmit,
   modalVisible,
   setModalVisible,
@@ -46,8 +53,11 @@ const PropertyDetail = ({
     resolver: yupResolver(schema),
     defaultValues: {
       property: "",
+      password: "",
     },
   });
+
+  const [isPassShow, setIsPassShow] = useState<boolean>(false);
   const data = propertyDetail.data;
 
   const navigate = useNavigate();
@@ -93,7 +103,7 @@ const PropertyDetail = ({
                   placeholder="상품속성"
                   label="property"
                   register={register}
-                  errors={errors.property?.message}
+                  errors={errors}
                   status={errors.property}
                 />
               }
@@ -106,7 +116,29 @@ const PropertyDetail = ({
               label="수정일"
               content={changeDays(data?.base.updatedAt)}
             />
+            <DescriptionContent
+              span="12"
+              label="비밀번호 확인"
+              content={
+                <StyledInput
+                  align="vertical"
+                  placeholder="비밀번호 확인"
+                  type={isPassShow ? "text" : "password"}
+                  endItem={
+                    <PassShowBlock
+                      isPassShow={isPassShow}
+                      setIsPassShow={setIsPassShow}
+                    />
+                  }
+                  label="password"
+                  register={register}
+                  errors={errors}
+                  status={errors.password}
+                />
+              }
+            />
           </Description>
+          <ErrorMsg>{checkPassword.message || propertyEdit.message}</ErrorMsg>
           <div>
             <Button
               needMarginTop
@@ -132,7 +164,7 @@ const PropertyDetail = ({
           submitMsg="확인"
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
-          action={() => navigate(`/code/property`)}
+          // action={() => navigate(`/code/property`)}
         />
       </PropertyDetailBlock>
     </>

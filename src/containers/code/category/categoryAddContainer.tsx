@@ -4,7 +4,7 @@ import { masterProductActions } from "reducers/product/masterProduct";
 import { masterAdminActions } from "reducers/admin/masterAdmin";
 import { masterCategoryActions } from "reducers/product/masterCategory";
 import CategoryAdd from "components/code/category/categoryAdd";
-import { DataObj } from "types/globalTypes";
+import { DataObj, checkStatus } from "types/globalTypes";
 
 const CategoryAddContainer = ({
   higherLevel,
@@ -21,7 +21,6 @@ const CategoryAddContainer = ({
     categoryRegister: state.masterCategory.register,
   }));
   const dispatch = useAppDispatch();
-  const [resultMsg, setResultMsg] = useState<any>("");
   const [inputData, setInputData] = useState<any>();
 
   const onCheckPassword = ({ password }: any) => {
@@ -36,7 +35,7 @@ const CategoryAddContainer = ({
   };
 
   useEffect(() => {
-    if (checkPassword.success && inputData) {
+    if (checkStatus(checkPassword.status) && inputData) {
       dispatch(
         masterCategoryActions.register({
           kind,
@@ -49,7 +48,7 @@ const CategoryAddContainer = ({
   }, [checkPassword]);
 
   useEffect(() => {
-    if (categoryRegister.success) {
+    if (checkStatus(categoryRegister.status)) {
       setModalVisible(true);
     }
   }, [categoryRegister]);
@@ -65,7 +64,7 @@ const CategoryAddContainer = ({
   return (
     <CategoryAdd
       categoryRegister={categoryRegister}
-      resultMsg={resultMsg}
+      checkPassword={checkPassword}
       onSubmit={onSubmit}
       modalVisible={modalVisible}
       setModalVisible={setModalVisible}

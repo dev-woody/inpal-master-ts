@@ -5,12 +5,12 @@ import { useAppSelector, useAppDispatch } from "reducers/reducerHooks";
 import { masterAdminActions } from "reducers/admin/masterAdmin";
 import { masterProductActions } from "reducers/product/masterProduct";
 import { masterUnitActions } from "reducers/product/masterUnit";
-import { DataObj } from "types/globalTypes";
+import { DataObj, checkStatus } from "types/globalTypes";
 
 const UnitRegisterContainer = () => {
   const { productList, checkPassword, register } = useAppSelector((state) => ({
     productList: state.masterProduct.findAll,
-    checkPassword: state.masterAdmin.checkPass.success,
+    checkPassword: state.masterAdmin.checkPass,
     register: state.masterUnit.register,
   }));
   const [modalVisible, setModalVisible] = useState<boolean>(false);
@@ -30,14 +30,14 @@ const UnitRegisterContainer = () => {
   };
 
   useEffect(() => {
-    if (checkPassword) {
+    if (checkStatus(checkPassword.status)) {
       dispatch(masterUnitActions.register(inputData));
       // dispatch(masterAdminActions.reset({}));
     }
   }, [checkPassword]);
 
   useEffect(() => {
-    if (register.success) {
+    if (checkStatus(register.status)) {
       dispatch(
         masterUnitActions.findAllByProductId({
           id: inputData?.id,
@@ -45,7 +45,7 @@ const UnitRegisterContainer = () => {
         })
       );
       setModalVisible(true);
-      // dispatch(masterUnitActions.reset({}));
+      dispatch(masterUnitActions.reset("register"));
     }
   }, [register]);
 
@@ -59,7 +59,9 @@ const UnitRegisterContainer = () => {
 
   return (
     <UnitAdd
+      registerResult={register}
       productList={productList}
+      checkPassword={checkPassword}
       onSubmit={onSubmit}
       modalVisible={modalVisible}
       setModalVisible={setModalVisible}

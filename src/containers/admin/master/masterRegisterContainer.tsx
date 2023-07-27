@@ -3,7 +3,7 @@ import { useAppSelector, useAppDispatch } from "reducers/reducerHooks";
 import MasterAdd from "components/admin/list/masterAdd";
 import { masterAdminActions } from "reducers/admin/masterAdmin";
 import { useNavigate } from "react-router-dom";
-import { DataObj } from "types/globalTypes";
+import { DataObj, checkStatus } from "types/globalTypes";
 import { changePostPhone } from "lib/functions/changeInput";
 
 const MasterRegisterContainer = () => {
@@ -21,7 +21,7 @@ const MasterRegisterContainer = () => {
   };
 
   useEffect(() => {
-    if (signUp.success) {
+    if (checkStatus(signUp.status)) {
       dispatch(masterAdminActions.findAll(false));
       setModalVisible(true);
       dispatch(masterAdminActions.reset("signUp"));
@@ -36,7 +36,7 @@ const MasterRegisterContainer = () => {
 
   return (
     <MasterAdd
-      addResult={signUp.success}
+      addResult={signUp}
       onSubmit={onSubmit}
       modalVisible={modalVisible}
       setModalVisible={setModalVisible}

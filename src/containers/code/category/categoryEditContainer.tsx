@@ -3,7 +3,8 @@ import { useAppSelector, useAppDispatch } from "reducers/reducerHooks";
 import { masterAdminActions } from "reducers/admin/masterAdmin";
 import { masterCategoryActions } from "reducers/product/masterCategory";
 import CategoryEdit from "components/code/category/categoryEdit";
-import { DataObj } from "types/globalTypes";
+import { DataObj, checkStatus } from "types/globalTypes";
+import { changeStatus } from "lib/functions/changeInput";
 
 const CategoryEditContainer = () => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
@@ -11,7 +12,7 @@ const CategoryEditContainer = () => {
     (state) => ({
       categoryFindById: state.masterCategory.findById,
       categoryUpdate: state.masterCategory.update,
-      checkPassword: state.masterAdmin.checkPass.success,
+      checkPassword: state.masterAdmin.checkPass,
     })
   );
   const [inputData, setInputData] = useState<any>();
@@ -29,10 +30,10 @@ const CategoryEditContainer = () => {
   };
 
   useEffect(() => {
-    if (checkPassword && inputData !== undefined) {
+    if (checkStatus(checkPassword.status) && inputData !== undefined) {
       dispatch(
         masterCategoryActions.update({
-          id: categoryFindById.data.info.id,
+          id: categoryFindById.data.base.id,
           description: inputData.description,
         })
       );
@@ -41,8 +42,7 @@ const CategoryEditContainer = () => {
   }, [checkPassword]);
 
   useEffect(() => {
-    if (categoryUpdate.success) {
-      // navigate(`/code/category`);
+    if (changeStatus(categoryUpdate.status)) {
       dispatch(
         masterCategoryActions.findAllByOwnerId({
           ownerId: categoryFindById?.data.info.productId,
@@ -54,8 +54,6 @@ const CategoryEditContainer = () => {
       setModalVisible(true);
     }
   }, [categoryUpdate]);
-
-  useEffect(() => {}, [categoryUpdate]);
 
   useEffect(() => {
     dispatch(masterCategoryActions.reset("findById"));
@@ -70,8 +68,9 @@ const CategoryEditContainer = () => {
 
   return (
     <CategoryEdit
-      categoryFindById={categoryFindById.data}
+      categoryFindById={categoryFindById}
       categoryUpdate={categoryUpdate}
+      checkPassword={checkPassword}
       onSubmit={onSubmit}
       modalVisible={modalVisible}
       setModalVisible={setModalVisible}

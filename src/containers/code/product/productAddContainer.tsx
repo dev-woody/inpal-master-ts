@@ -10,7 +10,7 @@ const ProductAddContainer = () => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const { register, checkPassword } = useAppSelector((state) => ({
     register: state.masterProduct.register,
-    checkPassword: state.masterAdmin.checkPass.success,
+    checkPassword: state.masterAdmin.checkPass,
   }));
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -27,16 +27,15 @@ const ProductAddContainer = () => {
   };
 
   useEffect(() => {
-    if (checkPassword) {
+    if (checkPassword.status === "success") {
       dispatch(masterProductActions.register(inputData));
       dispatch(masterAdminActions.reset("checkPass"));
-      navigate("/code/product");
     }
   }, [checkPassword]);
 
   useEffect(() => {
-    if (register.success) {
-      dispatch(masterProductActions.findAll({ isDesc: false }));
+    if (register?.status === "success") {
+      dispatch(masterProductActions.findAll(false));
       setModalVisible(true);
       dispatch(masterProductActions.reset("register"));
     }
@@ -54,6 +53,7 @@ const ProductAddContainer = () => {
   return (
     <ProductAdd
       addResult={register}
+      checkPassword={checkPassword}
       onSubmit={onSubmit}
       modalVisible={modalVisible}
       setModalVisible={setModalVisible}

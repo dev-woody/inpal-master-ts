@@ -17,7 +17,7 @@ type masterProps = {
 const ManagerMaster = ({ masterList, user }: masterProps) => {
   const navigate = useNavigate();
   return (
-    <Fragment>
+    <>
       <ManagerBlock>
         <PageHeader
           breadCrumb={
@@ -48,7 +48,7 @@ const ManagerMaster = ({ masterList, user }: masterProps) => {
           pagenation
         />
       </ManagerBlock>
-    </Fragment>
+    </>
   );
 };
 

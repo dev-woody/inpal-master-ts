@@ -4,6 +4,7 @@ import {
   Button,
   Description,
   DescriptionContent,
+  ErrorMsg,
   Modal,
   PassShowBlock,
   Responsive,
@@ -24,7 +25,8 @@ const UnitEditBlock = styled(Responsive)``;
 type UnitUpdateProps = {
   unitDetail: response;
   productId: response;
-  editResult: boolean;
+  checkPassword: response;
+  editResult: response;
   onSubmit: (data: DataObj<string>) => void;
   modalVisible: boolean;
   setModalVisible: (status: boolean) => void;
@@ -41,6 +43,7 @@ const schema = yup.object({
 const UnitEdit = ({
   unitDetail,
   productId,
+  checkPassword,
   editResult,
   onSubmit,
   modalVisible,
@@ -117,7 +120,7 @@ const UnitEdit = ({
                   placeholder="단위(한)"
                   label="nameKr"
                   register={register}
-                  errors={errors.nameKr?.message}
+                  errors={errors}
                   status={errors.nameKr}
                 />
               }
@@ -131,7 +134,7 @@ const UnitEdit = ({
                   placeholder="단위"
                   label="nameEn"
                   register={register}
-                  errors={errors.nameEn?.message}
+                  errors={errors}
                   status={errors.nameEn}
                 />
               }
@@ -152,21 +155,31 @@ const UnitEdit = ({
                   }
                   label="password"
                   register={register}
-                  errors={errors.password?.message}
+                  errors={errors}
                   status={errors.password}
                 />
               }
             />
           </Description>
-          <Button
-            type="submit"
-            status="primary"
-            needMarginTop
-            disabled={isSubmitting}
-            withInput
-          >
-            확인
-          </Button>
+          <ErrorMsg>{checkPassword.message || editResult.message}</ErrorMsg>
+          <div>
+            <Button
+              needMarginTop
+              withInput
+              onClick={() => navigate("/code/unit")}
+            >
+              뒤로가기
+            </Button>
+            <Button
+              type="submit"
+              status="primary"
+              needMarginTop
+              disabled={isSubmitting}
+              withInput
+            >
+              확인
+            </Button>
+          </div>
         </StyledForm>
         <Modal
           title="단위 수정"
@@ -174,11 +187,11 @@ const UnitEdit = ({
           submitMsg="확인"
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
-          action={() => {
-            if (typeof id === "string") {
-              navigate(`/code/unit`);
-            }
-          }}
+          // action={() => {
+          //   if (typeof id === "string") {
+          //     navigate(`/code/unit`);
+          //   }
+          // }}
         />
       </UnitEditBlock>
     </>

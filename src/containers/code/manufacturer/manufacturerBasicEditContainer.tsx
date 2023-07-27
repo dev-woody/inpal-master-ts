@@ -5,7 +5,7 @@ import { masterAdminActions } from "reducers/admin/masterAdmin";
 import { masterProductActions } from "reducers/product/masterProduct";
 import { masterManufacturerActions } from "reducers/product/masterManufecturer";
 import ManufacturerBasicEdit from "components/code/manufacturer/manufacturerBasicEdit";
-import { DataObj } from "types/globalTypes";
+import { checkStatus } from "types/globalTypes";
 
 const ManufacturerBasicEditContainer = () => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
@@ -35,7 +35,7 @@ const ManufacturerBasicEditContainer = () => {
   };
 
   useEffect(() => {
-    if (checkPassword.success && isSubmit) {
+    if (checkStatus(checkPassword.status) && isSubmit) {
       const data = manufacturerDetail.data;
       const { logoImageInfo, nameKr, nameEn, country } = inputData;
       dispatch(
@@ -56,7 +56,7 @@ const ManufacturerBasicEditContainer = () => {
   }, [checkPassword]);
 
   useEffect(() => {
-    if (basicEditResult.success) {
+    if (checkStatus(basicEditResult.status)) {
       dispatch(masterManufacturerActions.findById(id));
       setModalVisible(true);
       dispatch(masterManufacturerActions.reset("basicInfo"));
@@ -64,7 +64,7 @@ const ManufacturerBasicEditContainer = () => {
   }, [basicEditResult]);
 
   useEffect(() => {
-    if (manufacturerDetail.success) {
+    if (checkStatus(manufacturerDetail.status)) {
       dispatch(
         masterProductActions.findById(manufacturerDetail.data?.info.productId)
       );
@@ -85,8 +85,9 @@ const ManufacturerBasicEditContainer = () => {
   return (
     <ManufacturerBasicEdit
       manufacturerDetail={manufacturerDetail}
+      checkPassword={checkPassword}
       productId={productId}
-      basicEditResult={basicEditResult.success}
+      basicEditResult={basicEditResult}
       onSubmit={onSubmit}
       modalVisible={modalVisible}
       setModalVisible={setModalVisible}

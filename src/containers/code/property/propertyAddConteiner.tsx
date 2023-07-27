@@ -5,14 +5,14 @@ import { masterPropertyActions } from "reducers/product/masterProperty";
 import PropertyAdd from "components/code/property/propertyAdd";
 import { useNavigate } from "react-router-dom";
 import { masterProductActions } from "reducers/product/masterProduct";
-import { DataObj } from "types/globalTypes";
+import { DataObj, checkStatus } from "types/globalTypes";
 
 const PropertyAddContainer = () => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const { productList, register, checkPassword } = useAppSelector((state) => ({
     productList: state.masterProduct.findAll,
     register: state.masterProperty.register,
-    checkPassword: state.masterAdmin.checkPass.success,
+    checkPassword: state.masterAdmin.checkPass,
   }));
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -30,14 +30,14 @@ const PropertyAddContainer = () => {
   };
 
   useEffect(() => {
-    if (checkPassword) {
+    if (checkStatus(checkPassword.status)) {
       dispatch(masterPropertyActions.register(inputData));
       dispatch(masterAdminActions.reset("checkPass"));
     }
   }, [checkPassword]);
 
   useEffect(() => {
-    if (register.success) {
+    if (checkStatus(register.status)) {
       dispatch(
         masterPropertyActions.findAllByProductId({
           productId: inputData?.productId,
@@ -69,10 +69,10 @@ const PropertyAddContainer = () => {
 
   return (
     <PropertyAdd
-      addResult={register.success}
-      productList={productList.data}
+      addResult={register}
+      checkPassword={checkPassword}
+      productList={productList}
       onSubmit={onSubmit}
-      resultMsg={register.message}
       modalVisible={modalVisible}
       setModalVisible={setModalVisible}
       navigate={navigate}

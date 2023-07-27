@@ -4,6 +4,7 @@ import {
   Button,
   Description,
   DescriptionContent,
+  ErrorMsg,
   Modal,
   PassShowBlock,
   Responsive,
@@ -22,7 +23,9 @@ import { NavigateFunction } from "react-router-dom";
 const UnitAddBlock = styled(Responsive)``;
 
 type UnitAddProps = {
+  registerResult: response;
   productList: response;
+  checkPassword: response;
   onSubmit: (data: DataObj<string>) => void;
   modalVisible: boolean;
   setModalVisible: (status: boolean) => void;
@@ -37,7 +40,9 @@ const schema = yup.object({
 });
 
 const UnitAdd = ({
+  registerResult,
   productList,
+  checkPassword,
   onSubmit,
   modalVisible,
   setModalVisible,
@@ -154,6 +159,7 @@ const UnitAdd = ({
               }
             />
           </Description>
+          <ErrorMsg>{checkPassword.message || registerResult.message}</ErrorMsg>
           <Button
             type="submit"
             needMarginTop

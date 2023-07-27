@@ -8,14 +8,20 @@ interface CreateAsyncReducersParams {
 
 export interface DataForm {
   data: any;
-  success: boolean;
+  status: "idle" | "success" | "fail";
   message: string | null;
 }
+
+const initialState: DataForm = {
+  data: null,
+  status: "idle",
+  message: null,
+};
 
 type AsyncEntity<T, R> = {
   data: T | null; // 데이터 없는 경우에는 명시적으로 null
   status: "idle" | "success" | "fail";
-  error: R | null;
+  message: R | null;
 };
 
 export interface ResponseData {
@@ -57,7 +63,7 @@ const createAsyncReducers =
         state: State,
         action: PayloadAction<Failure>
       ) => {
-        (state[reducerName] as AsyncEntity<Success, Failure>).error =
+        (state[reducerName] as AsyncEntity<Success, Failure>).message =
           action.payload;
 
         (state[reducerName] as AsyncEntity<Success, Failure>).status = "fail";
@@ -70,11 +76,11 @@ export default createAsyncReducers;
 
 export const createSingleReducers =
   ({ actionName }: { actionName: string }) =>
-  <Start>() => {
+  <ReducerName>() => {
     const result = {
-      [`${actionName}`]: (state: any, action: PayloadAction<Start>) => {
+      [`${actionName}`]: (state: any, action: PayloadAction<ReducerName>) => {
         const reducerName = action.payload;
-        (state[reducerName] as DataForm).data = null;
+        (state[reducerName] as DataForm) = initialState;
       },
     };
     return result;

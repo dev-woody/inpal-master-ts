@@ -5,7 +5,7 @@ import { masterProductActions } from "reducers/product/masterProduct";
 import { masterManufacturerActions } from "reducers/product/masterManufecturer";
 import ManufacturerAdd from "components/code/manufacturer/manufacturerAdd";
 import { useNavigate } from "react-router-dom";
-import { DataObj } from "types/globalTypes";
+import { DataObj, checkStatus } from "types/globalTypes";
 
 const ManufacturerAddContainer = () => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
@@ -30,7 +30,7 @@ const ManufacturerAddContainer = () => {
   };
 
   useEffect(() => {
-    if (checkPassword.success) {
+    if (checkStatus(checkPassword.status)) {
       const {
         logoImageInfo,
         country,
@@ -59,7 +59,7 @@ const ManufacturerAddContainer = () => {
   }, [checkPassword]);
 
   useEffect(() => {
-    if (register.success) {
+    if (checkStatus(register.status)) {
       dispatch(
         masterManufacturerActions.findAllByProductId({
           id: inputData?.productId,
@@ -90,7 +90,8 @@ const ManufacturerAddContainer = () => {
 
   return (
     <ManufacturerAdd
-      addResult={register.success}
+      addResult={register}
+      checkPassword={checkPassword}
       productList={productList}
       onSubmit={onSubmit}
       resultMsg={register.message}

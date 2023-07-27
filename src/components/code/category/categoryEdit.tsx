@@ -1,5 +1,11 @@
 import PageHeader from "lib/pages/pageHeader";
-import { Description, DescriptionContent, Modal, Responsive } from "lib/styles";
+import {
+  Description,
+  DescriptionContent,
+  ErrorMsg,
+  Modal,
+  Responsive,
+} from "lib/styles";
 import { StyledForm, StyledInput, Button, PassShowBlock } from "lib/styles";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
@@ -7,7 +13,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState } from "react";
 import { changeDays } from "lib/functions/changeInput";
-import { DataObj } from "types/globalTypes";
+import { DataObj, checkStatus, response } from "types/globalTypes";
 
 const CategoryEditBlock = styled(Responsive)`
   margin-top: 0 !important;
@@ -15,8 +21,9 @@ const CategoryEditBlock = styled(Responsive)`
 `;
 
 type categoryProps = {
-  categoryFindById: any;
-  categoryUpdate: any;
+  categoryFindById: response;
+  checkPassword: response;
+  categoryUpdate: response;
   onSubmit: (data: DataObj<string>) => void;
   modalVisible: boolean;
   setModalVisible: (status: boolean) => void;
@@ -29,6 +36,7 @@ const schema = yup.object({
 
 const CategoryEdit = ({
   categoryFindById,
+  checkPassword,
   categoryUpdate,
   onSubmit,
   modalVisible,
@@ -50,13 +58,13 @@ const CategoryEdit = ({
   const [isPassShow, setIsPassShow] = useState<boolean>(false);
 
   useEffect(() => {
-    if (categoryUpdate.success) {
+    if (checkStatus(categoryUpdate.status)) {
       reset();
     }
   }, [categoryUpdate]);
 
   useEffect(() => {
-    setValue("description", categoryFindById?.info.description);
+    setValue("description", categoryFindById.data?.info.description);
   }, [categoryFindById]);
   return (
     <div style={{ alignSelf: "stretch" }}>
@@ -75,15 +83,15 @@ const CategoryEdit = ({
           <Description>
             <DescriptionContent
               label="코드"
-              content={categoryFindById?.info.code}
+              content={categoryFindById.data?.info.code}
             />
             <DescriptionContent
               label="생성일"
-              content={changeDays(categoryFindById?.base.createdAt)}
+              content={changeDays(categoryFindById.data?.base.createdAt)}
             />
             <DescriptionContent
               label="수정일"
-              content={changeDays(categoryFindById?.base.updatedAt)}
+              content={changeDays(categoryFindById.data?.base.updatedAt)}
             />
             <DescriptionContent
               label="카테고리명"
@@ -126,16 +134,27 @@ const CategoryEdit = ({
           </Description>
         </div>
         {categoryFindById && (
-          <Button
-            type="submit"
-            status="primary"
-            needMarginTop
-            disabled={isSubmitting}
-            withInput
-            style={{ alignSelf: "center" }}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+            }}
           >
-            수정
-          </Button>
+            <ErrorMsg style={{ display: "flex", justifyContent: "center" }}>
+              {checkPassword.message || categoryUpdate.message}
+            </ErrorMsg>
+            <Button
+              type="submit"
+              status="primary"
+              needMarginTop
+              disabled={isSubmitting}
+              withInput
+              style={{ alignSelf: "center" }}
+            >
+              수정
+            </Button>
+          </div>
         )}
       </StyledForm>
       <Modal

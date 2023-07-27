@@ -132,7 +132,7 @@ const SignInForm = ({ isSignIn, onSubmit }: SignInProps) => {
             errors={errors}
             status={errors.password}
           />
-          <ErrorMsg>{isSignIn?.error}</ErrorMsg>
+          <ErrorMsg>{isSignIn?.message}</ErrorMsg>
           <Button
             type="submit"
             status="primary"

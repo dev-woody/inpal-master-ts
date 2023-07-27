@@ -3,6 +3,7 @@ import {
   BreadCrumb,
   Description,
   DescriptionContent,
+  ErrorMsg,
   Modal,
   Responsive,
 } from "lib/styles";
@@ -58,17 +59,17 @@ const ColorAdd = ({
     },
   });
 
-  useEffect(() => {
-    switch (colorAddresult.message) {
-      case "이미 등록된 색상 이름 입니다.\n최종 관리자에게 문의 하세요.":
-        setError(
-          "name",
-          { type: "focus", message: "이미 등록된 색상 이름입니다." },
-          { shouldFocus: true }
-        );
-        break;
-    }
-  }, [errors]);
+  // useEffect(() => {
+  //   switch (colorAddresult.message) {
+  //     case "이미 등록된 색상 이름 입니다.\n최종 관리자에게 문의 하세요.":
+  //       setError(
+  //         "name",
+  //         { type: "focus", message: "이미 등록된 색상 이름입니다." },
+  //         { shouldFocus: true }
+  //       );
+  //       break;
+  //   }
+  // }, [errors]);
 
   const navigate = useNavigate();
   return (
@@ -142,6 +143,7 @@ const ColorAdd = ({
               }
             />
           </Description>
+          <ErrorMsg>{colorAddresult.message}</ErrorMsg>
           <Button
             type="submit"
             status="primary"

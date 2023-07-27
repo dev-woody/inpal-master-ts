@@ -56,12 +56,12 @@ const ManufacturerContainer = () => {
     {
       title: "제조사 명",
       dataIndex: "info",
-      render: (info) => info.basic.nameKr,
+      render: (info) => info.basic.info.nameKr,
     },
     {
       title: "제조 국가",
       dataIndex: "info",
-      render: (info) => info.basic.country,
+      render: (info) => info.basic.info.country,
     },
     {
       title: "생성일",

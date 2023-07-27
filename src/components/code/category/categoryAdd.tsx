@@ -1,15 +1,15 @@
 import styled from "styled-components";
-import { Button, Modal, PassShowBlock, Responsive } from "lib/styles";
+import { Button, ErrorMsg, Modal, PassShowBlock, Responsive } from "lib/styles";
 import { StyledInput, StyledForm } from "lib/styles";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState } from "react";
-import { DataObj, response } from "types/globalTypes";
+import { DataObj, checkStatus, response } from "types/globalTypes";
 
 type AddProps = {
   categoryRegister: response;
-  resultMsg: response;
+  checkPassword: response;
   onSubmit: (data: DataObj<string>) => void;
   modalVisible: boolean;
   setModalVisible: (status: boolean) => void;
@@ -23,7 +23,7 @@ const schema = yup.object({
 
 const CategoryAdd = ({
   categoryRegister,
-  resultMsg,
+  checkPassword,
   onSubmit,
   modalVisible,
   setModalVisible,
@@ -47,7 +47,7 @@ const CategoryAdd = ({
   const [isPassShow, setIsPassShow] = useState<boolean>(false);
 
   useEffect(() => {
-    if (categoryRegister.success) {
+    if (checkStatus(categoryRegister.status)) {
       reset();
     }
   }, [categoryRegister]);
@@ -65,12 +65,10 @@ const CategoryAdd = ({
           placeholder="카테고리명"
           label="name"
           register={register}
-          errors={errors.name?.message}
+          errors={errors}
           status={errors.name}
-          nonError
         />
         <StyledInput
-          align="vertical"
           placeholder="비밀번호 확인"
           type={isPassShow ? "text" : "password"}
           endItem={
@@ -82,9 +80,10 @@ const CategoryAdd = ({
           label="password"
           register={register}
           fullWidth
-          errors={errors.password?.message}
+          errors={errors}
           status={errors.password}
         />
+        <ErrorMsg>{checkPassword.message || categoryRegister.message}</ErrorMsg>
         <Button
           type="submit"
           disabled={isSubmitting}

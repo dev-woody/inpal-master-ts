@@ -3,6 +3,7 @@ import { useAppSelector, useAppDispatch } from "reducers/reducerHooks";
 import { masterProductActions } from "reducers/product/masterProduct";
 import CategoryList from "components/code/category/categoryList";
 import { masterCategoryActions } from "reducers/product/masterCategory";
+import { checkStatus } from "types/globalTypes";
 
 const CategoryContainer = () => {
   const { productList, categoryAllList, categoryEdit, categoryAdd } =
@@ -30,7 +31,7 @@ const CategoryContainer = () => {
   };
 
   useEffect(() => {
-    if (categoryEdit.success || categoryAdd.success) {
+    if (checkStatus(categoryEdit.status) || checkStatus(categoryAdd.status)) {
       dispatch(masterCategoryActions.reset("register"));
       dispatch(masterCategoryActions.reset("update"));
       dispatch(

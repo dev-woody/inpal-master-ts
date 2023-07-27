@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import ManagerMasterDetail from "components/admin/list/managerMasterDetail";
 import { masterAdminActions } from "reducers/admin/masterAdmin";
 import { changePostPhone } from "lib/functions/changeInput";
-import { DataObj } from "types/globalTypes";
+import { DataObj, checkStatus } from "types/globalTypes";
 
 const MasterDetailContainer = () => {
   const { user, master, updateResult, changePass } = useAppSelector(
@@ -24,7 +24,7 @@ const MasterDetailContainer = () => {
       masterAdminActions.update({
         ...data,
         name: master.data.info.name,
-        id: master.data.info.id,
+        id: master.data.base.id,
         phone: changePostPhone(data?.phone),
       })
     );
@@ -39,7 +39,7 @@ const MasterDetailContainer = () => {
   };
 
   useEffect(() => {
-    if (updateResult.success) {
+    if (checkStatus(updateResult.status)) {
       dispatch(masterAdminActions.reset("update"));
       setModalVisible(true);
     }

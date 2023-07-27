@@ -17,6 +17,16 @@ yarn start
 
 ## 패치노트
 
-### `07.26 Update`
+### `07.27 Update`
 
-1. change redux util function
+## 1. modal enter bug fix
+
+등록 및 수정시 엔터를 누르면 페이지를 이탈하던 버그를 수정하였음.
+
+## 2. sideBar location reload
+
+사이드바 메뉴 클릭시 페이지 새로고침 기능 추가함.
+
+## 3. etc bug fix
+
+기타 버그 수정

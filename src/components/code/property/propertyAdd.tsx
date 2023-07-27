@@ -9,6 +9,7 @@ import {
   StyledForm,
   PassShowBlock,
   BreadCrumb,
+  ErrorMsg,
 } from "lib/styles";
 import PageHeader from "lib/pages/pageHeader";
 import { StyledSelect } from "lib/styles/selectStyle";
@@ -24,9 +25,9 @@ const PropertyAddBlock = styled(Responsive)`
 `;
 
 type AddProps = {
-  addResult: boolean;
+  addResult: response;
   productList: response;
-  resultMsg: string;
+  checkPassword: response;
   onSubmit: (data: DataObj<string>) => void;
   modalVisible: boolean;
   setModalVisible: (status: boolean) => void;
@@ -42,7 +43,7 @@ const schema = yup.object({
 const PropertyAdd = ({
   addResult,
   productList,
-  resultMsg,
+  checkPassword,
   onSubmit,
   modalVisible,
   setModalVisible,
@@ -100,7 +101,7 @@ const PropertyAdd = ({
                 <StyledSelect
                   align="vertical"
                   placeholder="품목 선택"
-                  optionList={productList}
+                  optionList={productList.data}
                   label="productId"
                   register={register}
                   setValue={setValue}
@@ -146,6 +147,7 @@ const PropertyAdd = ({
               }
             />
           </Description>
+          <ErrorMsg>{checkPassword.message || addResult.message}</ErrorMsg>
           <Button
             type="submit"
             needMarginTop

@@ -48,7 +48,7 @@ const PropertyList = ({
       <PropertyListBlock>
         <Table
           columns={propertyListColumns}
-          content={propertyList}
+          content={propertyList.data}
           url="/code/property/detail"
           moveKey={["base", "id"]}
           pagenation
@@ -57,14 +57,14 @@ const PropertyList = ({
             <>
               <StyledSelect
                 placeholder="품목 선택"
-                optionList={productList}
+                optionList={productList.data}
                 actions={onSelect}
               />
-              <StyledSelect
+              {/* <StyledSelect
                 placeholder="사용 상태"
                 optionList={[]}
                 actions={function () {}}
-              />
+              /> */}
             </>
           }
         />

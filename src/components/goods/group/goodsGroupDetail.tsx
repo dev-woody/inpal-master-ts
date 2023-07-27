@@ -8,12 +8,12 @@ import { changeDays, changeSellStatus } from "lib/functions/changeInput";
 import ItemIndex from "../item";
 import OptionIndex from "../option";
 import { sellStatusOption } from "lib/columns/statusColumns";
-import { testGroupData } from "types/data.test";
+import { response } from "types/globalTypes";
 
 const GoodsGroupDetailBlock = styled(Responsive)``;
 
 type groupDetailProps = {
-  groupDetail: any;
+  groupDetail: response;
   onSetSellStatus: (data: any) => void;
 };
 
@@ -21,7 +21,7 @@ const GoodsGroupDetail = ({
   groupDetail,
   onSetSellStatus,
 }: groupDetailProps) => {
-  const data = testGroupData[0];
+  const data = groupDetail?.data;
 
   const {
     register,

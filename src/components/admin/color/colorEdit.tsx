@@ -116,15 +116,24 @@ const ColorEdit = ({
               }
             />
           </Description>
-          <Button
-            type="submit"
-            status="primary"
-            withInput
-            needMarginTop
-            // disabled={isSubmitting}
-          >
-            색상 수정
-          </Button>
+          <div>
+            <Button
+              needMarginTop
+              withInput
+              onClick={() => navigate("/admin/color")}
+            >
+              뒤로가기
+            </Button>
+            <Button
+              type="submit"
+              status="primary"
+              withInput
+              needMarginTop
+              // disabled={isSubmitting}
+            >
+              수정
+            </Button>
+          </div>
         </StyledForm>
         <Modal
           title="색상 수정"
@@ -132,7 +141,7 @@ const ColorEdit = ({
           submitMsg="확인"
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
-          action={() => navigate(`/admin/color`)}
+          // action={() => navigate(`/admin/color`)}
         />
       </ColorEditBlock>
     </>

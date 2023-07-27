@@ -5,6 +5,7 @@ import { masterAdminActions } from "reducers/admin/masterAdmin";
 import { masterProductActions } from "reducers/product/masterProduct";
 import { masterManufacturerActions } from "reducers/product/masterManufecturer";
 import ManufacturerDetailPage from "components/code/manufacturer/manufacturerDetailPage";
+import { checkStatus } from "types/globalTypes";
 
 const ManufacturerDetailPageContainer = () => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
@@ -34,7 +35,7 @@ const ManufacturerDetailPageContainer = () => {
   };
 
   useEffect(() => {
-    if (checkPassword.success && isSubmit) {
+    if (checkStatus(checkPassword.status) && isSubmit) {
       const data = manufacturerDetail.data;
       const { imageNumInfos } = inputData;
       dispatch(
@@ -49,7 +50,7 @@ const ManufacturerDetailPageContainer = () => {
   }, [checkPassword]);
 
   useEffect(() => {
-    if (detailEditResult.success) {
+    if (checkStatus(detailEditResult.status)) {
       dispatch(masterManufacturerActions.findById(id));
       setModalVisible(true);
       dispatch(masterManufacturerActions.reset("detailPage"));
@@ -57,7 +58,7 @@ const ManufacturerDetailPageContainer = () => {
   }, [detailEditResult]);
 
   useEffect(() => {
-    if (manufacturerDetail.success) {
+    if (checkStatus(manufacturerDetail.status)) {
       dispatch(
         masterProductActions.findById(manufacturerDetail.data?.info.productId)
       );
@@ -78,8 +79,9 @@ const ManufacturerDetailPageContainer = () => {
   return (
     <ManufacturerDetailPage
       manufacturerDetail={manufacturerDetail}
+      checkPassword={checkPassword}
       productId={productId}
-      detailEditResult={detailEditResult.success}
+      detailEditResult={detailEditResult}
       onSubmit={onSubmit}
       modalVisible={modalVisible}
       setModalVisible={setModalVisible}

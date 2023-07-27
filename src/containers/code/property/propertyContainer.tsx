@@ -12,10 +12,8 @@ const PropertyContainer = () => {
     propertyList: state.masterProperty.findAllByProductId,
   }));
   const dispatch = useAppDispatch();
-  const [productId, setProductId] = useState<string>("");
 
   const onSelect = (id: string) => {
-    setProductId(id);
     dispatch(
       masterPropertyActions.findAllByProductId({ productId: id, isDesc: false })
     );
@@ -52,8 +50,8 @@ const PropertyContainer = () => {
 
   return (
     <PropertyList
-      propertyList={propertyList.data}
-      productList={productList.data}
+      propertyList={propertyList}
+      productList={productList}
       propertyListColumns={propertyListColumns}
       onSelect={onSelect}
     />

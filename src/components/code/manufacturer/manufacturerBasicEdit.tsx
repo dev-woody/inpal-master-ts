@@ -14,15 +14,16 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState } from "react";
 import { NavigateFunction } from "react-router-dom";
-import { DataObj, response } from "types/globalTypes";
+import { DataObj, checkStatus, response } from "types/globalTypes";
 import { changeDays, changeOpenStatus } from "lib/functions/changeInput";
 
 const ManufacturerBasicEditBlock = styled(Responsive)``;
 
 type manufacturerProps = {
   manufacturerDetail: response;
+  checkPassword: response;
   productId: response;
-  basicEditResult: boolean;
+  basicEditResult: response;
   onSubmit: (data: any) => void;
   modalVisible: boolean;
   setModalVisible: (status: boolean) => void;
@@ -68,16 +69,16 @@ const ManufacturerBasicEdit = ({
   const data = manufacturerDetail.data;
 
   useEffect(() => {
-    if (basicEditResult) {
+    if (checkStatus(basicEditResult.status)) {
       reset();
     }
   }, [basicEditResult]);
 
   useEffect(() => {
-    setValue("nameKr", data?.info.basic.nameKr);
-    setValue("nameEn", data?.info.basic.nameEn);
-    setValue("country", data?.info.basic.country);
-    setValue("logoImageInfo", { id: data?.info.basic.logoImage.id });
+    setValue("nameKr", data?.info.basic.info.nameKr);
+    setValue("nameEn", data?.info.basic.info.nameEn);
+    setValue("country", data?.info.basic.info.country);
+    setValue("logoImageInfo", { id: data?.info.basic.info.logoImage.id });
   }, [manufacturerDetail]);
 
   return (
@@ -166,7 +167,9 @@ const ManufacturerBasicEdit = ({
                 action={() => console.log()}
                 subject="manufacturer"
                 type="logo"
-                isThumbnailImage={[{ imageId: data?.info.basic.logoImage.id }]}
+                isThumbnailImage={[
+                  { imageId: data?.info.basic.info.logoImage.id },
+                ]}
                 successAction={(result: any) => {
                   const imageArray = result.map((image: any) => {
                     return { id: image.imageId };
@@ -214,11 +217,11 @@ const ManufacturerBasicEdit = ({
         submitMsg="확인"
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
-        action={() => {
-          if (typeof id === "string") {
-            navigate(`/code/manufacturer/detail/${id}`);
-          }
-        }}
+        // action={() => {
+        //   if (typeof id === "string") {
+        //     navigate(`/code/manufacturer/detail/${id}`);
+        //   }
+        // }}
       />
     </ManufacturerBasicEditBlock>
   );

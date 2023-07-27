@@ -4,10 +4,11 @@ import { useAppSelector, useAppDispatch } from "reducers/reducerHooks";
 import GoodsGroupDetail from "components/goods/group/goodsGroupDetail";
 import { goodFindByIdActions } from "reducers/goods/group/findById";
 import { goodsSetSellStatusActions } from "reducers/goods/group/setSellStatus";
+import { masterGoodsGroupActions } from "reducers/goods/goodsGroup";
 
 const GoodDetailContainer = () => {
   const { groupDetail, setSellStatus } = useAppSelector((state) => ({
-    groupDetail: state.goodFindById.data,
+    groupDetail: state.masterGoodsGroup.findById,
     setSellStatus: state.goodsSetSellStatus,
   }));
   const dispatch = useAppDispatch();
@@ -25,9 +26,9 @@ const GoodDetailContainer = () => {
   };
 
   useEffect(() => {
-    dispatch(goodFindByIdActions.getFindById({ id }));
+    dispatch(masterGoodsGroupActions.findById(id));
     return () => {
-      dispatch(goodFindByIdActions.reset({}));
+      dispatch(masterGoodsGroupActions.reset({}));
     };
   }, []);
 

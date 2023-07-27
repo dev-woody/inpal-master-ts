@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "reducers/reducerHooks";
 import ColorEdit from "components/admin/color/colorEdit";
 import { masterColorActions } from "reducers/admin/masterColor";
+import { checkStatus } from "types/globalTypes";
 
 const ColorEditContainer = () => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
@@ -32,7 +33,7 @@ const ColorEditContainer = () => {
   }, [location]);
 
   useEffect(() => {
-    if (colorUpdateResult.success) {
+    if (checkStatus(colorUpdateResult.status)) {
       dispatch(masterColorActions.reset("update"));
       dispatch(masterColorActions.findAll(false));
       setModalVisible(true);

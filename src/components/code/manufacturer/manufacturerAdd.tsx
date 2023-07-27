@@ -10,6 +10,7 @@ import {
   PassShowBlock,
   BreadCrumb,
   StyledUpload,
+  ErrorMsg,
 } from "lib/styles";
 import PageHeader from "lib/pages/pageHeader";
 import { StyledSelect } from "lib/styles/selectStyle";
@@ -25,7 +26,8 @@ const ManufacturerAddBlock = styled(Responsive)`
 `;
 
 type AddProps = {
-  addResult: boolean;
+  addResult: response;
+  checkPassword: response;
   productList: response;
   resultMsg: string;
   onSubmit: (data: any) => void;
@@ -55,6 +57,7 @@ const schema = yup.object({
 
 const ManufacturerAdd = ({
   addResult,
+  checkPassword,
   productList,
   resultMsg,
   onSubmit,
@@ -260,6 +263,7 @@ const ManufacturerAdd = ({
               }
             />
           </Description>
+          <ErrorMsg>{addResult.message || checkPassword.message}</ErrorMsg>
           <Button
             type="submit"
             needMarginTop

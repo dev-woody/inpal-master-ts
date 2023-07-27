@@ -60,11 +60,11 @@ const ManufacturerList = ({
                 optionList={productList.data}
                 actions={onSelect}
               />
-              <StyledSelect
+              {/* <StyledSelect
                 placeholder="사용 상태"
                 optionList={[]}
                 actions={function () {}}
-              />
+              /> */}
             </>
           }
         />

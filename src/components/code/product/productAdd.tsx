@@ -3,6 +3,7 @@ import {
   BreadCrumb,
   Description,
   DescriptionContent,
+  ErrorMsg,
   Modal,
   Responsive,
 } from "lib/styles";
@@ -19,6 +20,7 @@ const ProductAddBlock = styled(Responsive)``;
 
 type AddProps = {
   addResult: response;
+  checkPassword: response;
   onSubmit: (data: DataObj<string>) => void;
   modalVisible: boolean;
   setModalVisible: (status: boolean) => void;
@@ -31,6 +33,7 @@ const schema = yup.object({
 
 const ProductAdd = ({
   addResult,
+  checkPassword,
   onSubmit,
   modalVisible,
   setModalVisible,
@@ -50,11 +53,11 @@ const ProductAdd = ({
   const [isPassShow, setIsPassShow] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (addResult.success) {
-      reset();
-    }
-  }, [addResult]);
+  // useEffect(() => {
+  //   if (addResult.s) {
+  //     reset();
+  //   }
+  // }, [addResult]);
   return (
     <>
       <ProductAddBlock>
@@ -119,6 +122,7 @@ const ProductAdd = ({
               }
             />
           </Description>
+          <ErrorMsg>{checkPassword.message || addResult.message}</ErrorMsg>
           <Button
             type="submit"
             needMarginTop

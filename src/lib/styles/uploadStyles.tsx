@@ -24,7 +24,6 @@ export const Label = styled.label`
   text-align: center;
   font-size: 0.75rem;
   font-weight: 600;
-  height: 100%;
   overflow: hidden !important;
 
   ${(props: { status?: string }) =>
@@ -267,7 +266,7 @@ export const StyledUpload = (props: propsTypes) => {
       .then((res) => {
         e.target.value = "";
         let newSrcList = [...isSrc];
-        newSrcList?.push({ imageId: res.data.base.id });
+        newSrcList?.push({ imageId: res.data.data.base.id });
         setIsSrc(newSrcList);
         // client
         //   .post(`/common/image/display`, null, {

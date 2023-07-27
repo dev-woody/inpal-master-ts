@@ -44,14 +44,14 @@ const ProductList = ({ productList, productListColumns }: ProductProps) => {
           url="/code/product/detail"
           moveKey={["base", "id"]}
           pagenation
-          filter
-          filterInput={
-            <StyledSelect
-              placeholder="사용 상태"
-              optionList={[]}
-              actions={function () {}}
-            />
-          }
+          // filter
+          // filterInput={
+          //   <StyledSelect
+          //     placeholder="사용 상태"
+          //     optionList={[]}
+          //     actions={function () {}}
+          //   />
+          // }
         />
         {/* <MasterAuthority content={<ProductAddContainer />} /> */}
       </ProductListBlock>

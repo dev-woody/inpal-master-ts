@@ -3,6 +3,7 @@ import PageHeader from "lib/pages/pageHeader";
 import {
   BreadCrumb,
   Button,
+  ErrorMsg,
   Modal,
   Responsive,
   StyledForm,
@@ -16,7 +17,7 @@ import { Description, DescriptionContent } from "lib/styles/descriptionStyles";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { DataObj, response, userType } from "types/globalTypes";
+import { DataObj, checkStatus, response, userType } from "types/globalTypes";
 
 type MasterProps = {
   master: response;
@@ -98,7 +99,7 @@ const ManagerMasterDetail = ({
           title="비밀번호 변경"
           msg={
             <div>
-              {changePass.success ? (
+              {checkStatus(changePass.status) ? (
                 "수정이 완료되었습니다."
               ) : (
                 <StyledSearchInput
@@ -115,13 +116,14 @@ const ManagerMasterDetail = ({
                   }}
                 />
               )}
+              <ErrorMsg>{changePass.message}</ErrorMsg>
             </div>
           }
-          submitMsg={changePass.success ? "확인" : "취소"}
+          submitMsg={checkStatus(changePass.status) ? "확인" : "취소"}
           modalVisible={editPass}
           setModalVisible={setEditPass}
           action={() => {
-            changePass.success && onReset("changePass");
+            checkStatus(changePass.status) && onReset("changePass");
           }}
         />
       </ManagerMasterDetailBlock>
@@ -214,7 +216,7 @@ const ManagerMasterDetail = ({
           submitMsg="확인"
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
-          action={() => navigate(`/admin/master`)}
+          // action={() => navigate(`/admin/master`)}
         />
       </ManagerMasterDetailBlock>
     </Fragment>

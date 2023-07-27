@@ -5,7 +5,7 @@ import { useAppSelector, useAppDispatch } from "reducers/reducerHooks";
 import { masterAdminActions } from "reducers/admin/masterAdmin";
 import { masterProductActions } from "reducers/product/masterProduct";
 import { masterUnitActions } from "reducers/product/masterUnit";
-import { DataObj } from "types/globalTypes";
+import { DataObj, checkStatus } from "types/globalTypes";
 
 const UnitEditContainer = () => {
   const { editResult, checkPassword, unitDetail, productId } = useAppSelector(
@@ -34,7 +34,7 @@ const UnitEditContainer = () => {
   };
 
   useEffect(() => {
-    if (checkPassword.success) {
+    if (checkStatus(checkPassword.status)) {
       const data: any = unitDetail.data;
       dispatch(
         masterUnitActions.update({
@@ -47,7 +47,7 @@ const UnitEditContainer = () => {
   }, [checkPassword]);
 
   useEffect(() => {
-    if (editResult.success) {
+    if (checkStatus(editResult.status)) {
       setModalVisible(true);
       dispatch(masterUnitActions.reset("update"));
       dispatch(
@@ -57,7 +57,7 @@ const UnitEditContainer = () => {
   }, [editResult]);
 
   useEffect(() => {
-    if (unitDetail.success) {
+    if (checkStatus(unitDetail.status)) {
       dispatch(masterProductActions.findById(unitDetail.data?.info.productId));
     }
   }, [unitDetail]);
@@ -74,7 +74,8 @@ const UnitEditContainer = () => {
     <UnitEdit
       unitDetail={unitDetail}
       productId={productId}
-      editResult={editResult.success}
+      checkPassword={checkPassword}
+      editResult={editResult}
       onSubmit={onSubmit}
       modalVisible={modalVisible}
       setModalVisible={setModalVisible}

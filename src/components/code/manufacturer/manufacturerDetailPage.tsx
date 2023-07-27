@@ -3,6 +3,7 @@ import {
   BreadCrumb,
   Description,
   DescriptionContent,
+  ErrorMsg,
   Modal,
   Responsive,
   StyledUpload,
@@ -14,15 +15,16 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState } from "react";
 import { NavigateFunction } from "react-router-dom";
-import { response } from "types/globalTypes";
+import { checkStatus, response } from "types/globalTypes";
 import { changeDays, changeOpenStatus } from "lib/functions/changeInput";
 
 const ManufacturerDetailPageBlock = styled(Responsive)``;
 
 type manufacturerProps = {
   manufacturerDetail: response;
+  checkPassword: response;
   productId: response;
-  detailEditResult: boolean;
+  detailEditResult: response;
   onSubmit: (data: any) => void;
   modalVisible: boolean;
   setModalVisible: (status: boolean) => void;
@@ -45,6 +47,7 @@ const schema = yup.object({
 
 const ManufacturerDetailPage = ({
   manufacturerDetail,
+  checkPassword,
   productId,
   detailEditResult,
   onSubmit,
@@ -70,13 +73,13 @@ const ManufacturerDetailPage = ({
   const data = manufacturerDetail.data;
 
   useEffect(() => {
-    if (detailEditResult) {
+    if (checkStatus(detailEditResult.status)) {
       reset();
     }
   }, [detailEditResult]);
 
   useEffect(() => {
-    setValue("imageNumInfos", data?.info.detailPage.imageNums);
+    setValue("imageNumInfos", data?.info.detailPage.info.imageNums);
   }, [manufacturerDetail]);
 
   return (
@@ -105,9 +108,9 @@ const ManufacturerDetailPage = ({
                 action={() => console.log()}
                 subject="manufacturer"
                 type="detail_page"
-                isThumbnailImage={data?.info.detailPage.imageNums.map(
+                isThumbnailImage={data?.info.detailPage.info.imageNums.map(
                   (imageInfo: any) => {
-                    return { imageId: imageInfo.image.id };
+                    return { imageId: imageInfo.info.image.id };
                   }
                 )}
                 successAction={(result: any) => {
@@ -141,6 +144,7 @@ const ManufacturerDetailPage = ({
             }
           />
         </Description>
+        <ErrorMsg>{checkPassword.message || detailEditResult.message}</ErrorMsg>
         <Button
           type="submit"
           status="primary"
@@ -157,11 +161,11 @@ const ManufacturerDetailPage = ({
         submitMsg="확인"
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
-        action={() => {
-          if (typeof id === "string") {
-            navigate(`/code/manufacturer/detail/${id}`);
-          }
-        }}
+        // action={() => {
+        //   if (typeof id === "string") {
+        //     navigate(`/code/manufacturer/detail/${id}`);
+        //   }
+        // }}
       />
     </ManufacturerDetailPageBlock>
   );

@@ -7,10 +7,11 @@ import { ColumnsType } from "lib/columns/columnsList";
 import { changeDays } from "lib/functions/changeInput";
 import { goodsSetSellStatusActions } from "reducers/goods/group/setSellStatus";
 import { StyledToggle } from "lib/styles";
+import { masterGoodsGroupActions } from "reducers/goods/goodsGroup";
 
 const GoodsGroupContainer = () => {
   const { goodsGroup, setOpenStatus } = useAppSelector((state) => ({
-    goodsGroup: state.goodsSearchByKeyword,
+    goodsGroup: state.masterGoodsGroup.goodsGroupFindAll,
     setOpenStatus: state.goodsSetSellStatus,
   }));
   const dispatch = useAppDispatch();
@@ -32,6 +33,10 @@ const GoodsGroupContainer = () => {
   useEffect(() => {
     // dispatch(productFindAllActions.getFindAll({isDesc: false}));
   }, [setOpenStatus]);
+
+  useEffect(() => {
+    dispatch(masterGoodsGroupActions.findAll(false));
+  }, []);
 
   const groupColumns: ColumnsType[] = [
     {

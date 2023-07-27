@@ -62,11 +62,11 @@ const UnitList = ({
                 optionList={productList}
                 actions={onSelect}
               />
-              <StyledSelect
+              {/* <StyledSelect
                 placeholder="사용 상태"
                 optionList={[]}
                 actions={function () {}}
-              />
+              /> */}
             </>
           }
         />

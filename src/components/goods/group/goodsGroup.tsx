@@ -3,7 +3,6 @@ import PageHeader from "lib/pages/pageHeader";
 import { BreadCrumb, Responsive, StyledSelect } from "lib/styles";
 import { Table } from "lib/styles/tableStyle";
 import styled from "styled-components";
-import { testGroupData } from "types/data.test";
 import { response } from "types/globalTypes";
 
 const GoodsGroupBlock = styled(Responsive)``;
@@ -34,8 +33,7 @@ const GoodsGroup = ({ goodsGroup, groupColumns, onSearch }: groupProps) => {
       <GoodsGroupBlock>
         <Table
           columns={groupColumns}
-          // content={goodsGroup.data}
-          content={testGroupData}
+          content={goodsGroup?.data}
           pagenation
           url="/goods/group"
           moveKey="id"
@@ -52,11 +50,11 @@ const GoodsGroup = ({ goodsGroup, groupColumns, onSearch }: groupProps) => {
                 optionList={[]}
                 actions={function () {}}
               />
-              <StyledSelect
+              {/* <StyledSelect
                 placeholder="사용 상태"
                 optionList={[]}
                 actions={function () {}}
-              />
+              /> */}
             </>
           }
         />

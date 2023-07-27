@@ -244,7 +244,7 @@ export const StyledSearchInput = (props: propsTypes) => {
           htmlFor={label}
           status="primary"
           onClick={action}
-          style={{ marginLeft: "0.25rem" }}
+          style={{ margin: "0.25rem 0 0.25rem 0.25rem" }}
         >
           {buttonText || "검색"}
         </Label>

@@ -8,6 +8,7 @@ import {
   Description,
   DescriptionContent,
   BreadCrumb,
+  ErrorMsg,
 } from "lib/styles";
 import PageHeader from "lib/pages/pageHeader";
 import { useForm } from "react-hook-form";
@@ -17,12 +18,12 @@ import { useEffect, useState } from "react";
 
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { NavigateFunction } from "react-router-dom";
-import { DataObj } from "types/globalTypes";
+import { DataObj, checkStatus, response } from "types/globalTypes";
 
 const MasterAddBlock = styled(Responsive)``;
 
 type addProps = {
-  addResult: boolean;
+  addResult: response;
   onSubmit: (data: any) => void;
   modalVisible: boolean;
   setModalVisible: (status: boolean) => void;
@@ -76,7 +77,7 @@ const MasterAdd = ({
   };
 
   useEffect(() => {
-    if (addResult) {
+    if (checkStatus(addResult.status)) {
       reset();
     }
   }, [addResult]);
@@ -117,7 +118,7 @@ const MasterAdd = ({
                   placeholder="아이디"
                   label="signInfo.userId"
                   register={register}
-                  errors={errors.signInfo?.userId?.message}
+                  errors={errors}
                   status={errors.signInfo?.userId}
                 />
               }
@@ -133,7 +134,7 @@ const MasterAdd = ({
                   label="signInfo.password"
                   register={register}
                   endItem={<PassShowBlock />}
-                  errors={errors.signInfo?.password?.message}
+                  errors={errors}
                   status={errors.signInfo?.password}
                 />
               }
@@ -147,7 +148,7 @@ const MasterAdd = ({
                   placeholder="이름"
                   label="name"
                   register={register}
-                  errors={errors.name?.message}
+                  errors={errors}
                   status={errors.name}
                 />
               }
@@ -161,7 +162,7 @@ const MasterAdd = ({
                   placeholder="이메일"
                   label="email"
                   register={register}
-                  errors={errors.email?.message}
+                  errors={errors}
                   status={errors.email}
                 />
               }
@@ -175,12 +176,13 @@ const MasterAdd = ({
                   placeholder="전화번호"
                   label="phone"
                   register={register}
-                  errors={errors.phone?.message}
+                  errors={errors}
                   status={errors.phone}
                 />
               }
             />
           </Description>
+          <ErrorMsg>{addResult.message}</ErrorMsg>
           <Button
             type="submit"
             status="primary"
