@@ -185,7 +185,7 @@ export const masterAllListColumns = [
   {
     title: "이름",
     dataIndex: "info",
-    render: (info: any) => info.name,
+    render: (info: any) => info.admin.name,
   },
   {
     title: "이메일",
@@ -361,7 +361,7 @@ export const vendorAllListColumns: ColumnsType[] = [
     title: "회사명",
     dataIndex: "info",
     render: (info: any) => {
-      return info.bizInfo.basic.name;
+      return info.bizInfo.info.basic.info.name;
     },
   },
   {

@@ -32,6 +32,8 @@ const VendorDetail = ({
   navigate,
   id,
 }: detailProps) => {
+  //todo 판매자 등록 후 등록했다는 화면 이동
+  //todo 판매사 리듀서 수정해야함
   // const { basic, registration, account, service, address } =
   //   vendor?.info?.bizInfo;
   const basicInfo = vendor?.vendorInfo?.basicInfo;
@@ -80,7 +82,7 @@ const VendorDetail = ({
             />
             <DescriptionContent
               label="이름"
-              content={vendor?.info?.bizInfo.basic.name}
+              content={vendor?.info.bizInfo.info.basic.info.name}
             />
             <DescriptionContent
               label="생성일"
@@ -156,7 +158,7 @@ const VendorDetail = ({
         <Description>
           <DescriptionContent
             label="취급품목"
-            content={vendor?.info?.bizInfo.basic?.name}
+            content={vendor?.info?.bizInfo.info.basic.info.name}
           />
         </Description>
         <div style={{ marginTop: "1rem" }} />
@@ -169,7 +171,7 @@ const VendorDetail = ({
           /> */}
           <DescriptionContent
             label="사업자 등록번호"
-            content={vendor?.info?.bizInfo.registration.number}
+            content={vendor?.info?.bizInfo.info.registration.info.number}
           />
           {/* <DescriptionContent
             label="통신판매업번호"
@@ -177,15 +179,15 @@ const VendorDetail = ({
           /> */}
           <DescriptionContent
             label="업태"
-            content={vendor?.info?.bizInfo.registration?.sector}
+            content={vendor?.info?.bizInfo.info.registration.info.sector}
           />
           <DescriptionContent
             label="업종"
-            content={vendor?.info?.bizInfo.registration.detail}
+            content={vendor?.info?.bizInfo.info.registration.info.detail}
           />
           <DescriptionContent
             label="상담번호"
-            content={changePhone(vendor?.info?.bizInfo.service.phone)}
+            content={changePhone(vendor?.info?.bizInfo.info.service.info.phone)}
           />
           {/* <DescriptionContent
             label="상담시간"
@@ -205,15 +207,15 @@ const VendorDetail = ({
         <Description>
           <DescriptionContent
             label="예금주명"
-            content={vendor?.info?.bizInfo.account.name}
+            content={vendor?.info?.bizInfo.info.account.info.name}
           />
           <DescriptionContent
             label="은행명"
-            content={vendor?.info?.bizInfo.account.bank}
+            content={vendor?.info?.bizInfo.info.account.info.bank}
           />
           <DescriptionContent
             label="계좌번호"
-            content={vendor?.info?.bizInfo.account.number}
+            content={vendor?.info?.bizInfo.info.account.info.number}
           />
           {/* <DescriptionContent
             label="통장사본"
