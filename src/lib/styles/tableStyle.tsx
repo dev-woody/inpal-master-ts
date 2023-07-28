@@ -340,7 +340,7 @@ export const Table = (props: propsTypes) => {
                           );
                         }
                       } else if (typeof moveKey === "string") {
-                        navigate(`${url}/${contentList.moveKey}`);
+                        navigate(`${url}/${contentList[moveKey]}`);
                       }
                     }
                   }}

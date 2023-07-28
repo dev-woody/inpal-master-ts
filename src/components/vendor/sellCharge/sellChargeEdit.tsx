@@ -21,7 +21,7 @@ const SellChargeEditBlock = styled(Responsive)``;
 
 type EditProps = {
   sellChargeDetail: response;
-  onSubmit: ({ data }: { data: object }) => void;
+  onSubmit: (data: object) => void;
   navigate: NavigateFunction;
   vendorId: string | undefined;
   id: string | undefined;
@@ -30,8 +30,7 @@ type EditProps = {
 };
 
 const schema = yup.object({
-  chargeRatio: yup.string().required("판매수수료를 입력해주세요."),
-  memo: yup.string().required("메모를 입력해주세요."),
+  charge: yup.string().required("판매수수료를 입력해주세요."),
 });
 
 const SellChargeEdit = ({
@@ -51,15 +50,13 @@ const SellChargeEdit = ({
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      chargeRatio: "",
-      memo: "",
+      charge: "",
     },
   });
   const data = sellChargeDetail.data;
 
   useEffect(() => {
-    setValue("chargeRatio", data?.chargeRatio.replace(/\%/g, ""));
-    setValue("memo", data?.memo);
+    setValue("charge", data?.chargeRatio.replace(/\%/g, ""));
   }, [sellChargeDetail]);
 
   return (
@@ -67,7 +64,7 @@ const SellChargeEdit = ({
       <PageHeader title="판매 수수료 조회" />
       <StyledForm
         onSubmit={handleSubmit(
-          (data) => onSubmit({ data }),
+          (data) => onSubmit(data),
           (errors) => console.log(errors)
         )}
       >
@@ -94,24 +91,10 @@ const SellChargeEdit = ({
               <StyledInput
                 align="vertical"
                 placeholder="판매 수수료"
-                label="chargeRatio"
+                label="charge"
                 register={register}
-                errors={errors.chargeRatio?.message}
-                status={errors.chargeRatio}
-              />
-            }
-          />
-          <DescriptionContent
-            span="12"
-            label="메모"
-            content={
-              <StyledInput
-                align="vertical"
-                placeholder="메모"
-                label="memo"
-                register={register}
-                errors={errors.memo?.message}
-                status={errors.memo}
+                errors={errors}
+                status={errors.charge}
               />
             }
           />

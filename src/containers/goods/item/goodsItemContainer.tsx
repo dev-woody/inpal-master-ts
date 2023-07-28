@@ -1,28 +1,26 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "reducers/reducerHooks";
 import GoodsItem from "components/goods/item/goodsItem";
-import { itemFindByGroupIdActions } from "reducers/goods/item/findByGoodsGroupId";
+import { masterGoodsItemActions } from "reducers/goods/goodsItem";
 
 const GoodsItemContainer = () => {
   const { itemList } = useAppSelector((state) => ({
-    itemList: state.itemFindByGroupId.data,
+    itemList: state.masterGoodsItem.findByGoodsGroupId,
   }));
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
-
-  const splitUrl = location.pathname.split("/");
+  const { id } = useParams();
 
   useEffect(() => {
     dispatch(
-      itemFindByGroupIdActions.getFindByGroupId({
-        goodsGroupId: splitUrl[splitUrl.length - 1],
-        isDesc: true,
+      masterGoodsItemActions.findByGoodsGroupId({
+        goodGroupId: id,
+        isDesc: false,
       })
     );
     return () => {
-      dispatch(itemFindByGroupIdActions.reset({}));
+      dispatch(masterGoodsItemActions.reset("findByGoodsGroupId"));
     };
   }, []);
 

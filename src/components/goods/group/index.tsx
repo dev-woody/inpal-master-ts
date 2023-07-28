@@ -9,8 +9,11 @@ const GroupIndex = () => {
     <Routes>
       <Route path="/" element={<GoodsGroupContainer />} />
       <Route path="/:id/*" element={<GoodDetailContainer />} />
-      <Route path="/item/:id/*" element={<GoodsItemDetailContainer />} />
-      <Route path="/option/:id/*" element={<GoodOptionDetailContainer />} />
+      <Route
+        path="/:id/item/:itemId/*"
+        element={<GoodsItemDetailContainer />}
+      />
+      {/* <Route path="/option/:id/*" element={<GoodOptionDetailContainer />} /> */}
     </Routes>
   );
 };

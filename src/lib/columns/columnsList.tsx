@@ -66,6 +66,7 @@ export const sidebarList: sideListType[] = [
         icon: <FaTicketAlt />,
         menuName: "쿠폰",
         url: "/cupon",
+        disable: true,
       },
       {
         icon: <FaClipboard />,
@@ -154,11 +155,13 @@ export const sidebarList: sideListType[] = [
         icon: <FaHardHat />,
         menuName: "시공업자 조회",
         url: "/list",
+        disable: true,
       },
       {
         icon: <FaReceipt />,
         menuName: "주문 조회",
         url: "/order",
+        disable: true,
       },
     ],
   },
@@ -185,7 +188,7 @@ export const masterAllListColumns = [
   {
     title: "이름",
     dataIndex: "info",
-    render: (info: any) => info.admin.name,
+    render: (info: any) => info.name,
   },
   {
     title: "이메일",
@@ -299,48 +302,47 @@ export const optionColumns: ColumnsType[] = [
 export const itemColumns: ColumnsType[] = [
   {
     title: "코드",
-    dataIndex: "code",
+    dataIndex: "info",
+    render: (info) => info.code,
   },
   {
     title: "모델명",
-    dataIndex: "model",
-    render: (model: string) => changeTextCut(model),
+    dataIndex: "info",
+    render: (info) => changeTextCut(info.basic.info.model),
   },
   {
     title: "이름",
-    dataIndex: "name",
-    render: (name: string) => changeTextCut(name),
+    dataIndex: "info",
+    render: (info) => changeTextCut(info.basic.info.name),
   },
   {
     title: "생성일",
-    dataIndex: "createdAt",
+    dataIndex: "base",
     isDesc: true,
-    render: (createdAt: string) => changeDays(createdAt),
+    render: (base) => changeDays(base.createdAt),
   },
   {
     title: "수정일",
-    dataIndex: "updatedAt",
+    dataIndex: "base",
     isDesc: true,
-    render: (updatedAt: string) => changeDays(updatedAt),
-  },
-  {
-    title: "가격",
-    dataIndex: "price",
+    render: (base) => changeDays(base.updatedAt),
   },
   {
     title: "재고",
-    dataIndex: "stock",
+    dataIndex: "info",
     isDesc: true,
+    render: (info) => info.stock,
   },
   {
     title: "판매량",
-    dataIndex: "sellCount",
+    dataIndex: "info",
     isDesc: true,
+    render: (info) => info.sellCount,
   },
   {
     title: "판매상태",
-    dataIndex: "sellStatus",
-    render: (sellStatus: string) => changeSellStatus(sellStatus),
+    dataIndex: "info",
+    render: (info) => changeSellStatus(info.sellStatus),
   },
 ];
 
@@ -613,26 +615,6 @@ export const dealerOrderColumns = [
     dataIndex: "updatedAt",
     isDesc: true,
     render: (updatedAt: string) => changeDays(updatedAt),
-  },
-];
-
-//*  sellChargeColumns
-export const sellChargeColumns = [
-  {
-    title: "판매사 명",
-    dataIndex: "vendorName",
-  },
-  {
-    title: "작성자",
-    dataIndex: "masterUserId",
-  },
-  {
-    title: "품목명",
-    dataIndex: "productName",
-  },
-  {
-    title: "판매 수수료",
-    dataIndex: "chargeRatio",
   },
 ];
 

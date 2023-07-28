@@ -1,94 +1,73 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "reducers/reducerHooks";
 import GoodsGroup from "components/goods/group/goodsGroup";
-import { goodsSearchByKeywordActions } from "reducers/goods/group/serchByKeyword";
 import { ColumnsType } from "lib/columns/columnsList";
-import { changeDays } from "lib/functions/changeInput";
-import { goodsSetSellStatusActions } from "reducers/goods/group/setSellStatus";
+import { changeDays, changeOpenStatus } from "lib/functions/changeInput";
 import { StyledToggle } from "lib/styles";
 import { masterGoodsGroupActions } from "reducers/goods/goodsGroup";
 
 const GoodsGroupContainer = () => {
-  const { goodsGroup, setOpenStatus } = useAppSelector((state) => ({
-    goodsGroup: state.masterGoodsGroup.goodsGroupFindAll,
-    setOpenStatus: state.goodsSetSellStatus,
+  const { goodsGroup } = useAppSelector((state) => ({
+    goodsGroup: state.masterGoodsGroup.findAll,
   }));
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const onSearch = ({ data }: { data: { keyword: string } }) => {
-    dispatch(
-      goodsSearchByKeywordActions.getSearchByKeyword({
-        keyword: data.keyword,
-        isDesc: true,
-      })
-    );
-  };
-
-  const onSetStatus = (data: object) => {
-    dispatch(goodsSetSellStatusActions.getSetSellStatus({ ...data }));
-  };
-
-  useEffect(() => {
-    // dispatch(productFindAllActions.getFindAll({isDesc: false}));
-  }, [setOpenStatus]);
-
   useEffect(() => {
     dispatch(masterGoodsGroupActions.findAll(false));
+    return () => {
+      dispatch(masterGoodsGroupActions.reset("findAll"));
+    };
   }, []);
 
   const groupColumns: ColumnsType[] = [
     {
       title: "코드",
-      dataIndex: "code",
+      dataIndex: "info",
+      render: (info) => info.code,
     },
     {
       title: "그룹명",
-      dataIndex: "description",
+      dataIndex: "info",
+      render: (info) => info.basic.info.name,
     },
     {
       title: "생성일",
-      dataIndex: "createdAt",
+      dataIndex: "base",
       isDesc: true,
-      render: (createdAt: string) => changeDays(createdAt),
+      render: (base) => changeDays(base.createdAt),
     },
     {
       title: "수정일",
-      dataIndex: "updatedAt",
+      dataIndex: "base",
       isDesc: true,
-      render: (updatedAt: string) => changeDays(updatedAt),
-    },
-    {
-      title: "판매량",
-      dataIndex: "sellCount",
-      isDesc: true,
+      render: (base) => changeDays(base.updatedAt),
     },
     {
       title: "판매상태",
-      dataIndex: "sellStatus",
-      render: (openStatus: string, contentList: any) => {
-        const action = () => {
-          onSetStatus({
-            vendorId: contentList.vendorId,
-            goodGroupId: contentList.id,
-            status: openStatus == "OPEN" ? "close" : "open",
-          });
-        };
-        return (
-          <StyledToggle data={openStatus} openStatus="OPEN" action={action} />
-        );
-      },
+      dataIndex: "info",
+      render: (info) => changeOpenStatus(info.openStatus),
+      // render: (info: any, contentList: any) => {
+      //   const action = () => {
+      //     onSetStatus({
+      //       vendorId: contentList.info.vendorId,
+      //       goodGroupId: contentList.base.id,
+      //       openStatus: info.openStatus == "OPEN" ? "close" : "open",
+      //     });
+      //   };
+      //   return (
+      //     <StyledToggle
+      //       data={info.openStatus}
+      //       openStatus="OPEN"
+      //       action={action}
+      //     />
+      //   );
+      // },
     },
   ];
 
-  return (
-    <GoodsGroup
-      goodsGroup={goodsGroup}
-      onSearch={onSearch}
-      groupColumns={groupColumns}
-    />
-  );
+  return <GoodsGroup goodsGroup={goodsGroup} groupColumns={groupColumns} />;
 };
 
 export default GoodsGroupContainer;

@@ -62,16 +62,12 @@ export const setOptionStatus = async (
   return res;
 };
 
-export const itemFindBygoodsGroupId = async (
-  goodsGroupId: string,
-  isDesc: string
-) => {
+export const itemFindBygoodsGroupId = async (data: object) => {
   const res = await client.get(
-    `/construction/common/good/group/item/findAllBygoodsGroupId`,
+    `/store/construction/good/item/findByGoodGroupId`,
     {
       params: {
-        goodsGroupId,
-        isDesc,
+        ...data,
       },
     }
   );
@@ -79,9 +75,7 @@ export const itemFindBygoodsGroupId = async (
 };
 
 export const itemFindById = async (id: string) => {
-  const res = await client.get(
-    `/construction/common/good/group/item/findById/${id}`
-  );
+  const res = await client.get(`/store/construction/good/item/findById/${id}`);
   return res;
 };
 

@@ -17,16 +17,16 @@ yarn start
 
 ## 패치노트
 
-### `07.27 Update`
+### `07.28 Update`
 
-## 1. modal enter bug fix
+### 1. goods add
 
-등록 및 수정시 엔터를 누르면 페이지를 이탈하던 버그를 수정하였음.
+상품 조회 추가
 
-## 2. sideBar location reload
+### 2. productNum add
 
-사이드바 메뉴 클릭시 페이지 새로고침 기능 추가함.
+판매사 판매 수수료 조정 추가
 
-## 3. etc bug fix
+### 3. etc bug fix
 
 기타 버그 수정

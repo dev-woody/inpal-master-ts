@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "reducers/reducerHooks";
 import { masterVendorActions } from "reducers/vendor/masterVendor";
 import VendorDetail from "components/vendor/list/vendorDetail";
+import { checkStatus } from "types/globalTypes";
 
 const VendorDetailContainer = () => {
   const { vendorFindById, setVendorStatus, vendorRegister } = useAppSelector(
@@ -31,7 +32,10 @@ const VendorDetailContainer = () => {
   };
 
   useEffect(() => {
-    if (vendorRegister.success || setVendorStatus.success) {
+    if (
+      checkStatus(vendorRegister.status) ||
+      checkStatus(setVendorStatus.status)
+    ) {
       dispatch(masterVendorActions.findById(id));
       dispatch(masterVendorActions.reset("approve"));
       dispatch(masterVendorActions.reset("setBizStatus"));
@@ -50,6 +54,7 @@ const VendorDetailContainer = () => {
   return (
     <VendorDetail
       vendor={vendorFindById.data}
+      setBizStatus={setVendorStatus}
       onSubmit={onSubmit}
       onRegister={onRegister}
       navigate={navigate}

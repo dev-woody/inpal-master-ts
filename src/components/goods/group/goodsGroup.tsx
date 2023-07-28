@@ -10,10 +10,9 @@ const GoodsGroupBlock = styled(Responsive)``;
 type groupProps = {
   goodsGroup: response;
   groupColumns: ColumnsType[];
-  onSearch: (data: any) => void;
 };
 
-const GoodsGroup = ({ goodsGroup, groupColumns, onSearch }: groupProps) => {
+const GoodsGroup = ({ goodsGroup, groupColumns }: groupProps) => {
   return (
     <>
       <GoodsGroupBlock>
@@ -36,7 +35,7 @@ const GoodsGroup = ({ goodsGroup, groupColumns, onSearch }: groupProps) => {
           content={goodsGroup?.data}
           pagenation
           url="/goods/group"
-          moveKey="id"
+          moveKey={["base", "id"]}
           filter
           filterInput={
             <>

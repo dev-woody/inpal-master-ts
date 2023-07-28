@@ -2,19 +2,21 @@ import styled from "styled-components";
 import { Button, Responsive, Table } from "lib/styles";
 import PageHeader from "lib/pages/pageHeader";
 import { response } from "types/globalTypes";
-import { sellChargeColumns } from "lib/columns/columnsList";
+import { ColumnsType } from "lib/columns/columnsList";
 import { NavigateFunction } from "react-router-dom";
 
 const SellChargeListBlock = styled(Responsive)``;
 
 type SellChargeProps = {
-  sellChargeList: response;
+  sellChargeList: any;
+  sellChargeColumns: ColumnsType[];
   navigate: NavigateFunction;
   vendorId: string | undefined;
 };
 
 const SellChargeList = ({
   sellChargeList,
+  sellChargeColumns,
   navigate,
   vendorId,
 }: SellChargeProps) => {
@@ -36,11 +38,11 @@ const SellChargeList = ({
       />
       <Table
         columns={sellChargeColumns}
-        content={sellChargeList.data}
+        content={sellChargeList}
         url={`/vendor/sellCharge/${
           typeof vendorId === "string" && vendorId
         }/detail`}
-        moveKey="id"
+        // moveKey="id"
         pagenation
       />
     </SellChargeListBlock>

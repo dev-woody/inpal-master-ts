@@ -18,15 +18,46 @@ export const findAll = async (isDesc: boolean) => {
 
 export const approve = async (id: string) => {
   return accessClient
-    .get(`/master/biz/vendor/approve/${id}`)
+    .post(`/master/biz/vendor/approve/${id}`)
     .then((res) => res);
 };
 
 export const setBizStatus = async (data: object) => {
   return accessClient
-    .get(`/master/biz/vendor/setBizStatus`, {
-      params: { ...data },
-    })
+    .post(
+      `/master/biz/vendor/setBizStatus`,
+      {},
+      {
+        params: { ...data },
+      }
+    )
+    .then((res) => res);
+};
+
+//* productNum
+export const pnRegister = async (data: object) => {
+  return accessClient
+    .post(`/master/biz/vendor/productNum/add`, {}, { params: { ...data } })
+    .then((res) => res);
+};
+
+export const pnUpdate = async (data: object) => {
+  return accessClient
+    .post(
+      `/master/biz/vendor/productNum/setCharge`,
+      {},
+      { params: { ...data } }
+    )
+    .then((res) => res);
+};
+
+export const setPnOpenStatus = async (data: object) => {
+  return accessClient
+    .post(
+      `/master/biz/vendor/productNum/setOpenStatus`,
+      {},
+      { params: { ...data } }
+    )
     .then((res) => res);
 };
 

@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import PageHeader from "lib/pages/pageHeader";
-import { BreadCrumb, Responsive, Table } from "lib/styles";
+import { BreadCrumb, ErrorMsg, Responsive, Table } from "lib/styles";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import {
@@ -14,11 +14,13 @@ import { StyledSelect } from "lib/styles/selectStyle";
 import { vendorAdminListColumns } from "lib/columns/columnsList";
 import { statusOption } from "lib/columns/statusColumns";
 import { NavigateFunction, useNavigate } from "react-router-dom";
+import { response } from "types/globalTypes";
 
 const VendorDetailBlock = styled(Responsive)``;
 
 type detailProps = {
   vendor: any;
+  setBizStatus: response;
   onSubmit: (data: any) => void;
   onRegister: () => void;
   navigate: NavigateFunction;
@@ -27,6 +29,7 @@ type detailProps = {
 
 const VendorDetail = ({
   vendor,
+  setBizStatus,
   onSubmit,
   onRegister,
   navigate,
@@ -106,7 +109,7 @@ const VendorDetail = ({
                 </Button>
               }
             />
-            <DescriptionContent
+            {/* <DescriptionContent
               label="최소 적립금 관리"
               content={
                 <Button
@@ -119,7 +122,7 @@ const VendorDetail = ({
                   상세보기
                 </Button>
               }
-            />
+            /> */}
             <DescriptionContent
               label="권한"
               content={
@@ -140,16 +143,27 @@ const VendorDetail = ({
               }
             />
           </Description>
+          <ErrorMsg>{setBizStatus.message}</ErrorMsg>
           {vendor?.info.bizStatus === "APPROVING" ? null : (
-            <Button
-              type="submit"
-              status="primary"
-              withInput
-              needMarginTop
-              disabled={isSubmitting}
-            >
-              수정
-            </Button>
+            <>
+              <Button
+                needMarginTop
+                withInput
+                disabled={isSubmitting}
+                onClick={() => navigate("/vendor/list")}
+              >
+                뒤로가기
+              </Button>
+              <Button
+                type="submit"
+                status="primary"
+                withInput
+                needMarginTop
+                disabled={isSubmitting}
+              >
+                수정
+              </Button>
+            </>
           )}
         </form>
       </VendorDetailBlock>

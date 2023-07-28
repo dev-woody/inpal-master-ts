@@ -3,13 +3,15 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { masterProductActions } from "reducers/product/masterProduct";
 import { useAppSelector, useAppDispatch } from "reducers/reducerHooks";
+import { masterVendorActions } from "reducers/vendor/masterVendor";
 import { sellChargeRegisterActions } from "reducers/vendor/sellCharge/register";
+import { checkStatus } from "types/globalTypes";
 
 const SellChargeRegisterContainer = () => {
   const { user, productList, registerResult } = useAppSelector((state) => ({
     user: state.user,
     productList: state.masterProduct.findAll,
-    registerResult: state.sellChargeRegister.success,
+    registerResult: state.masterVendor.pnRegister,
   }));
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const dispatch = useAppDispatch();
@@ -17,22 +19,13 @@ const SellChargeRegisterContainer = () => {
   const { vendorId } = useParams();
 
   const onSubmit = ({ data }: { data: any }) => {
-    dispatch(
-      sellChargeRegisterActions.postRegister({
-        data: {
-          vendorId: vendorId,
-          masterUserId: user.signInfo.userId,
-          chargeRatio: Number(data?.chargeRatio),
-          ...data,
-        },
-      })
-    );
+    dispatch(masterVendorActions.pnRegister({ vendorId, ...data }));
   };
 
   useEffect(() => {
-    if (registerResult) {
+    if (checkStatus(registerResult.status)) {
       setModalVisible(true);
-      dispatch(sellChargeRegisterActions.reset({}));
+      dispatch(masterVendorActions.reset("pnRegister"));
     }
   }, [registerResult]);
 
@@ -40,7 +33,7 @@ const SellChargeRegisterContainer = () => {
     dispatch(masterProductActions.findAll(false));
     return () => {
       // dispatch(masterProductActions.reset({}));
-      // dispatch(sellChargeRegisterActions.reset({}));
+      dispatch(masterVendorActions.reset("pnRegister"));
     };
   }, []);
 

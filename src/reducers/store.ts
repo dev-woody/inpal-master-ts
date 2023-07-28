@@ -16,6 +16,7 @@ import masterCategory, { masterCategorySaga } from "./product/masterCategory";
 import masterUnit, { masterUnitSaga } from "./product/masterUnit";
 import masterProperty, { masterPropertySaga } from "./product/masterProperty";
 import masterGoodsGroup, { masterGoodsGroupSaga } from "./goods/goodsGroup";
+import masterGoodsItem, { masterGoodsItemSaga } from "./goods/goodsItem";
 
 //* vendor
 import vendorOrderFindAll, {
@@ -73,20 +74,6 @@ import dealerOrderFindById, {
 } from "./dealer/order/findById";
 
 //*  goods
-import goodsSearchByKeyword, {
-  goodsSearchByKeywordSaga,
-} from "./goods/group/serchByKeyword";
-import goodFindById, { goodFindByIdSaga } from "./goods/group/findById";
-import goodsSetSellStatus, {
-  goodsSetSellStatusSaga,
-} from "./goods/group/setSellStatus";
-import itemFindByGroupId, {
-  itemFindByGroupIdSaga,
-} from "./goods/item/findByGoodsGroupId";
-import itemFindById, { itemFindByIdSaga } from "./goods/item/findById";
-import itemSetSellStatus, {
-  itemSetSellStatusSaga,
-} from "./goods/item/setSellStatus";
 import optionSetSellStatus, {
   optionSetSellStatusSaga,
 } from "./goods/option/setSellStatus";
@@ -106,6 +93,7 @@ function* rootSaga() {
     fork(masterUnitSaga),
     fork(masterPropertySaga),
     fork(masterGoodsGroupSaga),
+    fork(masterGoodsItemSaga),
     //* vendor
     fork(vendorOrderFindAllSaga),
     fork(paymentFindByIdSaga),
@@ -130,12 +118,6 @@ function* rootSaga() {
     fork(orderFindByDealerIdSaga),
     fork(dealerOrderFindByIdSaga),
     //* goods
-    fork(goodsSearchByKeywordSaga),
-    fork(goodFindByIdSaga),
-    fork(goodsSetSellStatusSaga),
-    fork(itemFindByGroupIdSaga),
-    fork(itemFindByIdSaga),
-    fork(itemSetSellStatusSaga),
     fork(optionSetSellStatusSaga),
   ]);
 }
@@ -154,6 +136,7 @@ const rootReducer = combineReducers({
   masterUnit: masterUnit.reducer,
   masterProperty: masterProperty.reducer,
   masterGoodsGroup: masterGoodsGroup.reducer,
+  masterGoodsItem: masterGoodsItem.reducer,
   //* vendor
   vendorOrderFindAll: vendorOrderFindAll.reducer,
   paymentFindById: paymentFindById.reducer,
@@ -178,12 +161,6 @@ const rootReducer = combineReducers({
   orderFindByDealerId: orderFindByDealerId.reducer,
   dealerOrderFindById: dealerOrderFindById.reducer,
   //* goods
-  goodsSearchByKeyword: goodsSearchByKeyword.reducer,
-  goodFindById: goodFindById.reducer,
-  goodsSetSellStatus: goodsSetSellStatus.reducer,
-  itemFindByGroupId: itemFindByGroupId.reducer,
-  itemFindById: itemFindById.reducer,
-  itemSetSellStatus: itemSetSellStatus.reducer,
   optionSetSellStatus: optionSetSellStatus.reducer,
 });
 

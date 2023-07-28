@@ -15,9 +15,9 @@ export function changePhone(inputPhone: string | undefined) {
 }
 
 export function changeTextCut(text: string | undefined) {
-  if (text && text?.length > 5) {
-    return text.substring(0, 5) + "...";
-  }
+  if (text && text?.length > 10) {
+    return text.substring(0, 10) + "...";
+  } else return text;
 }
 
 export function changeStatus(status: string | undefined) {

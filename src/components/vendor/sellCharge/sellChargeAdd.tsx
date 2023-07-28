@@ -29,8 +29,7 @@ type RegisterProps = {
 
 const schema = yup.object({
   productId: yup.string().required("품목을 선택해주세요."),
-  chargeRatio: yup.string().required("판매 수수료를 입력해주세요."),
-  memo: yup.string().required("메모를 입력해주세요."),
+  masterCharge: yup.string().required("판매 수수료를 입력해주세요."),
 });
 
 const SellChargeAdd = ({
@@ -50,8 +49,7 @@ const SellChargeAdd = ({
     resolver: yupResolver(schema),
     defaultValues: {
       productId: "",
-      chargeRatio: "",
-      memo: "",
+      masterCharge: "",
     },
   });
   return (
@@ -87,24 +85,10 @@ const SellChargeAdd = ({
               <StyledInput
                 align="vertical"
                 placeholder="판매 수수료"
-                label="chargeRatio"
+                label="masterCharge"
                 register={register}
-                errors={errors.chargeRatio?.message}
-                status={errors.chargeRatio}
-              />
-            }
-          />
-          <DescriptionContent
-            span="12"
-            label="메모"
-            content={
-              <StyledInput
-                align="vertical"
-                placeholder="메모"
-                label="memo"
-                register={register}
-                errors={errors.memo?.message}
-                status={errors.memo}
+                errors={errors.masterCharge?.message}
+                status={errors.masterCharge}
               />
             }
           />

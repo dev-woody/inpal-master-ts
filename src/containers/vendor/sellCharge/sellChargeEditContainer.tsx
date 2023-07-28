@@ -2,6 +2,7 @@ import SellChargeEdit from "components/vendor/sellCharge/sellChargeEdit";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "reducers/reducerHooks";
+import { masterVendorActions } from "reducers/vendor/masterVendor";
 import { sellChargeFindByIdActions } from "reducers/vendor/sellCharge/findById";
 import { sellChargeUpdateActions } from "reducers/vendor/sellCharge/update";
 
@@ -16,18 +17,12 @@ const SellChargeEditContainer = () => {
   const navigate = useNavigate();
   const { vendorId, id } = useParams();
 
-  const onSubmit = ({ data }: { data: object }) => {
+  const onSubmit = (data: object) => {
     dispatch(
-      sellChargeUpdateActions.postUpdate({
-        data: {
-          id,
-          vendorId,
-          masterUserId: user.signInfo.userId,
-          //! ProductId 필요함
-          productId: sellChargeDetail.data.productId,
-          chargeRatio: Number(sellChargeDetail.data.chargeRatio),
-          ...data,
-        },
+      masterVendorActions.pnUpdate({
+        id,
+        vendorId,
+        ...data,
       })
     );
   };
