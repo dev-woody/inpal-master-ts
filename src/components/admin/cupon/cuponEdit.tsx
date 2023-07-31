@@ -3,6 +3,7 @@ import {
   BreadCrumb,
   Description,
   DescriptionContent,
+  ErrorMsg,
   Modal,
   Responsive,
   StyledUpload,
@@ -20,25 +21,22 @@ const CuponEditBlock = styled(Responsive)``;
 
 type cuponEditProps = {
   editResult: response;
-  // uploadImage: response;
   cuponDetail: response;
-  onUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSubmit: <T>(data: T) => void;
   modalVisible: boolean;
   setModalVisible: (status: boolean) => void;
 };
 
 const schema = yup.object({
+  kind: yup.string().required("종류를 입력해주세요."),
+  title: yup.string().required("타이틀을 입력해주세요"),
   description: yup.string().required("설명을 입력해주세요."),
   expirationDays: yup.string().required("잔여일을 입력해주세요."),
-  imageId: yup.string().required("이미지를 등록해주세요."),
 });
 
 const CuponEdit = ({
   editResult,
-  // uploadImage,
   cuponDetail,
-  onUpload,
   onSubmit,
   modalVisible,
   setModalVisible,
@@ -52,9 +50,10 @@ const CuponEdit = ({
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
+      kind: "",
+      title: "",
       description: "",
       expirationDays: "",
-      imageId: "",
     },
   });
 
@@ -69,8 +68,10 @@ const CuponEdit = ({
   }
 
   useEffect(() => {
-    setValue("description", cuponDetail?.data?.description);
-    setValue("expirationDays", cuponDetail?.data?.expirationDays);
+    setValue("kind", cuponDetail?.data?.info?.kind);
+    setValue("title", cuponDetail?.data?.info?.title);
+    setValue("description", cuponDetail?.data?.info?.description);
+    setValue("expirationDays", cuponDetail?.data?.info?.expirationDays);
   }, [cuponDetail]);
 
   return (
@@ -96,10 +97,38 @@ const CuponEdit = ({
       <CuponEditBlock>
         <StyledForm
           onSubmit={handleSubmit((data) => {
-            onSubmit({ data });
+            onSubmit(data);
           })}
         >
           <Description>
+            <DescriptionContent
+              span="12"
+              label="종류"
+              content={
+                <StyledInput
+                  align="vertical"
+                  placeholder="종류"
+                  label="kind"
+                  register={register}
+                  errors={errors}
+                  status={errors.kind}
+                />
+              }
+            />
+            <DescriptionContent
+              span="12"
+              label="타이틀"
+              content={
+                <StyledInput
+                  align="vertical"
+                  placeholder="타이틀"
+                  label="title"
+                  register={register}
+                  errors={errors}
+                  status={errors.title}
+                />
+              }
+            />
             <DescriptionContent
               span="12"
               label="설명"
@@ -109,7 +138,7 @@ const CuponEdit = ({
                   placeholder="설명"
                   label="description"
                   register={register}
-                  errors={errors.description?.message}
+                  errors={errors}
                   status={errors.description}
                 />
               }
@@ -123,37 +152,13 @@ const CuponEdit = ({
                   placeholder="잔여일"
                   label="expirationDays"
                   register={register}
-                  errors={errors.expirationDays?.message}
+                  errors={errors}
                   status={errors.expirationDays}
                 />
               }
             />
-            {/* <DescriptionContent
-              span="12"
-              label="쿠폰이미지"
-              content={
-                <StyledUpload
-                  readOnly
-                  placeholder="쿠폰이미지"
-                  label="imageId"
-                  errors={errors.imageId?.message || "이미지는 필수입니다."}
-                  status={errors.imageId}
-                  onImageUpload={onUpload}
-                  image={uploadImage}
-                  deleteImage={deleteImage}
-                  imageKind="imageId"
-                  isBox
-                  imageArray={imageArray}
-                  thumnailUrl={`/master/coupon/image/display`}
-                  params={{
-                    id: uploadImage?.data?.id,
-                    isThumbnail: true,
-                  }}
-                  thumnail={cuponDetail?.data?.image?.id}
-                />
-              }
-            /> */}
           </Description>
+          <ErrorMsg>{editResult.message}</ErrorMsg>
           <Button
             type="submit"
             status="primary"

@@ -3,9 +3,9 @@ import {
   BreadCrumb,
   Description,
   DescriptionContent,
+  ErrorMsg,
   Modal,
   Responsive,
-  StyledUpload,
 } from "lib/styles";
 import { Button, StyledForm, StyledInput } from "lib/styles";
 import { useForm } from "react-hook-form";
@@ -20,24 +20,23 @@ const CuponAddBlock = styled(Responsive)``;
 
 type cuponAddProps = {
   addResult: response;
-  // uploadImage: response;
   onSubmit: <T>(data: T) => void;
-  onUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
   modalVisible: boolean;
   setModalVisible: (status: boolean) => void;
 };
 
 const schema = yup.object({
-  kind: yup.string().required("종류를 입력해주세요."),
+  type: yup.string().required("종류를 입력해주세요."),
+  kind: yup.string().required("마스터타이틀을 입력해주세요."),
+  title: yup.string().required("타이틀을 입력해주세요."),
   description: yup.string().required("설명을 입력해주세요."),
   expirationDays: yup.string().required("잔여일을 입력해주세요."),
-  imageId: yup.string().required("이미지를 등록해주세요."),
+  disCountRate: yup.string(),
+  // point: yup.string(),
 });
 
 const CuponAdd = ({
   addResult,
-  // uploadImage,
-  onUpload,
   onSubmit,
   modalVisible,
   setModalVisible,
@@ -50,10 +49,13 @@ const CuponAdd = ({
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
+      type: "",
       kind: "",
+      title: "",
       description: "",
       expirationDays: "",
-      imageId: "",
+      disCountRate: null,
+      // point: null,
     },
   });
 
@@ -98,7 +100,7 @@ const CuponAdd = ({
       <CuponAddBlock>
         <StyledForm
           onSubmit={handleSubmit(
-            (data) => onSubmit({ data }),
+            (data) => onSubmit(data),
             (errors) => console.log(errors)
           )}
         >
@@ -110,6 +112,20 @@ const CuponAdd = ({
                 <StyledInput
                   align="vertical"
                   placeholder="종류"
+                  label="type"
+                  register={register}
+                  errors={errors}
+                  status={errors.type}
+                />
+              }
+            />
+            <DescriptionContent
+              span="12"
+              label="마스터 타이틀"
+              content={
+                <StyledInput
+                  align="vertical"
+                  placeholder="마스터 타이틀"
                   label="kind"
                   register={register}
                   errors={errors}
@@ -117,6 +133,48 @@ const CuponAdd = ({
                 />
               }
             />
+            <DescriptionContent
+              span="12"
+              label="타이틀"
+              content={
+                <StyledInput
+                  align="vertical"
+                  placeholder="타이틀"
+                  label="title"
+                  register={register}
+                  errors={errors}
+                  status={errors.title}
+                />
+              }
+            />
+            <DescriptionContent
+              span="12"
+              label="할인률"
+              content={
+                <StyledInput
+                  align="vertical"
+                  placeholder="할인률"
+                  label="disCountRate"
+                  register={register}
+                  errors={errors}
+                  status={errors.disCountRate}
+                />
+              }
+            />
+            {/*   <DescriptionContent
+              span="12"
+              label="포인트"
+              content={
+                <StyledInput
+                  align="vertical"
+                  placeholder="포인트"
+                  label="point"
+                  register={register}
+                  errors={errors}
+                  status={errors.point}
+                />
+              }
+            /> */}
             <DescriptionContent
               span="12"
               label="설명"
@@ -145,33 +203,8 @@ const CuponAdd = ({
                 />
               }
             />
-            {/* <DescriptionContent
-              span="12"
-              label="쿠폰이미지"
-              content={
-                <StyledUpload
-                  // align="vertical"
-                  readOnly
-                  placeholder="쿠폰이미지"
-                  label="imageId"
-                  register={register}
-                  errors={errors || "이미지는 필수입니다."}
-                  status={errors.imageId}
-                  onImageUpload={onUpload}
-                  image={uploadImage}
-                  deleteImage={deleteImage}
-                  imageKind="imageId"
-                  isBox
-                  imageArray={imageArray}
-                  thumnailUrl={`/master/coupon/image/display`}
-                  params={{
-                    id: uploadImage?.data?.id,
-                    isThumbnail: true,
-                  }}
-                />
-              }
-            /> */}
           </Description>
+          <ErrorMsg>{addResult.message}</ErrorMsg>
           <Button
             type="submit"
             status="primary"

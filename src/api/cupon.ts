@@ -24,11 +24,15 @@ export const update = async (data: object) => {
 
 export const setStatus = async (data: object) => {
   return accessClient
-    .get(`/master/coupon/setStatus`, {
-      params: {
-        ...data,
-      },
-    })
+    .post(
+      `/master/coupon/setOpenStatus`,
+      {},
+      {
+        params: {
+          ...data,
+        },
+      }
+    )
     .then((res) => res);
 };
 
@@ -39,7 +43,7 @@ export const findById = async (id: string) => {
 };
 
 export const findAll = async (isDesc: boolean) => {
-  return accessClient.get(`/store/coupon/findAll/${isDesc}`).then((res) => {
-    return res;
-  });
+  return accessClient
+    .get(`/master/coupon/findAll/${isDesc}`)
+    .then((res) => res);
 };

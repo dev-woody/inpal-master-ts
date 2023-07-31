@@ -66,7 +66,6 @@ export const sidebarList: sideListType[] = [
         icon: <FaTicketAlt />,
         menuName: "쿠폰",
         url: "/cupon",
-        disable: true,
       },
       {
         icon: <FaClipboard />,
