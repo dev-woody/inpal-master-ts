@@ -181,10 +181,21 @@ const VendorDetail = ({
         <PageHeader title={`기업 상세정보`} />
         <Description>
           {/* <DescriptionContent label="대표명" content={companyInfo?.ceo} /> */}
-          {/* <DescriptionContent
-            label="사업자 등록증"
-            content={<Button>상세보기</Button>}
-          /> */}
+          <DescriptionContent
+            label="사업자등록증"
+            content={
+              <Button
+                type="button"
+                onClick={() =>
+                  navigate(
+                    `/image/${vendor?.info?.bizInfo.info.registration.info.registrationImage?.id}`
+                  )
+                }
+              >
+                상세보기
+              </Button>
+            }
+          />
           <DescriptionContent
             label="사업자 등록번호"
             content={vendor?.info?.bizInfo.info.registration.info.number}
@@ -228,6 +239,21 @@ const VendorDetail = ({
           <DescriptionContent
             label="은행명"
             content={vendor?.info?.bizInfo.info.account.info.bank}
+          />
+          <DescriptionContent
+            label="통장사본"
+            content={
+              <Button
+                type="button"
+                onClick={() =>
+                  navigate(
+                    `/image/${vendor?.info?.bizInfo.info.account.info.accountImage?.id}`
+                  )
+                }
+              >
+                상세보기
+              </Button>
+            }
           />
           <DescriptionContent
             label="계좌번호"

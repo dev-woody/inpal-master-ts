@@ -36,26 +36,26 @@ const GoodsGroup = ({ goodsGroup, groupColumns }: groupProps) => {
           pagenation
           url="/goods/group"
           moveKey={["base", "id"]}
-          filter
-          filterInput={
-            <>
-              <StyledSelect
-                placeholder="품목 선택"
-                optionList={[]}
-                actions={function () {}}
-              />
-              <StyledSelect
-                placeholder="제조사 선택"
-                optionList={[]}
-                actions={function () {}}
-              />
-              {/* <StyledSelect
-                placeholder="사용 상태"
-                optionList={[]}
-                actions={function () {}}
-              /> */}
-            </>
-          }
+          // filter
+          // filterInput={
+          //   <>
+          //     <StyledSelect
+          //       placeholder="품목 선택"
+          //       optionList={[]}
+          //       actions={function () {}}
+          //     />
+          //     <StyledSelect
+          //       placeholder="제조사 선택"
+          //       optionList={[]}
+          //       actions={function () {}}
+          //     />
+          //     {/* <StyledSelect
+          //       placeholder="사용 상태"
+          //       optionList={[]}
+          //       actions={function () {}}
+          //     /> */}
+          //   </>
+          // }
         />
       </GoodsGroupBlock>
     </>

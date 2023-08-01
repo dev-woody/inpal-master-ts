@@ -200,7 +200,7 @@ const ImageArray = ({
                 }}
               >
                 <img
-                  src={`http://49.247.31.111:8080/api/v000/common/image/display?id=${imageSrc.imageId}&isThumbnail=true`}
+                  src={`/common/image/display?id=${imageSrc.imageId}&isThumbnail=true`}
                   style={{ width: "100%", WebkitFilter: "blur(1px)" }}
                 />
                 <DeleteBlock

@@ -15,6 +15,7 @@ import VendorIndex from "components/vendor";
 import DealerIndex from "components/dealer";
 import Dashboard from "lib/pages/dashboard";
 import PrivateRouter from "lib/pages/privateRouter";
+import IamgePage from "lib/pages/imageDisplay";
 
 function App() {
   const router = createBrowserRouter(
@@ -24,6 +25,7 @@ function App() {
           <Route path="signIn" element={<SignInIndex />} />
         </Route>
         <Route element={<PrivateRouter authentication={true} />}>
+          <Route path="/image/:id" element={<IamgePage />} />
           <Route path="/" element={<Dashboard />} />
           <Route path="admin/*" element={<MasterIndex />} />
           <Route path="code/*" element={<CodeIndex />} />
