@@ -99,9 +99,10 @@ const VendorDetail = ({
               label="판매 수수료 관리"
               content={
                 <Button
+                  type="button"
                   onClick={() => {
                     if (typeof id === "string") {
-                      navigate(`/vendor/sellCharge/${id}`);
+                      navigate(`/vendor/list/${id}/sellFees`);
                     }
                   }}
                 >
@@ -147,6 +148,7 @@ const VendorDetail = ({
           {vendor?.info.bizStatus === "APPROVING" ? null : (
             <>
               <Button
+                type="button"
                 needMarginTop
                 withInput
                 disabled={isSubmitting}

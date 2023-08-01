@@ -196,6 +196,7 @@ const ManagerMasterDetail = ({
           </Description>
           <div>
             <Button
+              type="button"
               needMarginTop
               withInput
               disabled={isSubmitting}

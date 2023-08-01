@@ -6,13 +6,14 @@ import {
   ErrorMsg,
   Modal,
   Responsive,
+  StyledSelect,
 } from "lib/styles";
 import { Button, StyledForm, StyledInput } from "lib/styles";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import PageHeader from "lib/pages/pageHeader";
-import { ReactEventHandler, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { response } from "types/globalTypes";
 
@@ -20,7 +21,7 @@ const CuponAddBlock = styled(Responsive)``;
 
 type cuponAddProps = {
   addResult: response;
-  onSubmit: <T>(data: T) => void;
+  onSubmit: (data: any) => void;
   modalVisible: boolean;
   setModalVisible: (status: boolean) => void;
 };
@@ -31,8 +32,8 @@ const schema = yup.object({
   title: yup.string().required("타이틀을 입력해주세요."),
   description: yup.string().required("설명을 입력해주세요."),
   expirationDays: yup.string().required("잔여일을 입력해주세요."),
-  disCountRate: yup.string(),
-  // point: yup.string(),
+  disCountRate: yup.string().nullable(),
+  point: yup.string().nullable(),
 });
 
 const CuponAdd = ({
@@ -45,6 +46,7 @@ const CuponAdd = ({
     register,
     handleSubmit,
     setValue,
+    getValues,
     formState: { isSubmitting, errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -55,27 +57,32 @@ const CuponAdd = ({
       description: "",
       expirationDays: "",
       disCountRate: null,
-      // point: null,
+      point: null,
     },
   });
 
   const navigate = useNavigate();
 
-  const [imageArray, setImageArray] = useState<{ id: string }[]>([]);
-  const newArray = JSON.parse(JSON.stringify(imageArray));
+  const [isType, setIsType] = useState<string>("");
 
-  function deleteImage(id: string) {
-    const deleteArray = newArray.filter(
-      (list: { id: string }) => list.id !== id
-    );
-    setImageArray(deleteArray);
-  }
-
-  // useEffect(() => {
-  //   if (uploadImage.success) {
-  //     setValue("imageId", uploadImage.data.id);
-  //   }
-  // }, [uploadImage]);
+  const typeColumns = [
+    {
+      name: "할인",
+      id: "SALE",
+    },
+    {
+      name: "포인트",
+      id: "POINT",
+    },
+    {
+      name: "등급업",
+      id: "GRADE_UP",
+    },
+    {
+      name: "다이아몬드 등급 업그레이드",
+      id: "GO_TO_DIAMOND",
+    },
+  ];
 
   return (
     <>
@@ -109,11 +116,17 @@ const CuponAdd = ({
               span="12"
               label="종류"
               content={
-                <StyledInput
+                <StyledSelect
                   align="vertical"
-                  placeholder="종류"
+                  placeholder="쿠폰종류선택"
+                  optionList={typeColumns}
                   label="type"
                   register={register}
+                  setValue={(label: "type", id: string) => {
+                    setValue(label, id);
+                    setIsType(id);
+                  }}
+                  getValues={getValues("type")}
                   errors={errors}
                   status={errors.type}
                 />
@@ -147,34 +160,38 @@ const CuponAdd = ({
                 />
               }
             />
-            <DescriptionContent
-              span="12"
-              label="할인률"
-              content={
-                <StyledInput
-                  align="vertical"
-                  placeholder="할인률"
-                  label="disCountRate"
-                  register={register}
-                  errors={errors}
-                  status={errors.disCountRate}
-                />
-              }
-            />
-            {/*   <DescriptionContent
-              span="12"
-              label="포인트"
-              content={
-                <StyledInput
-                  align="vertical"
-                  placeholder="포인트"
-                  label="point"
-                  register={register}
-                  errors={errors}
-                  status={errors.point}
-                />
-              }
-            /> */}
+            {isType === "SALE" && (
+              <DescriptionContent
+                span="12"
+                label="할인률"
+                content={
+                  <StyledInput
+                    align="vertical"
+                    placeholder="할인률"
+                    label="disCountRate"
+                    register={register}
+                    errors={errors}
+                    status={errors.disCountRate}
+                  />
+                }
+              />
+            )}
+            {isType === "POINT" && (
+              <DescriptionContent
+                span="12"
+                label="포인트"
+                content={
+                  <StyledInput
+                    align="vertical"
+                    placeholder="포인트"
+                    label="point"
+                    register={register}
+                    errors={errors}
+                    status={errors.point}
+                  />
+                }
+              />
+            )}
             <DescriptionContent
               span="12"
               label="설명"

@@ -15,6 +15,8 @@ const initialState: ResponseData = {
   findById: {},
   findByName: {},
 
+  pnList: {},
+  pnFindById: {},
   pnRegister: {},
   pnUpdate: {},
   setPnOpenStatus: {},
@@ -40,6 +42,14 @@ export function* masterVendorSaga() {
   yield takeLatest(
     masterVendorActions.findByName,
     createRequestSaga("masterVendor/findByName", vendorAPI.findByName)
+  );
+  yield takeLatest(
+    masterVendorActions.pnList,
+    createRequestSaga("masterVendor/pnList", vendorAPI.pnFindByVendorId)
+  );
+  yield takeLatest(
+    masterVendorActions.pnFindById,
+    createRequestSaga("masterVendor/pnFindById", vendorAPI.pnFindById)
   );
   yield takeLatest(
     masterVendorActions.pnRegister,
@@ -79,6 +89,14 @@ const masterVendor = createSlice({
     ...createAsyncReducers({
       actionName: "findById",
       reducerName: "findById",
+    })<any, DataForm, string>(),
+    ...createAsyncReducers({
+      actionName: "pnList",
+      reducerName: "pnList",
+    })<any, DataForm, string>(),
+    ...createAsyncReducers({
+      actionName: "pnFindById",
+      reducerName: "pnFindById",
     })<any, DataForm, string>(),
     ...createAsyncReducers({
       actionName: "pnRegister",

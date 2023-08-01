@@ -64,7 +64,7 @@ const PropertyDetail = ({
 
   useEffect(() => {
     setValue("property", data?.info.property);
-  }, []);
+  }, [propertyDetail]);
 
   return (
     <>
@@ -141,6 +141,7 @@ const PropertyDetail = ({
           <ErrorMsg>{checkPassword.message || propertyEdit.message}</ErrorMsg>
           <div>
             <Button
+              type="button"
               needMarginTop
               withInput
               onClick={() => navigate("/code/property")}

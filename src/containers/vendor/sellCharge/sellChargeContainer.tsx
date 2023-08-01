@@ -9,12 +9,12 @@ import { checkStatus } from "types/globalTypes";
 
 const SellChargeContainer = () => {
   const { sellChargeList, setOpenStatus } = useAppSelector((state) => ({
-    sellChargeList: state.masterVendor.findById,
+    sellChargeList: state.masterVendor.pnList,
     setOpenStatus: state.masterVendor.setPnOpenStatus,
   }));
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { vendorId } = useParams();
+  const { id } = useParams();
 
   const onSetStatus = (data: object) => {
     dispatch(masterVendorActions.setPnOpenStatus({ ...data }));
@@ -22,14 +22,14 @@ const SellChargeContainer = () => {
 
   useEffect(() => {
     if (checkStatus(setOpenStatus.status)) {
-      dispatch(masterVendorActions.findById(vendorId));
+      dispatch(masterVendorActions.findById(id));
     }
   }, [setOpenStatus]);
 
   useEffect(() => {
-    dispatch(masterVendorActions.findById(vendorId));
+    dispatch(masterVendorActions.pnList(id));
     return () => {
-      dispatch(masterVendorActions.reset("findById"));
+      dispatch(masterVendorActions.reset("pnList"));
     };
   }, []);
 
@@ -37,28 +37,28 @@ const SellChargeContainer = () => {
   const sellChargeColumns: ColumnsType[] = [
     {
       title: "품목명",
-      dataIndex: "info",
-      render: (info) => info.product.info.nameKr,
+      dataIndex: "productNumInfo",
+      render: (productNumInfo) => productNumInfo.product.info.nameKr,
     },
     {
       title: "판매 수수료",
-      dataIndex: "info",
-      render: (info) => info.masterCharge,
+      dataIndex: "productNumInfo",
+      render: (productNumInfo) => productNumInfo.masterCharge,
     },
     {
       title: "사용상태",
-      dataIndex: "info",
-      render: (info: any, contentList: any) => {
+      dataIndex: "productNumInfo",
+      render: (productNumInfo: any, contentList: any) => {
         const action = () => {
           onSetStatus({
-            vendorId,
-            id: contentList.id,
-            openStatus: info.openStatus == "OPEN" ? "close" : "open",
+            id,
+            vendorId: contentList.id,
+            openStatus: productNumInfo.openStatus == "OPEN" ? "close" : "open",
           });
         };
         return (
           <StyledToggle
-            data={info.openStatus}
+            data={productNumInfo.openStatus}
             openStatus="OPEN"
             action={action}
           />
@@ -69,13 +69,10 @@ const SellChargeContainer = () => {
 
   return (
     <SellChargeList
-      sellChargeList={
-        sellChargeList?.data?.info.bizInfo.info.basic.info.handleProductOwner
-          .info.productNums
-      }
+      sellChargeList={sellChargeList}
       sellChargeColumns={sellChargeColumns}
       navigate={navigate}
-      vendorId={vendorId}
+      vendorId={id}
     />
   );
 };

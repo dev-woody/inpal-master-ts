@@ -3,6 +3,7 @@ import {
   Button,
   Description,
   DescriptionContent,
+  ErrorMsg,
   Modal,
   Responsive,
   StyledForm,
@@ -21,6 +22,7 @@ const SellChargeEditBlock = styled(Responsive)``;
 
 type EditProps = {
   sellChargeDetail: response;
+  updateResult: response;
   onSubmit: (data: object) => void;
   navigate: NavigateFunction;
   vendorId: string | undefined;
@@ -35,6 +37,7 @@ const schema = yup.object({
 
 const SellChargeEdit = ({
   sellChargeDetail,
+  updateResult,
   onSubmit,
   navigate,
   vendorId,
@@ -56,7 +59,7 @@ const SellChargeEdit = ({
   const data = sellChargeDetail.data;
 
   useEffect(() => {
-    setValue("charge", data?.chargeRatio.replace(/\%/g, ""));
+    setValue("charge", data?.productNumInfo?.masterCharge);
   }, [sellChargeDetail]);
 
   return (
@@ -69,23 +72,11 @@ const SellChargeEdit = ({
         )}
       >
         <Description>
-          <DescriptionContent label="등록인" content={data?.masterUserId} />
-          <DescriptionContent label="품목명" content={data?.productName} />
           <DescriptionContent
-            label="등록일"
-            content={changeDays(data?.createdAt)}
+            label="품목명"
+            content={data?.productNumInfo?.product?.info?.nameKr}
           />
           <DescriptionContent
-            label="수정일"
-            content={changeDays(data?.updatedAt)}
-          />
-          <DescriptionContent
-            span="12"
-            label="판매사명"
-            content={data?.vendorName}
-          />
-          <DescriptionContent
-            span="12"
             label="판매 수수료"
             content={
               <StyledInput
@@ -98,16 +89,35 @@ const SellChargeEdit = ({
               />
             }
           />
+          <DescriptionContent
+            label="등록일"
+            content={changeDays(data?.base?.createdAt)}
+          />
+          <DescriptionContent
+            label="수정일"
+            content={changeDays(data?.base?.updatedAt)}
+          />
         </Description>
-        <Button
-          type="submit"
-          status="primary"
-          needMarginTop
-          disabled={isSubmitting}
-          withInput
-        >
-          확인
-        </Button>
+        <ErrorMsg>{updateResult.message}</ErrorMsg>
+        <div>
+          <Button
+            type="button"
+            needMarginTop
+            withInput
+            onClick={() => navigate(`/vendor/list/${vendorId}/sellFees`)}
+          >
+            뒤로가기
+          </Button>
+          <Button
+            type="submit"
+            status="primary"
+            needMarginTop
+            disabled={isSubmitting}
+            withInput
+          >
+            확인
+          </Button>
+        </div>
       </StyledForm>
       <Modal
         title="판매 수수료 수정"
@@ -115,11 +125,11 @@ const SellChargeEdit = ({
         submitMsg="확인"
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
-        action={() => {
-          if (typeof vendorId === "string") {
-            navigate(`/vendor/sellCharge/${vendorId}`);
-          }
-        }}
+        // action={() => {
+        //   if (typeof vendorId === "string") {
+        //     navigate(`/vendor/list/${vendorId}/sellFees`);
+        //   }
+        // }}
       />
     </SellChargeEditBlock>
   );

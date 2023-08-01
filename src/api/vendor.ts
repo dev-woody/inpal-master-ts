@@ -35,6 +35,18 @@ export const setBizStatus = async (data: object) => {
 };
 
 //* productNum
+export const pnFindByVendorId = async (id: string) => {
+  return accessClient
+    .get(`/master/biz/vendor/productNum/findAllByVendorId/${id}`)
+    .then((res) => res);
+};
+
+export const pnFindById = async (data: object) => {
+  return accessClient
+    .get(`/master/biz/vendor/productNum/findById`, { params: { ...data } })
+    .then((res) => res);
+};
+
 export const pnRegister = async (data: object) => {
   return accessClient
     .post(`/master/biz/vendor/productNum/add`, {}, { params: { ...data } })

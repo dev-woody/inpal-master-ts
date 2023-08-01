@@ -195,7 +195,7 @@ const ManufacturerBasicEdit = ({
                 }
                 label="password"
                 register={register}
-                errors={errors.password?.message}
+                errors={errors}
                 status={errors.password}
               />
             }

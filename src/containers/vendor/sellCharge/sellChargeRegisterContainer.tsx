@@ -16,10 +16,10 @@ const SellChargeRegisterContainer = () => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { vendorId } = useParams();
+  const { id } = useParams();
 
   const onSubmit = ({ data }: { data: any }) => {
-    dispatch(masterVendorActions.pnRegister({ vendorId, ...data }));
+    dispatch(masterVendorActions.pnRegister({ vendorId: id, ...data }));
   };
 
   useEffect(() => {
@@ -40,9 +40,10 @@ const SellChargeRegisterContainer = () => {
   return (
     <SellChargeAdd
       productList={productList}
+      registerResult={registerResult}
       onSubmit={onSubmit}
       navigate={navigate}
-      vendorId={vendorId}
+      vendorId={id}
       modalVisible={modalVisible}
       setModalVisible={setModalVisible}
     />

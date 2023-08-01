@@ -3,6 +3,7 @@ import {
   BreadCrumb,
   Description,
   DescriptionContent,
+  ErrorMsg,
   Modal,
   Responsive,
 } from "lib/styles";
@@ -18,7 +19,7 @@ import { response } from "types/globalTypes";
 const ColorEditBlock = styled(Responsive)``;
 
 type colorEditProps = {
-  editResult: boolean;
+  editResult: response;
   colorFindByName: response;
   onSubmit: <T>(data: T) => void;
   modalVisible: boolean;
@@ -116,8 +117,10 @@ const ColorEdit = ({
               }
             />
           </Description>
+          <ErrorMsg>{editResult.message}</ErrorMsg>
           <div>
             <Button
+              type="button"
               needMarginTop
               withInput
               onClick={() => navigate("/admin/color")}

@@ -12,19 +12,10 @@ const SellChargeIndexBlock = styled(Responsive)``;
 const SellChargeIndex = () => {
   return (
     <Fragment>
-      <SellChargeIndexBlock>
-        <PageHeader title="판매 수수료 관리" />
-      </SellChargeIndexBlock>
       <Routes>
-        <Route path="/:vendorId" element={<SellChargeContainer />} />
-        <Route
-          path="/:vendorId/register"
-          element={<SellChargeRegisterContainer />}
-        />
-        <Route
-          path="/:vendorId/detail/:id"
-          element={<SellChargeEditContainer />}
-        />
+        <Route path="/" element={<SellChargeContainer />} />
+        <Route path="/register" element={<SellChargeRegisterContainer />} />
+        <Route path="/detail/:sellId" element={<SellChargeEditContainer />} />
       </Routes>
     </Fragment>
   );

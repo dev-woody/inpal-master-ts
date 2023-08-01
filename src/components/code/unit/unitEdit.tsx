@@ -164,6 +164,7 @@ const UnitEdit = ({
           <ErrorMsg>{checkPassword.message || editResult.message}</ErrorMsg>
           <div>
             <Button
+              type="button"
               needMarginTop
               withInput
               onClick={() => navigate("/code/unit")}

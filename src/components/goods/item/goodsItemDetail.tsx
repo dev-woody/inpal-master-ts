@@ -94,6 +94,7 @@ const GoodsItemDetail = ({
           />
         </Description>
         <Button
+          type="button"
           needMarginTop
           withInput
           onClick={() => navigate(`/goods/group/${id}`)}

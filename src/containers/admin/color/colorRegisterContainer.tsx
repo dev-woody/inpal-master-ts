@@ -11,9 +11,15 @@ const ColorRegisterContainer = () => {
   }));
   const dispatch = useAppDispatch();
 
-  const onSubmit = (data: object) => {
+  const onSubmit = (data: any) => {
     console.log(data);
-    dispatch(masterColorActions.register({ ...data }));
+    dispatch(
+      masterColorActions.register({
+        disCountRate: Number(data.disCountRate),
+        expirationDays: Number(data.expirationDays),
+        ...data,
+      })
+    );
   };
 
   useEffect(() => {
