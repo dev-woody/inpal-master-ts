@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "reducers/reducerHooks";
 import VendorOrder from "components/vendor/order/vendorOrder";
-import { orderFindByVendorIdActions } from "reducers/vendor/order/findByVendorId";
+// import { orderFindByVendorIdActions } from "reducers/vendor/order/findByVendorId";
 
 const OrderListVendorContainer = () => {
-  const { orderList } = useAppSelector((state) => ({
-    orderList: state.orderFindByVendorId.data,
-  }));
+  // const { orderList } = useAppSelector((state) => ({
+  //   orderList: state.orderFindByVendorId.data,
+  // }));
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -23,7 +23,7 @@ const OrderListVendorContainer = () => {
   //   );
   // }, []);
 
-  return <VendorOrder orderList={orderList} />;
+  // return <VendorOrder orderList={orderList} />;
 };
 
 export default OrderListVendorContainer;

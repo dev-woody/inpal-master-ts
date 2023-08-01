@@ -15,7 +15,7 @@ const DealerOrderIndex = () => {
     <Routes>
       <Route path="/" element={<OrderContainer />} />
       <Route path="/:id/*" element={<OrderDetailContainer />} />
-      <Route path="/vendor/:id/*" element={<OrderVendorContainer />} />
+      {/* <Route path="/vendor/:id/*" element={<OrderVendorContainer />} /> */}
       <Route path="/orderByDealerId/:id/*" element={<OrderDealerContainer />} />
     </Routes>
   );

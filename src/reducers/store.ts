@@ -19,18 +19,9 @@ import masterGoodsGroup, { masterGoodsGroupSaga } from "./goods/goodsGroup";
 import masterGoodsItem, { masterGoodsItemSaga } from "./goods/goodsItem";
 
 //* vendor
-import vendorOrderFindAll, {
-  vendorOrderFindAllSaga,
-} from "./vendor/order/findAll";
 import paymentFindById, {
   paymentFindByIdSaga,
 } from "./vendor/payment/findById";
-import orderFindByVendorId, {
-  orderFindByVendorIdSaga,
-} from "./vendor/order/findByVendorId";
-import vendorOrderFindById, {
-  vendorOrderFindByIdSaga,
-} from "./vendor/order/findById";
 
 //* sellCharge
 import sellChargeFindByVId, {
@@ -95,10 +86,7 @@ function* rootSaga() {
     fork(masterGoodsGroupSaga),
     fork(masterGoodsItemSaga),
     //* vendor
-    fork(vendorOrderFindAllSaga),
     fork(paymentFindByIdSaga),
-    fork(orderFindByVendorIdSaga),
-    fork(vendorOrderFindByIdSaga),
     //* sellCharge
     fork(sellChargeFindByVIdSaga),
     fork(sellChargeFindByIdSaga),
@@ -138,10 +126,7 @@ const rootReducer = combineReducers({
   masterGoodsGroup: masterGoodsGroup.reducer,
   masterGoodsItem: masterGoodsItem.reducer,
   //* vendor
-  vendorOrderFindAll: vendorOrderFindAll.reducer,
   paymentFindById: paymentFindById.reducer,
-  orderFindByVendorId: orderFindByVendorId.reducer,
-  vendorOrderFindById: vendorOrderFindById.reducer,
   //* sellCharge
   sellChargeFindByVId: sellChargeFindByVId.reducer,
   sellChargeFindById: sellChargeFindById.reducer,

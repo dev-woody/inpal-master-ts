@@ -116,13 +116,11 @@ export const paymentFindById = async (vendorId: string, isDesc: boolean) => {
     .then((res) => res);
 };
 
-export const findAllByVendorId = async (vendorId: string, isDesc: boolean) => {
-  return accessClient
-    .get(`/master/construction/vendor/order/findAllByVendorId`, {
-      params: {
-        vendorId,
-        isDesc,
-      },
-    })
-    .then((res) => res);
+export const findAllByVendorId = async (id: string) => {
+  return (
+    accessClient
+      //! 조회하는 URL 없음
+      .get(`/master/biz/vendor/productNum/findAllByVendorId/${id}`)
+      .then((res) => res)
+  );
 };

@@ -35,10 +35,6 @@ const VendorDetail = ({
   navigate,
   id,
 }: detailProps) => {
-  //todo 판매자 등록 후 등록했다는 화면 이동
-  //todo 판매사 리듀서 수정해야함
-  // const { basic, registration, account, service, address } =
-  //   vendor?.info?.bizInfo;
   const basicInfo = vendor?.vendorInfo?.basicInfo;
   const productList = basicInfo?.sellProducts;
   const allProductList = () => {
@@ -265,15 +261,15 @@ const VendorDetail = ({
           /> */}
         </Description>
       </VendorDetailBlock>
-      <VendorDetailBlock>
+      {/* <VendorDetailBlock>
         <PageHeader title={`관리자 정보`} />
         <Table
           columns={vendorAdminListColumns}
-          content={vendor?.admins}
+          content={findAllByVendorId.data}
           doNoting
           pagenation
         />
-      </VendorDetailBlock>
+      </VendorDetailBlock> */}
     </Fragment>
   );
 };

@@ -382,38 +382,39 @@ export const vendorAllListColumns: ColumnsType[] = [
     dataIndex: "info",
     render: (info: any) => changeStatus(info.bizStatus),
   },
-  {
-    title: "판매대금 조회",
-    dataIndex: "base",
-    render: (base: any) => {
-      return (
-        <Link
-          to={`/vendor/payment/${base.id}`}
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-        >
-          <Button>조회</Button>
-        </Link>
-      );
-    },
-  },
-  {
-    title: "주문 조회",
-    dataIndex: "id",
-    render: (id: string) => {
-      return (
-        <Link
-          to={`/vendor/order/orderByVendorId/${id}`}
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-        >
-          <Button>조회</Button>
-        </Link>
-      );
-    },
-  },
+  //! 수정해야할 페이지
+  // {
+  //   title: "판매대금 조회",
+  //   dataIndex: "base",
+  //   render: (base: any) => {
+  //     return (
+  //       <Link
+  //         to={`/vendor/payment/${base.id}`}
+  //         onClick={(e) => {
+  //           e.stopPropagation();
+  //         }}
+  //       >
+  //         <Button>조회</Button>
+  //       </Link>
+  //     );
+  //   },
+  // },
+  // {
+  //   title: "주문 조회",
+  //   dataIndex: "id",
+  //   render: (id: string) => {
+  //     return (
+  //       <Link
+  //         to={`/vendor/order/orderByVendorId/${id}`}
+  //         onClick={(e) => {
+  //           e.stopPropagation();
+  //         }}
+  //       >
+  //         <Button>조회</Button>
+  //       </Link>
+  //     );
+  //   },
+  // },
 ];
 
 //* vendorAdminListColumns
