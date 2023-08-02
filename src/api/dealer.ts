@@ -1,36 +1,37 @@
 import { client, accessClient } from "./createAPI";
 
-export const register = (id: string) => {
-  return accessClient
-    .get(`/master/construction/dealer/register/${id}`)
+export const approve = async (id: string) => {
+  return await accessClient
+    .post(`/master/biz/dealer/approve/${id}`)
     .then((res) => res);
 };
 
-export const setDealerStatus = (dealerId: string, dealerStatus: string) => {
-  return accessClient
-    .get(`/master/construction/dealer/setDealerStatus`, {
-      params: {
-        dealerId,
-        dealerStatus,
-      },
-    })
+export const setBizStatus = async (data: object) => {
+  return await accessClient
+    .post(
+      `/master/biz/dealer/setBizStatus`,
+      {},
+      {
+        params: { ...data },
+      }
+    )
     .then((res) => res);
 };
 
-export const findAll = (reverse: boolean) => {
-  return client
-    .get(`/construction/common/dealer/findAll/false/${reverse}`)
+export const findAll = async (isDesc: boolean) => {
+  return await client
+    .get(`/store/biz/dealer/findAll/${isDesc}`)
     .then((res) => res);
 };
 
-export const findById = (id: string) => {
-  return client
-    .get(`/construction/common/dealer/findById/${id}`)
+export const findById = async (id: string) => {
+  return await client
+    .get(`/store/biz/dealer/findById/${id}`)
     .then((res) => res);
 };
 
-export const orderFindAll = (dealerId: string, isDesc: boolean) => {
-  return accessClient
+export const orderFindAll = async (dealerId: string, isDesc: boolean) => {
+  return await accessClient
     .get(`/master/construction/dealer/order/findAll`, {
       params: {
         dealerId,
@@ -40,8 +41,11 @@ export const orderFindAll = (dealerId: string, isDesc: boolean) => {
     .then((res) => res);
 };
 
-export const orderFindByDealerId = (dealerId: string, isDesc: boolean) => {
-  return accessClient
+export const orderFindByDealerId = async (
+  dealerId: string,
+  isDesc: boolean
+) => {
+  return await accessClient
     .get(`/master/construction/dealer/order/findAll`, {
       params: {
         dealerId,
@@ -51,6 +55,6 @@ export const orderFindByDealerId = (dealerId: string, isDesc: boolean) => {
     .then((res) => res);
 };
 
-export const orderFindById = (id: string) => {
-  return accessClient.get(``);
+export const orderFindById = async (id: string) => {
+  return await accessClient.get(``);
 };

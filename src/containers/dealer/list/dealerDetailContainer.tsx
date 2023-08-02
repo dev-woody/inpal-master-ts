@@ -2,49 +2,59 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "reducers/reducerHooks";
 import DealerDetail from "components/dealer/list/delaerDetail";
-import { setDealerStatusActions } from "reducers/dealer/setStatus";
-import { dealerRegisterActions } from "reducers/dealer/register";
-import { dealerFindByIdActions } from "reducers/dealer/findById";
-import { DataObj } from "types/globalTypes";
+// import { setDealerStatusActions } from "reducers/dealer/setStatus";
+// import { dealerRegisterActions } from "reducers/dealer/register";
+// import { dealerFindByIdActions } from "reducers/dealer/findById";
+import { masterDealerActions } from "reducers/dealer/masterDealer";
+import { checkStatus } from "types/globalTypes";
 
 const DealerDetailContainer = () => {
-  const { dealerRegister, setDealerStatus } = useAppSelector((state) => ({
-    dealerRegister: state.dealerRegister.success,
-    setDealerStatus: state.setDealerStatus.success,
-  }));
+  const { dealerInfo, dealerApprove, setBizStatus } = useAppSelector(
+    (state) => ({
+      dealerInfo: state.masterDealer.findById,
+      dealerApprove: state.masterDealer.approve,
+      setBizStatus: state.masterDealer.setBizStatus,
+    })
+  );
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const onRegister = () => {
-    dispatch(dealerRegisterActions.getRegister({ id: id }));
+  const onApprove = () => {
+    dispatch(masterDealerActions.approve(id));
   };
 
-  const onSubmit = (data: DataObj<string>) => {
+  const onSubmit = (data: any) => {
     dispatch(
-      setDealerStatusActions.getSetStatus({
+      masterDealerActions.setBizStatus({
         dealerId: id,
-        dealerStatus: data.dealerStatus,
+        status: data.bizStatus,
       })
     );
   };
 
   useEffect(() => {
-    if (dealerRegister || setDealerStatus) {
-      dispatch(dealerFindByIdActions.getFindById({ id }));
-      dispatch(dealerRegisterActions.reset({}));
-      dispatch(setDealerStatusActions.reset({}));
+    if (checkStatus(dealerApprove.status) || checkStatus(setBizStatus.status)) {
+      dispatch(masterDealerActions.findById(id));
+      dispatch(masterDealerActions.reset("approve"));
+      dispatch(masterDealerActions.reset("setBizStatus"));
     }
-  }, [dealerRegister, setDealerStatus]);
+  }, [dealerApprove, setBizStatus]);
 
   useEffect(() => {
-    dispatch(dealerFindByIdActions.getFindById({ id }));
+    dispatch(masterDealerActions.findById(id));
     return () => {
-      dispatch(dealerFindByIdActions.reset({}));
+      dispatch(masterDealerActions.reset("findById"));
     };
   }, []);
 
-  return <DealerDetail onSubmit={onSubmit} onRegister={onRegister} />;
+  return (
+    <DealerDetail
+      dealerInfo={dealerInfo}
+      onSubmit={onSubmit}
+      onApprove={onApprove}
+    />
+  );
 };
 
 export default DealerDetailContainer;

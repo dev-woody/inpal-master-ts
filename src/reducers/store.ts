@@ -17,6 +17,7 @@ import masterUnit, { masterUnitSaga } from "./product/masterUnit";
 import masterProperty, { masterPropertySaga } from "./product/masterProperty";
 import masterGoodsGroup, { masterGoodsGroupSaga } from "./goods/goodsGroup";
 import masterGoodsItem, { masterGoodsItemSaga } from "./goods/goodsItem";
+import masterDealer, { masterDealerSaga } from "./dealer/masterDealer";
 
 //* vendor
 import paymentFindById, {
@@ -50,13 +51,9 @@ import minPointRegister, {
 import minPointUpdate, { minPointUpdateSaga } from "./vendor/minPoint/update";
 
 //* dealer
-import dealerFindAll, { dealerFindAllSaga } from "./dealer/findAll";
 import dealerOrderFindAll, {
   dealerOrderFindAllSaga,
 } from "./dealer/order/findAll";
-import setDealerStatus, { setDealerStatusSaga } from "./dealer/setStatus";
-import dealerRegister, { dealerRegisterSaga } from "./dealer/register";
-import dealerFindById, { dealerFindByIdSaga } from "./dealer/findById";
 import orderFindByDealerId, {
   orderFindByDealerIdSaga,
 } from "./dealer/order/findByDealerId";
@@ -85,6 +82,7 @@ function* rootSaga() {
     fork(masterPropertySaga),
     fork(masterGoodsGroupSaga),
     fork(masterGoodsItemSaga),
+    fork(masterDealerSaga),
     //* vendor
     fork(paymentFindByIdSaga),
     //* sellCharge
@@ -98,11 +96,7 @@ function* rootSaga() {
     fork(minPointRegisterSaga),
     fork(minPointUpdateSaga),
     //* dealer
-    fork(dealerFindAllSaga),
     fork(dealerOrderFindAllSaga),
-    fork(setDealerStatusSaga),
-    fork(dealerRegisterSaga),
-    fork(dealerFindByIdSaga),
     fork(orderFindByDealerIdSaga),
     fork(dealerOrderFindByIdSaga),
     //* goods
@@ -125,6 +119,7 @@ const rootReducer = combineReducers({
   masterProperty: masterProperty.reducer,
   masterGoodsGroup: masterGoodsGroup.reducer,
   masterGoodsItem: masterGoodsItem.reducer,
+  masterDealer: masterDealer.reducer,
   //* vendor
   paymentFindById: paymentFindById.reducer,
   //* sellCharge
@@ -138,11 +133,7 @@ const rootReducer = combineReducers({
   minPointRegister: minPointRegister.reducer,
   minPointUpdate: minPointUpdate.reducer,
   //* dealer
-  dealerFindAll: dealerFindAll.reducer,
   dealerOrderFindAll: dealerOrderFindAll.reducer,
-  setDealerStatus: setDealerStatus.reducer,
-  dealerRegister: dealerRegister.reducer,
-  dealerFindById: dealerFindById.reducer,
   orderFindByDealerId: orderFindByDealerId.reducer,
   dealerOrderFindById: dealerOrderFindById.reducer,
   //* goods

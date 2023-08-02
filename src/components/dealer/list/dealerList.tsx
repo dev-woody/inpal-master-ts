@@ -3,11 +3,15 @@ import styled from "styled-components";
 import { Table } from "lib/styles/tableStyle";
 import { dealerAllListColumns } from "lib/columns/columnsList";
 import PageHeader from "lib/pages/pageHeader";
-import { testDealerData } from "types/data.test";
+import { response } from "types/globalTypes";
 
 const DealerListBlock = styled(Responsive)``;
 
-const DealerList = ({ dealerInfo }: { dealerInfo: any }) => {
+type DealerProps = {
+  dealerList: response;
+};
+
+const DealerList = ({ dealerList }: DealerProps) => {
   return (
     <>
       <DealerListBlock>
@@ -27,25 +31,25 @@ const DealerList = ({ dealerInfo }: { dealerInfo: any }) => {
       <DealerListBlock>
         <Table
           columns={dealerAllListColumns}
-          content={testDealerData}
+          content={dealerList.data}
           url="/dealer/list"
-          moveKey="id"
+          moveKey={["base", "id"]}
           pagenation
-          filter
-          filterInput={
-            <>
-              <StyledSelect
-                placeholder="대표 품목별"
-                optionList={[]}
-                actions={function () {}}
-              />
-              <StyledSelect
-                placeholder="누적 금액별"
-                optionList={[]}
-                actions={function () {}}
-              />
-            </>
-          }
+          // filter
+          // filterInput={
+          //   <>
+          //     <StyledSelect
+          //       placeholder="대표 품목별"
+          //       optionList={[]}
+          //       actions={function () {}}
+          //     />
+          //     <StyledSelect
+          //       placeholder="누적 금액별"
+          //       optionList={[]}
+          //       actions={function () {}}
+          //     />
+          //   </>
+          // }
         />
       </DealerListBlock>
     </>

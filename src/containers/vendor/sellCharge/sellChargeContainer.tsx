@@ -8,9 +8,10 @@ import { masterVendorActions } from "reducers/vendor/masterVendor";
 import { checkStatus } from "types/globalTypes";
 
 const SellChargeContainer = () => {
-  const { sellChargeList, setOpenStatus } = useAppSelector((state) => ({
-    sellChargeList: state.masterVendor.pnList,
-    setOpenStatus: state.masterVendor.setPnOpenStatus,
+  const { user, sellChargeList, setOpenStatus } = useAppSelector((store) => ({
+    user: store.user,
+    sellChargeList: store.masterVendor.pnList,
+    setOpenStatus: store.masterVendor.setPnOpenStatus,
   }));
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ const SellChargeContainer = () => {
   useEffect(() => {
     if (checkStatus(setOpenStatus.status)) {
       dispatch(masterVendorActions.findById(id));
+      dispatch(masterVendorActions.pnList(id));
     }
   }, [setOpenStatus]);
 
@@ -50,9 +52,10 @@ const SellChargeContainer = () => {
       dataIndex: "productNumInfo",
       render: (productNumInfo: any, contentList: any) => {
         const action = () => {
+          console.log(contentList);
           onSetStatus({
-            id,
-            vendorId: contentList.id,
+            id: contentList.base.id,
+            vendorId: id,
             openStatus: productNumInfo.openStatus == "OPEN" ? "close" : "open",
           });
         };

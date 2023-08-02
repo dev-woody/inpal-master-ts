@@ -17,16 +17,12 @@ yarn start
 
 ## 패치노트
 
-### `07.28 Update`
+### `08.02 Update`
 
-### 1. goods add
+### 1. add dealer page
 
-상품 조회 추가
+클라이언트 관리 페이지 추가
 
-### 2. productNum add
-
-판매사 판매 수수료 조정 추가
-
-### 3. etc bug fix
+### .etc
 
 기타 버그 수정

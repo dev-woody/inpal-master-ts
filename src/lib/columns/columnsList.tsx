@@ -154,7 +154,6 @@ export const sidebarList: sideListType[] = [
         icon: <FaHardHat />,
         menuName: "시공업자 조회",
         url: "/list",
-        disable: true,
       },
       {
         icon: <FaReceipt />,
@@ -453,15 +452,18 @@ export const vendorAdminListColumns: ColumnsType[] = [
 export const dealerAllListColumns: ColumnsType[] = [
   {
     title: "코드",
-    dataIndex: "code",
+    dataIndex: "info",
+    render: (info) => (info.code === null ? "미승인" : info.code),
   },
   {
     title: "사업자명",
-    dataIndex: "name",
+    dataIndex: "info",
+    render: (info) => info.bizInfo.info.basic.info.name,
   },
   {
     title: "대표품목",
-    dataIndex: "headProduct",
+    dataIndex: "info",
+    render: (info) => info.bizInfo.info.basic.info.headProduct.info.nameKr,
   },
   {
     title: "보유 포인트",
@@ -471,37 +473,37 @@ export const dealerAllListColumns: ColumnsType[] = [
   },
   {
     title: "생성일",
-    dataIndex: "createdAt",
+    dataIndex: "base",
     isDesc: true,
-    render: (createdAt: string) => changeDays(createdAt),
+    render: (base) => changeDays(base.createdAt),
   },
   {
     title: "수정일",
-    dataIndex: "updatedAt",
+    dataIndex: "base",
     isDesc: true,
-    render: (updatedAt: string) => changeDays(updatedAt),
+    render: (base) => changeDays(base.updatedAt),
   },
   {
     title: "상태",
-    dataIndex: "dealerStatus",
-    render: (dealerStatus: string) => changeStatus(dealerStatus),
+    dataIndex: "info",
+    render: (info) => changeStatus(info.bizStatus),
   },
-  {
-    title: "주문 조회",
-    dataIndex: "id",
-    render: (id: string) => {
-      return (
-        <Link
-          to={`/dealer/order/orderByDealerId/${id}`}
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-        >
-          <Button>조회</Button>
-        </Link>
-      );
-    },
-  },
+  // {
+  //   title: "주문 조회",
+  //   dataIndex: "id",
+  //   render: (id: string) => {
+  //     return (
+  //       <Link
+  //         to={`/dealer/order/orderByDealerId/${id}`}
+  //         onClick={(e) => {
+  //           e.stopPropagation();
+  //         }}
+  //       >
+  //         <Button>조회</Button>
+  //       </Link>
+  //     );
+  //   },
+  // },
 ];
 
 //* vendorOrderColumns

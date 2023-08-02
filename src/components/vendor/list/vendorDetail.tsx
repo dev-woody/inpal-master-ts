@@ -170,7 +170,11 @@ const VendorDetail = ({
         <Description>
           <DescriptionContent
             label="취급품목"
-            content={vendor?.info?.bizInfo.info.basic.info.name}
+            content={vendor?.info?.bizInfo.info.basic.info.handleProductOwner.info.productNums.map(
+              (item: any) => {
+                return item.info.product.info.nameKr + " ";
+              }
+            )}
           />
         </Description>
         <div style={{ marginTop: "1rem" }} />
