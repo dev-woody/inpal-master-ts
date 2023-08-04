@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "reducers/reducerHooks";
 import { masterVendorActions } from "reducers/vendor/masterVendor";
 import VendorList from "components/vendor/list/vendorList";
+import { useParams } from "react-router-dom";
 
 const VendorContainer = () => {
   const { vendorList } = useAppSelector((state) => ({

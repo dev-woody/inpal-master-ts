@@ -21,6 +21,10 @@ const initialState: ResponseData = {
   pnRegister: {},
   pnUpdate: {},
   setPnOpenStatus: {},
+
+  orderLog: {},
+  orderFindById: {},
+  orderItemFindByVendorId: {},
 };
 
 export function* masterVendorSaga() {
@@ -70,6 +74,21 @@ export function* masterVendorSaga() {
   yield takeLatest(
     masterVendorActions.setPnOpenStatus,
     createRequestSaga("masterVendor/setPnOpenStatus", vendorAPI.setPnOpenStatus)
+  );
+  yield takeLatest(
+    masterVendorActions.orderLog,
+    createRequestSaga("masterVendor/orderLog", vendorAPI.orderLogFindByItemId)
+  );
+  yield takeLatest(
+    masterVendorActions.orderFindById,
+    createRequestSaga("masterVendor/orderFindById", vendorAPI.orderFindById)
+  );
+  yield takeLatest(
+    masterVendorActions.orderItemFindByVendorId,
+    createRequestSaga(
+      "masterVendor/orderItemFindByVendorId",
+      vendorAPI.orderItemFindByVendorId
+    )
   );
 }
 
@@ -121,6 +140,18 @@ const masterVendor = createSlice({
     ...createAsyncReducers({
       actionName: "setPnOpenStatus",
       reducerName: "setPnOpenStatus",
+    })<any, DataForm, string>(),
+    ...createAsyncReducers({
+      actionName: "orderLog",
+      reducerName: "orderLog",
+    })<any, DataForm, string>(),
+    ...createAsyncReducers({
+      actionName: "orderFindById",
+      reducerName: "orderFindById",
+    })<any, DataForm, string>(),
+    ...createAsyncReducers({
+      actionName: "orderItemFindByVendorId",
+      reducerName: "orderItemFindByVendorId",
     })<any, DataForm, string>(),
     ...createSingleReducers({
       actionName: "reset",

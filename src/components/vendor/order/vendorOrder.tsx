@@ -3,11 +3,16 @@ import styled from "styled-components";
 import { Table } from "lib/styles/tableStyle";
 import { vendorOrderColumns } from "lib/columns/columnsList";
 import PageHeader from "lib/pages/pageHeader";
-import { testVendorOrderData } from "types/data.test";
+import { response } from "types/globalTypes";
 
 const VendorOrderBlock = styled(Responsive)``;
 
-const VendorOrder = ({ orderList }: { orderList: any }) => {
+type VendorOrderType = {
+  orderList: response;
+  id: string | undefined;
+};
+
+const VendorOrder = ({ orderList, id }: VendorOrderType) => {
   return (
     <>
       <VendorOrderBlock>
@@ -31,18 +36,18 @@ const VendorOrder = ({ orderList }: { orderList: any }) => {
       <VendorOrderBlock>
         <Table
           columns={vendorOrderColumns}
-          content={testVendorOrderData}
-          url="/vendor/order"
-          moveKey="id"
+          content={orderList.data}
+          url={`/vendor/list/order/${id}`}
+          moveKey={["base", "id"]}
           pagenation
-          filter
-          filterInput={
-            <StyledSelect
-              placeholder="주문 상태별"
-              optionList={[]}
-              actions={function () {}}
-            />
-          }
+          // filter
+          // filterInput={
+          //   <StyledSelect
+          //     placeholder="주문 상태별"
+          //     optionList={[]}
+          //     actions={function () {}}
+          //   />
+          // }
         />
       </VendorOrderBlock>
     </>

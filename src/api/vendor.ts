@@ -75,17 +75,37 @@ export const setPnOpenStatus = async (data: object) => {
 
 //* order
 
+export const orderFindById = async (id: string) => {
+  return accessClient
+    .get(`/master/order/item/findById/${id}`)
+    .then((res) => res);
+};
+
+export const orderItemFindByVendorId = async (data: object) => {
+  return accessClient
+    .get(`/master/order/item/findByVendorId`, { params: { ...data } })
+    .then((res) => res);
+};
+
+export const orderLogFindByItemId = async (data: object) => {
+  return accessClient
+    .get(`/master/order/status/findByItemId`, {
+      params: { ...data },
+    })
+    .then((res) => res);
+};
+
 export const orderFindAll = async (isDesc: boolean) => {
   return accessClient
     .get(`/master/construction/vendor/order/findAll/${isDesc}`)
     .then((res) => res);
 };
 
-export const orderFindById = async (id: string) => {
-  return accessClient
-    .get(`/master/construction/vendor/order/findById/${id}`)
-    .then((res) => res);
-};
+// export const orderFindById = async (id: string) => {
+//   return accessClient
+//     .get(`/master/construction/vendor/order/findById/${id}`)
+//     .then((res) => res);
+// };
 
 //* payment
 

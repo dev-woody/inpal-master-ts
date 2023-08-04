@@ -26,6 +26,7 @@ import {
   FaReceipt,
   FaHardHat,
   FaPaintRoller,
+  FaBook,
 } from "react-icons/fa";
 
 type sideListType = {
@@ -66,6 +67,11 @@ export const sidebarList: sideListType[] = [
         icon: <FaTicketAlt />,
         menuName: "쿠폰",
         url: "/cupon",
+      },
+      {
+        icon: <FaBook />,
+        menuName: "약관관리",
+        url: "/terms",
       },
       {
         icon: <FaClipboard />,
@@ -142,7 +148,6 @@ export const sidebarList: sideListType[] = [
         icon: <FaReceipt />,
         menuName: "주문 조회",
         url: "/order",
-        disable: true,
       },
     ],
   },
@@ -381,39 +386,29 @@ export const vendorAllListColumns: ColumnsType[] = [
     dataIndex: "info",
     render: (info: any) => changeStatus(info.bizStatus),
   },
-  //! 수정해야할 페이지
-  // {
-  //   title: "판매대금 조회",
-  //   dataIndex: "base",
-  //   render: (base: any) => {
-  //     return (
-  //       <Link
-  //         to={`/vendor/payment/${base.id}`}
-  //         onClick={(e) => {
-  //           e.stopPropagation();
-  //         }}
-  //       >
-  //         <Button>조회</Button>
-  //       </Link>
-  //     );
-  //   },
-  // },
-  // {
-  //   title: "주문 조회",
-  //   dataIndex: "id",
-  //   render: (id: string) => {
-  //     return (
-  //       <Link
-  //         to={`/vendor/order/orderByVendorId/${id}`}
-  //         onClick={(e) => {
-  //           e.stopPropagation();
-  //         }}
-  //       >
-  //         <Button>조회</Button>
-  //       </Link>
-  //     );
-  //   },
-  // },
+];
+
+export const vendorOrderLogColumns: ColumnsType[] = [
+  {
+    title: "상태",
+    dataIndex: "info",
+    render: (info) => changeDeliveryStatus(info.status),
+  },
+  {
+    title: "관리자",
+    dataIndex: "info",
+    render: (info) => info.userId,
+  },
+  {
+    title: "메모",
+    dataIndex: "info",
+    render: (info) => (info.description ? info.description : "-"),
+  },
+  {
+    title: "수정일",
+    dataIndex: "base",
+    render: (base) => changeDays(base.updatedAt),
+  },
 ];
 
 //* vendorAdminListColumns
@@ -507,42 +502,46 @@ export const dealerAllListColumns: ColumnsType[] = [
 ];
 
 //* vendorOrderColumns
-export const vendorOrderColumns = [
+export const vendorOrderColumns: ColumnsType[] = [
   {
-    title: "코드",
-    dataIndex: "code",
+    title: "구매자명",
+    dataIndex: "info",
+    render: (info) => info.clientInfo.clientName,
   },
   {
-    title: "주문시간",
-    dataIndex: "paymentAt",
-    render: (paymentAt: string) => changeDays(paymentAt),
+    title: "주문자명",
+    dataIndex: "info",
+    render: (info) => info.address.info.application,
   },
   {
-    title: "생성일",
-    dataIndex: "createdAt",
-    isDesc: true,
-    render: (createdAt: string) => changeDays(createdAt),
+    title: "주문자 연락처",
+    dataIndex: "info",
+    render: (info) => info.address.info.mobile,
   },
   {
-    title: "수정일",
-    dataIndex: "updatedAt",
-    isDesc: true,
-    render: (updatedAt: string) => changeDays(updatedAt),
+    title: "모델명",
+    dataIndex: "info",
+    render: (info) => info.item.info.basic.info.model,
+  },
+  {
+    title: "상품명",
+    dataIndex: "info",
+    render: (info) => info.item.info.basic.info.name,
+  },
+  {
+    title: "주문수량",
+    dataIndex: "info",
+    render: (info) => info.count + "개",
   },
   {
     title: "주문금액",
-    dataIndex: "dealerOrderItem",
-    isDesc: true,
-    render: (dealerOrderItem: any) => dealerOrderItem?.countedTotalPrice + "원",
-  },
-  {
-    title: "송장번호",
-    dataIndex: "deliveryNum",
+    dataIndex: "info",
+    render: (info) => info.payTotal + "원",
   },
   {
     title: "주문상태",
-    dataIndex: "orderStatus",
-    render: (orderStatus: string) => changeDeliveryStatus(orderStatus),
+    dataIndex: "info",
+    render: (info) => changeDeliveryStatus(info.orderStatus),
   },
 ];
 

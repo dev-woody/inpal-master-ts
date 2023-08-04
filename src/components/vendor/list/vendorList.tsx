@@ -7,7 +7,11 @@ import { response } from "types/globalTypes";
 
 const VendorBlockList = styled(Responsive)``;
 
-const VendorList = ({ vendorList }: { vendorList: response }) => {
+type VendorListType = {
+  vendorList: response;
+};
+
+const VendorList = ({ vendorList }: VendorListType) => {
   return (
     <>
       <VendorBlockList>

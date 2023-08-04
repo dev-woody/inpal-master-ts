@@ -17,11 +17,15 @@ yarn start
 
 ## 패치노트
 
-### `08.02 Update`
+### `08.04 Update`
 
-### 1. add dealer page
+### 1. terms page
 
-클라이언트 관리 페이지 추가
+약관 페이지 추가
+
+### 2. vendor order page
+
+판매사 주문조회 추가
 
 ### .etc
 

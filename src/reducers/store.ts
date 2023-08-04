@@ -8,6 +8,7 @@ import masterAdmin, { masterAdminSaga } from "./admin/masterAdmin";
 import masterVendor, { masterVendorSaga } from "./vendor/masterVendor";
 import masterColor, { masterColorSaga } from "./admin/masterColor";
 import masterCupon, { masterCuponSaga } from "./admin/masterCupon";
+import masterTerms, { masterTermsSaga } from "./admin/masterTerms";
 import masterProduct, { masterProductSaga } from "./product/masterProduct";
 import masterManufacturer, {
   masterManufacturerSaga,
@@ -75,6 +76,7 @@ function* rootSaga() {
     fork(masterVendorSaga),
     fork(masterColorSaga),
     fork(masterCuponSaga),
+    fork(masterTermsSaga),
     fork(masterProductSaga),
     fork(masterManufacturerSaga),
     fork(masterCategorySaga),
@@ -112,6 +114,7 @@ const rootReducer = combineReducers({
   masterVendor: masterVendor.reducer,
   masterColor: masterColor.reducer,
   masterCupon: masterCupon.reducer,
+  masterTerms: masterTerms.reducer,
   masterProduct: masterProduct.reducer,
   masterManufacturer: masterManufacturer.reducer,
   masterCategory: masterCategory.reducer,

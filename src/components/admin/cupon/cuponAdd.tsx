@@ -229,7 +229,7 @@ const CuponAdd = ({
             withInput
             disabled={isSubmitting}
           >
-            색상 등록
+            쿠폰 등록
           </Button>
         </StyledForm>
         <Modal

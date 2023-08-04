@@ -80,7 +80,7 @@ const VendorDetail = ({
               content={vendor?.info.code ? vendor?.info.code : "미발급"}
             />
             <DescriptionContent
-              label="이름"
+              label="기업명"
               content={vendor?.info.bizInfo.info.basic.info.name}
             />
             <DescriptionContent
@@ -106,20 +106,20 @@ const VendorDetail = ({
                 </Button>
               }
             />
-            {/* <DescriptionContent
-              label="최소 적립금 관리"
+            <DescriptionContent
+              label="주문 관리"
               content={
                 <Button
                   onClick={() => {
                     if (typeof id === "string") {
-                      navigate(`/vendor/minPoint/${id}`);
+                      navigate(`/vendor/list/order/${id}`);
                     }
                   }}
                 >
                   상세보기
                 </Button>
               }
-            /> */}
+            />
             <DescriptionContent
               label="권한"
               content={

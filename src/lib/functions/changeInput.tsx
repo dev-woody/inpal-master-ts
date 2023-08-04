@@ -55,10 +55,8 @@ export function changeOpenStatus(status: string | undefined) {
 
 export function changeDeliveryStatus(status: string | undefined) {
   switch (status) {
-    case "ORDER_READY":
-      return "주문대기";
-    case "ORDER_REGISTER":
-      return "주문등록";
+    case "CART":
+      return "카트";
     case "PAYMENT_WAIT":
       return "입금대기";
     case "PAYMENT_COMPLETE":

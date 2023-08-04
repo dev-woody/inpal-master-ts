@@ -12,8 +12,9 @@ const VendorOrderIndexBlock = styled(Responsive)``;
 const VendorOrderIndex = () => {
   return (
     <Routes>
-      {/* <Route path="/" element={<OrderListContainer />} />
-      <Route path="/:id/*" element={<OrderVendorDetailContainer />} />
+      <Route path="/" element={<OrderListContainer />} />
+      <Route path="/:orderId/*" element={<OrderVendorDetailContainer />} />
+      {/*
       <Route
         path="/orderByVendorId/:id/*"
         element={<OrderListVendorContainer />}
