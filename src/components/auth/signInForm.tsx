@@ -19,6 +19,7 @@ import { BiUser, BiLock } from "react-icons/bi";
 import { ResponseData } from "reducers/createAsyncReducers";
 import { Link } from "react-router-dom";
 import { ErrorMessage } from "@hookform/error-message";
+import { regexId, regexPasswd } from "lib/functions/changeInput";
 
 const SignInBlock = styled.div`
   width: 100%;
@@ -44,8 +45,14 @@ type SignInProps = {
 };
 
 const schema = yup.object({
-  userId: yup.string().required("아이디를 입력해주세요."),
-  password: yup.string().required("비밀번호를 입력해주세요."),
+  userId: yup
+    .string()
+    .matches(regexId, "소문자 하나 숫자 하나 이상 입력해주세요.")
+    .required("아이디를 입력해주세요."),
+  password: yup
+    .string()
+    .matches(regexPasswd, "대소문자, 숫자, 특수문자를 하나씩 포함해야합니다.")
+    .required("비밀번호를 입력해주세요."),
 });
 
 const SignInForm = ({ isSignIn, onSubmit }: SignInProps) => {
@@ -62,35 +69,6 @@ const SignInForm = ({ isSignIn, onSubmit }: SignInProps) => {
       password: "",
     },
   });
-
-  // useEffect(() => {
-  //   switch (isSignIn.message) {
-  //     case "사용자 아이디가 존재하지 않습니다. 로그인을 확인하세요.":
-  //       setError(
-  //         "userId",
-  //         { type: "focus", message: "존재하지않는 아이디입니다." },
-  //         { shouldFocus: true }
-  //       );
-  //       break;
-  //     case "관리자 비밀번호가 다릅니다.\n비밀번호를 확인해 주세요.!":
-  //       setError(
-  //         "password",
-  //         { type: "focus", message: "잘못된 비밀번호입니다." },
-  //         { shouldFocus: true }
-  //       );
-  //       break;
-  //     case "사용자 비밀번호는 대문자가 최소 1개 존재 해야 합니다.!":
-  //       setError(
-  //         "password",
-  //         {
-  //           type: "focus",
-  //           message: "비밀번호는 대문자가 최소 1개 존재 해야 합니다.",
-  //         },
-  //         { shouldFocus: true }
-  //       );
-  //       break;
-  //   }
-  // }, [isSignIn, errors]);
 
   return (
     <SignInBlock>

@@ -33,7 +33,13 @@ type MasterProps = {
 const ManagerMasterDetailBlock = styled(Responsive)``;
 
 const schema = yup.object({
-  email: yup.string().required("이메일을 입력해주세요."),
+  email: yup
+    .string()
+    .matches(
+      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i,
+      "이메일 형식에 맞지않습니다."
+    )
+    .required("이메일을 입력해주세요."),
   phone: yup.string().required("전화번호를 입력해주세요."),
 });
 
