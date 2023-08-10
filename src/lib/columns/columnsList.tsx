@@ -44,7 +44,11 @@ export type ColumnsType = {
   title: string;
   dataIndex: string;
   isDesc?: boolean;
-  render?: (data: any, list?: any) => JSX.Element | string | undefined;
+  render?: (
+    data: any,
+    list?: any,
+    index?: number
+  ) => JSX.Element | string | number | undefined;
 };
 
 //* sidebarList
@@ -148,6 +152,7 @@ export const sidebarList: sideListType[] = [
         icon: <FaReceipt />,
         menuName: "주문 조회",
         url: "/order",
+        disable: true,
       },
     ],
   },
@@ -223,6 +228,11 @@ export const masterAllListColumns = [
 //* colorColumns
 export const colorColumns: ColumnsType[] = [
   {
+    title: "번호",
+    dataIndex: "",
+    render: (_, __, index) => index,
+  },
+  {
     title: "색상",
     dataIndex: "info",
     render: (info: any) => {
@@ -258,6 +268,11 @@ export const colorColumns: ColumnsType[] = [
 
 export const categoryListColumns: ColumnsType[] = [
   {
+    title: "번호",
+    dataIndex: "",
+    render: (_, __, index) => index,
+  },
+  {
     title: "코드",
     dataIndex: "code",
   },
@@ -268,6 +283,11 @@ export const categoryListColumns: ColumnsType[] = [
 ];
 
 export const optionColumns: ColumnsType[] = [
+  {
+    title: "번호",
+    dataIndex: "",
+    render: (_, __, index) => index,
+  },
   {
     title: "이름",
     dataIndex: "name",
@@ -303,6 +323,11 @@ export const optionColumns: ColumnsType[] = [
 ];
 
 export const itemColumns: ColumnsType[] = [
+  {
+    title: "번호",
+    dataIndex: "",
+    render: (_, __, index) => index,
+  },
   {
     title: "코드",
     dataIndex: "info",
@@ -352,6 +377,11 @@ export const itemColumns: ColumnsType[] = [
 //* vendorAllListColumns
 export const vendorAllListColumns: ColumnsType[] = [
   {
+    title: "번호",
+    dataIndex: "",
+    render: (_, __, index) => index,
+  },
+  {
     title: "코드",
     dataIndex: "info",
     render: (info: any) => {
@@ -390,6 +420,11 @@ export const vendorAllListColumns: ColumnsType[] = [
 
 export const vendorOrderLogColumns: ColumnsType[] = [
   {
+    title: "번호",
+    dataIndex: "",
+    render: (_, __, index) => index,
+  },
+  {
     title: "상태",
     dataIndex: "info",
     render: (info) => changeDeliveryStatus(info.status),
@@ -413,6 +448,11 @@ export const vendorOrderLogColumns: ColumnsType[] = [
 
 //* vendorAdminListColumns
 export const vendorAdminListColumns: ColumnsType[] = [
+  {
+    title: "번호",
+    dataIndex: "",
+    render: (_, __, index) => index,
+  },
   {
     title: "아이디",
     dataIndex: "userId",
@@ -445,6 +485,11 @@ export const vendorAdminListColumns: ColumnsType[] = [
 
 //* dealerAllListColumns
 export const dealerAllListColumns: ColumnsType[] = [
+  {
+    title: "번호",
+    dataIndex: "",
+    render: (_, __, index) => index,
+  },
   {
     title: "코드",
     dataIndex: "info",
@@ -504,6 +549,11 @@ export const dealerAllListColumns: ColumnsType[] = [
 //* vendorOrderColumns
 export const vendorOrderColumns: ColumnsType[] = [
   {
+    title: "번호",
+    dataIndex: "",
+    render: (_, __, index) => index,
+  },
+  {
     title: "구매자명",
     dataIndex: "info",
     render: (info) => info.clientInfo.clientName,
@@ -547,6 +597,11 @@ export const vendorOrderColumns: ColumnsType[] = [
 
 //* vendorPaymentColumns
 export const vendorPaymentColumns: ColumnsType[] = [
+  {
+    title: "번호",
+    dataIndex: "",
+    render: (_, __, index) => index,
+  },
   {
     title: "코드",
     dataIndex: "code",
@@ -640,6 +695,11 @@ export const minPointColumns = [
 ];
 
 export const dealerOrderDetailColumns: ColumnsType[] = [
+  {
+    title: "번호",
+    dataIndex: "",
+    render: (_, __, index) => index,
+  },
   {
     title: "코드",
     dataIndex: "code",

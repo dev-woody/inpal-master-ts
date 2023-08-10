@@ -8,6 +8,7 @@ const GoodDetailContainer = () => {
   const { groupDetail } = useAppSelector((state) => ({
     groupDetail: state.masterGoodsGroup.findById,
   }));
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { id } = useParams();
 
@@ -18,7 +19,7 @@ const GoodDetailContainer = () => {
     };
   }, []);
 
-  return <GoodsGroupDetail groupDetail={groupDetail} />;
+  return <GoodsGroupDetail groupDetail={groupDetail} navigate={navigate} />;
 };
 
 export default GoodDetailContainer;

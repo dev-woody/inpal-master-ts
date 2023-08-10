@@ -18,6 +18,9 @@ import masterUnit, { masterUnitSaga } from "./product/masterUnit";
 import masterProperty, { masterPropertySaga } from "./product/masterProperty";
 import masterGoodsGroup, { masterGoodsGroupSaga } from "./goods/goodsGroup";
 import masterGoodsItem, { masterGoodsItemSaga } from "./goods/goodsItem";
+import masterGoodsEvaluation, {
+  masterGoodsEvaluationSaga,
+} from "./goods/goodsEvaluation";
 import masterDealer, { masterDealerSaga } from "./dealer/masterDealer";
 
 //* vendor
@@ -84,6 +87,7 @@ function* rootSaga() {
     fork(masterPropertySaga),
     fork(masterGoodsGroupSaga),
     fork(masterGoodsItemSaga),
+    fork(masterGoodsEvaluationSaga),
     fork(masterDealerSaga),
     //* vendor
     fork(paymentFindByIdSaga),
@@ -121,7 +125,9 @@ const rootReducer = combineReducers({
   masterUnit: masterUnit.reducer,
   masterProperty: masterProperty.reducer,
   masterGoodsGroup: masterGoodsGroup.reducer,
+  masterGoodsEvaluation: masterGoodsEvaluation.reducer,
   masterGoodsItem: masterGoodsItem.reducer,
+
   masterDealer: masterDealer.reducer,
   //* vendor
   paymentFindById: paymentFindById.reducer,

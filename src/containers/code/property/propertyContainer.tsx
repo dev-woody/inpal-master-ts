@@ -30,6 +30,11 @@ const PropertyContainer = () => {
 
   const propertyListColumns: ColumnsType[] = [
     {
+      title: "번호",
+      dataIndex: "",
+      render: (_, __, index) => index,
+    },
+    {
       title: "속성명",
       dataIndex: "info",
       render: (info) => info.property,

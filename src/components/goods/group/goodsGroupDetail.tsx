@@ -7,14 +7,16 @@ import { useForm } from "react-hook-form";
 import { changeDays, changeOpenStatus } from "lib/functions/changeInput";
 import { response } from "types/globalTypes";
 import GoodsItemContainer from "containers/goods/item/goodsItemContainer";
+import { NavigateFunction } from "react-router-dom";
 
 const GoodsGroupDetailBlock = styled(Responsive)``;
 
 type groupDetailProps = {
   groupDetail: response;
+  navigate: NavigateFunction;
 };
 
-const GoodsGroupDetail = ({ groupDetail }: groupDetailProps) => {
+const GoodsGroupDetail = ({ groupDetail, navigate }: groupDetailProps) => {
   const data = groupDetail?.data;
 
   const {
@@ -23,6 +25,14 @@ const GoodsGroupDetail = ({ groupDetail }: groupDetailProps) => {
     setValue,
     formState: { isSubmitting },
   } = useForm();
+
+  const CategoryList = () => {
+    const List1st =
+      data?.info.basic.info.handleCategorys.info.handleCategory1sts.map(
+        (item1st: any) => item1st.info.category.info.description
+      );
+    return List1st;
+  };
   return (
     <Fragment>
       <GoodsGroupDetailBlock>
@@ -48,12 +58,75 @@ const GoodsGroupDetail = ({ groupDetail }: groupDetailProps) => {
         <Description>
           <DescriptionContent label="코드" content={data?.info.code} />
           <DescriptionContent
-            label="이름"
+            label="그룹명"
             content={data?.info.basic.info.name}
           />
           <DescriptionContent
-            label="설명"
+            label="그룹설명"
             content={data?.info.basic.info.description}
+          />
+          <DescriptionContent
+            label="품목"
+            content={data?.info.basic.info.product.info.nameKr}
+          />
+          <DescriptionContent
+            label="제조사"
+            content={data?.info.basic.info.manufacturer.info.nameKr}
+          />
+          <DescriptionContent
+            label="속성"
+            content={data?.info.basic.info.property.info.property}
+          />
+          <DescriptionContent
+            span="12"
+            label="1차 카테고리"
+            content={data?.info.basic.info.handleCategorys.info.handleCategory1sts.map(
+              (item: any) => item.info.category.info.description
+            )}
+          />
+          <DescriptionContent
+            span="12"
+            label="2차 카테고리"
+            content={data?.info.basic.info.handleCategorys.info.handleCategory2nds.map(
+              (item: any) => item.info.category.info.description
+            )}
+          />
+          <DescriptionContent
+            span="12"
+            label="3차 카테고리"
+            content={data?.info.basic.info.handleCategorys.info.handleCategory3rds.map(
+              (item: any) => item.info.category.info.description
+            )}
+          />
+          <DescriptionContent
+            label="상품이미지"
+            content={
+              <Button
+                type="button"
+                onClick={() =>
+                  navigate(
+                    `/image/${data?.info.goodImages.info.imageNums[0].info.image.id}`
+                  )
+                }
+              >
+                상세보기
+              </Button>
+            }
+          />
+          <DescriptionContent
+            label="상세페이지"
+            content={
+              <Button
+                type="button"
+                onClick={() =>
+                  navigate(
+                    `/image/${data?.info.detailPage.info.imageNums[0].info.image.id}`
+                  )
+                }
+              >
+                상세보기
+              </Button>
+            }
           />
           <DescriptionContent
             label="생성일"

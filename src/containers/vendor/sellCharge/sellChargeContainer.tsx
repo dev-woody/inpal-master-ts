@@ -38,6 +38,11 @@ const SellChargeContainer = () => {
   //*  sellChargeColumns
   const sellChargeColumns: ColumnsType[] = [
     {
+      title: "번호",
+      dataIndex: "",
+      render: (_, __, index) => index,
+    },
+    {
       title: "품목명",
       dataIndex: "productNumInfo",
       render: (productNumInfo) => productNumInfo.product.info.nameKr,

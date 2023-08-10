@@ -314,10 +314,10 @@ export const Table = (props: propsTypes) => {
           </thead>
           <tbody>
             {data?.length > 0 ? (
-              data?.map((contentList: any, index: number) => (
+              data?.map((contentList: any, rowIndex: number) => (
                 <RowTable
                   isHover
-                  key={index}
+                  key={rowIndex}
                   className={action ? "category" : undefined}
                   onClick={(e) => {
                     e.stopPropagation();
@@ -340,7 +340,7 @@ export const Table = (props: propsTypes) => {
                           );
                         }
                       } else if (typeof moveKey === "string") {
-                        navigate(`${url}/${contentList[moveKey]}`);
+                        navigate(`${url}/${contentList.moveKey}`);
                       }
                     }
                   }}
@@ -364,7 +364,8 @@ export const Table = (props: propsTypes) => {
                         >
                           {list.render(
                             contentList[list.dataIndex],
-                            contentList
+                            contentList,
+                            rowIndex
                           )}
                         </div>
                       </td>

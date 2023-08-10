@@ -32,6 +32,11 @@ const TermsContainer = () => {
 
   const termsColumns: ColumnsType[] = [
     {
+      title: "번호",
+      dataIndex: "",
+      render: (_, __, index) => index,
+    },
+    {
       title: "종류",
       dataIndex: "info",
       render: (info) => info.kind,

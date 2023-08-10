@@ -17,15 +17,11 @@ yarn start
 
 ## 패치노트
 
-### `08.04 Update`
+### `08.10 Update`
 
-### 1. terms page
+### 1. valuation
 
-약관 페이지 추가
-
-### 2. vendor order page
-
-판매사 주문조회 추가
+상품평 관리 추가
 
 ### .etc
 

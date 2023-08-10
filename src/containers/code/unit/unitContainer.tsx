@@ -35,6 +35,11 @@ const UnitContainer = () => {
 
   const unitColumns: ColumnsType[] = [
     {
+      title: "번호",
+      dataIndex: "",
+      render: (_, __, index) => index,
+    },
+    {
       title: "단위",
       dataIndex: "info",
       render: (info) => info.nameEn,
