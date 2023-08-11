@@ -25,6 +25,7 @@ const initialState: ResponseData = {
   orderLog: {},
   orderFindById: {},
   orderItemFindByVendorId: {},
+  setOrderStatus: {},
 };
 
 export function* masterVendorSaga() {
@@ -90,6 +91,10 @@ export function* masterVendorSaga() {
       vendorAPI.orderItemFindByVendorId
     )
   );
+  yield takeLatest(
+    masterVendorActions.setOrderStatus,
+    createRequestSaga("masterVendor/setOrderStatus", vendorAPI.setOrderStatus)
+  );
 }
 
 //* reducer
@@ -152,6 +157,10 @@ const masterVendor = createSlice({
     ...createAsyncReducers({
       actionName: "orderItemFindByVendorId",
       reducerName: "orderItemFindByVendorId",
+    })<any, DataForm, string>(),
+    ...createAsyncReducers({
+      actionName: "setOrderStatus",
+      reducerName: "setOrderStatus",
     })<any, DataForm, string>(),
     ...createSingleReducers({
       actionName: "reset",

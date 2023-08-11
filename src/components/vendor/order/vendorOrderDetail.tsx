@@ -1,37 +1,76 @@
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import PageHeader from "lib/pages/pageHeader";
-import { BreadCrumb, Button, Responsive, Table } from "lib/styles";
+import {
+  BreadCrumb,
+  Button,
+  ErrorMsg,
+  Modal,
+  Responsive,
+  StyledForm,
+  StyledInput,
+  StyledSelect,
+  Table,
+} from "lib/styles";
 import styled from "styled-components";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Description, DescriptionContent } from "lib/styles/descriptionStyles";
-import {
-  changeDays,
-  changeDeliveryStatus,
-  changePhone,
-} from "lib/functions/changeInput";
-import {
-  vendorOrderItemColumns,
-  vendorOrderLogColumns,
-} from "lib/columns/columnsList";
+import { changeDeliveryStatus, changePhone } from "lib/functions/changeInput";
+import { vendorOrderLogColumns } from "lib/columns/columnsList";
 import { response } from "types/globalTypes";
 import { NavigateFunction } from "react-router-dom";
+import { deliveryStatusOption } from "lib/columns/statusColumns";
 
 const VendorOrderDetailBlock = styled(Responsive)``;
 
 type orderDetailProps = {
   orderInfo: response;
   orderLog: response;
+  setOrderStatus: response;
+  onSubmit: (data: object) => void;
   navigate: NavigateFunction;
+  modalVisible: boolean;
+  setModalVisible: (status: boolean) => void;
 };
 
-// const VendorOrderDetail = ({ order }: { order: any }) => {
+const schema = yup.object({
+  orderStatus: yup.string().required("주문상태를 선택해주세요."),
+  description: yup.string(),
+});
+
 const VendorOrderDetail = ({
   orderInfo,
   orderLog,
+  setOrderStatus,
+  onSubmit,
   navigate,
+  modalVisible,
+  setModalVisible,
 }: orderDetailProps) => {
   const data = orderInfo?.data?.info;
   const path = window.location.pathname.split("/");
   const rollbackPath = "/" + path[1] + "/" + path[2];
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    getValues,
+    formState: { isSubmitting, errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      orderStatus: "",
+      description: "",
+    },
+  });
+
+  useEffect(() => {
+    setValue("description", "");
+    setValue("orderStatus", data?.orderStatus);
+  }, [orderInfo]);
+
   return (
     <Fragment>
       <VendorOrderDetailBlock>
@@ -54,13 +93,64 @@ const VendorOrderDetail = ({
       </VendorOrderDetailBlock>
       <VendorOrderDetailBlock>
         <PageHeader title="주문 상세정보" />
-        <Description style={{ marginBottom: "1rem" }}>
-          <DescriptionContent label="코드" content={data?.code} />
-          <DescriptionContent
-            label="주문상태"
-            content={changeDeliveryStatus(data?.orderStatus)}
+        <StyledForm
+          onSubmit={handleSubmit(
+            (data) => onSubmit(data),
+            (errors) => console.log(errors)
+          )}
+        >
+          <Description>
+            <DescriptionContent label="코드" content={data?.code} />
+            <DescriptionContent
+              label="주문상태"
+              content={
+                <StyledSelect
+                  align="vertical"
+                  placeholder={changeDeliveryStatus(data?.orderStatus)}
+                  optionList={deliveryStatusOption}
+                  label="orderStatus"
+                  register={register}
+                  setValue={setValue}
+                  getValues={getValues("orderStatus")}
+                  errors={errors}
+                  status={errors.orderStatus}
+                />
+              }
+            />
+            <DescriptionContent
+              span="12"
+              label="상태변경 메모"
+              content={
+                <StyledInput
+                  align="vertical"
+                  placeholder="상태변경 메모"
+                  label="description"
+                  register={register}
+                  errors={errors}
+                  status={errors.description}
+                />
+              }
+            />
+          </Description>
+          <ErrorMsg>{setOrderStatus.message}</ErrorMsg>
+          <Button
+            type="submit"
+            status="primary"
+            needMarginTop
+            disabled={isSubmitting}
+            withInput
+            style={{ marginBottom: "1rem" }}
+          >
+            주문상태 변경
+          </Button>
+          <Modal
+            title="주문상태 수정"
+            msg="주문상태 수정을 완료하였습니다."
+            submitMsg="확인"
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
           />
-        </Description>
+        </StyledForm>
         <PageHeader title="상품정보" />
         <Description style={{ marginBottom: "1rem" }}>
           <DescriptionContent

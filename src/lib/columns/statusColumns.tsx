@@ -30,15 +30,11 @@ export const sellStatusOption = [
 
 export const deliveryStatusOption = [
   {
-    name: "주문발생",
-    id: "ORDER_HAPPEN",
+    name: "카트등록",
+    id: "CART",
   },
   {
-    name: "사용중",
-    id: "ORDER_REGISTER",
-  },
-  {
-    name: "사용중지",
+    name: "결제대기중",
     id: "PAYMENT_WAIT",
   },
   {

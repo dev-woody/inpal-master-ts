@@ -101,6 +101,12 @@ export const orderFindAll = async (isDesc: boolean) => {
     .then((res) => res);
 };
 
+export const setOrderStatus = async (data: object) => {
+  return accessClient
+    .post(`/master/order/status/setOrderStatus`, { ...data })
+    .then((res) => res);
+};
+
 // export const orderFindById = async (id: string) => {
 //   return accessClient
 //     .get(`/master/construction/vendor/order/findById/${id}`)
