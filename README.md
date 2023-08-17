@@ -17,11 +17,11 @@ yarn start
 
 ## 패치노트
 
-### `08.10 Update`
+### `08.11 Update`
 
-### 1. valuation
+### 1. delevery status
 
-상품평 관리 추가
+상태변경 추가
 
 ### .etc
 

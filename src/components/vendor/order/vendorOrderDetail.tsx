@@ -19,7 +19,7 @@ import { Description, DescriptionContent } from "lib/styles/descriptionStyles";
 import { changeDeliveryStatus, changePhone } from "lib/functions/changeInput";
 import { vendorOrderLogColumns } from "lib/columns/columnsList";
 import { response } from "types/globalTypes";
-import { NavigateFunction } from "react-router-dom";
+import { NavigateFunction, useParams } from "react-router-dom";
 import { deliveryStatusOption } from "lib/columns/statusColumns";
 
 const VendorOrderDetailBlock = styled(Responsive)``;
@@ -49,8 +49,8 @@ const VendorOrderDetail = ({
   setModalVisible,
 }: orderDetailProps) => {
   const data = orderInfo?.data?.info;
-  const path = window.location.pathname.split("/");
-  const rollbackPath = "/" + path[1] + "/" + path[2];
+
+  const { id } = useParams();
 
   const {
     register,
@@ -79,8 +79,16 @@ const VendorOrderDetail = ({
             <BreadCrumb
               indicator={[
                 {
+                  name: "판매사 관리 /",
+                  url: "/vendor/list",
+                },
+                {
+                  name: "상세정보 /",
+                  url: `/vendor/list/${id}`,
+                },
+                {
                   name: "판매사 주문 관리 /",
-                  url: "/vendor/order",
+                  url: `/vendor/list/order/${id}`,
                 },
                 {
                   name: "상세정보",
@@ -263,7 +271,7 @@ const VendorOrderDetail = ({
           doNothing
         />
         <Button
-          onClick={() => navigate(`${rollbackPath}`)}
+          onClick={() => navigate(`/vendor/list/order/${id}`)}
           type="button"
           withInput
           needMarginTop

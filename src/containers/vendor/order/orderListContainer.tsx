@@ -15,7 +15,7 @@ const OrderListContainer = () => {
     dispatch(
       masterVendorActions.orderItemFindByVendorId({
         vendorId: id,
-        isDesc: false,
+        isDesc: true,
       })
     );
   }, []);

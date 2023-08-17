@@ -13,6 +13,7 @@ const VendorDetailContainer = () => {
       setVendorStatus: state.masterVendor.setBizStatus,
     })
   );
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -39,6 +40,8 @@ const VendorDetailContainer = () => {
       dispatch(masterVendorActions.findById(id));
       dispatch(masterVendorActions.reset("approve"));
       dispatch(masterVendorActions.reset("setBizStatus"));
+
+      setModalVisible(true);
     }
   }, [vendorRegister, setVendorStatus]);
 
@@ -59,6 +62,8 @@ const VendorDetailContainer = () => {
       onRegister={onRegister}
       navigate={navigate}
       id={id}
+      modalVisible={modalVisible}
+      setModalVisible={setModalVisible}
     />
   );
 };

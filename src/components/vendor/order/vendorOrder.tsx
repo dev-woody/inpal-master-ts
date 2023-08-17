@@ -21,11 +21,15 @@ const VendorOrder = ({ orderList, id }: VendorOrderType) => {
             <BreadCrumb
               indicator={[
                 {
-                  name: "판매사 주문 관리 /",
+                  name: "판매사 관리 /",
                   url: "/vendor/list",
                 },
                 {
-                  name: "상세정보",
+                  name: "상세정보 /",
+                  url: `/vendor/list/${id}`,
+                },
+                {
+                  name: "판매사 주문 관리",
                   url: "",
                 },
               ]}

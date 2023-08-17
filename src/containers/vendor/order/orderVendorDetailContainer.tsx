@@ -21,7 +21,6 @@ const OrderVendorDetailContainer = () => {
   const onSubmit = (data: object) => {
     dispatch(
       masterVendorActions.setOrderStatus({
-        // orderByVendorId: "",
         orderItemId: orderId,
         ...data,
       })
@@ -38,10 +37,9 @@ const OrderVendorDetailContainer = () => {
   }, []);
 
   useEffect(() => {
-    console.log(setOrderStatus.status);
     if (checkStatus(setOrderStatus.status)) {
-      dispatch(masterVendorActions.reset("setOrderStatus"));
       dispatch(masterVendorActions.orderFindById(orderId));
+      dispatch(masterVendorActions.reset("setOrderStatus"));
       setModalVisible(true);
     }
   }, [setOrderStatus]);

@@ -59,19 +59,19 @@ export const deliveryStatusOption = [
   },
   {
     name: "교환요청",
-    id: "EXCAHNGE_REQUEST",
+    id: "EXCHANGE_REQUEST",
   },
   {
     name: "교환요청완료",
-    id: "EXCAHNGE_COMPLETE",
+    id: "EXCHANGE_COMPLETE",
   },
   {
     name: "반품요청",
-    id: "EXCAHNGE_COMPLETE",
+    id: "RETURN_REQUEST",
   },
   {
     name: "반품요청완료",
-    id: "EXCAHNGE_COMPLETE",
+    id: "RETURN_COMPLETE",
   },
   {
     name: "환불요청",

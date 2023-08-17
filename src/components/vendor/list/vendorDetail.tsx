@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import PageHeader from "lib/pages/pageHeader";
-import { BreadCrumb, ErrorMsg, Responsive, Table } from "lib/styles";
+import { BreadCrumb, ErrorMsg, Modal, Responsive, Table } from "lib/styles";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import {
@@ -11,9 +11,8 @@ import {
 import { Description, DescriptionContent } from "lib/styles/descriptionStyles";
 import { Button } from "lib/styles";
 import { StyledSelect } from "lib/styles/selectStyle";
-import { vendorAdminListColumns } from "lib/columns/columnsList";
 import { statusOption } from "lib/columns/statusColumns";
-import { NavigateFunction, useNavigate } from "react-router-dom";
+import { NavigateFunction } from "react-router-dom";
 import { response } from "types/globalTypes";
 
 const VendorDetailBlock = styled(Responsive)``;
@@ -25,6 +24,8 @@ type detailProps = {
   onRegister: () => void;
   navigate: NavigateFunction;
   id: string | undefined;
+  modalVisible: boolean;
+  setModalVisible: (status: boolean) => void;
 };
 
 const VendorDetail = ({
@@ -34,6 +35,8 @@ const VendorDetail = ({
   onRegister,
   navigate,
   id,
+  modalVisible,
+  setModalVisible,
 }: detailProps) => {
   const basicInfo = vendor?.vendorInfo?.basicInfo;
   const productList = basicInfo?.sellProducts;
@@ -163,6 +166,13 @@ const VendorDetail = ({
               </Button>
             </>
           )}
+          <Modal
+            title="판매사상태 수정"
+            msg="판매사상태 수정을 완료하였습니다."
+            submitMsg="확인"
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+          />
         </form>
       </VendorDetailBlock>
       <VendorDetailBlock>
