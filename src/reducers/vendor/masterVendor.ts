@@ -15,6 +15,8 @@ const initialState: ResponseData = {
   findById: {},
   findByName: {},
   findAllByVendorId: {},
+  countVendor: {},
+  pageVendor: {},
 
   pnList: {},
   pnFindById: {},
@@ -26,6 +28,8 @@ const initialState: ResponseData = {
   orderFindById: {},
   orderItemFindByVendorId: {},
   setOrderStatus: {},
+  countOrder: {},
+  pageOrder: {},
 };
 
 export function* masterVendorSaga() {
@@ -55,6 +59,14 @@ export function* masterVendorSaga() {
       "masterVendor/findAllByVendorId",
       vendorAPI.findAllByVendorId
     )
+  );
+  yield takeLatest(
+    masterVendorActions.countVendor,
+    createRequestSaga("masterVendor/countVendor", vendorAPI.countVendor)
+  );
+  yield takeLatest(
+    masterVendorActions.pageVendor,
+    createRequestSaga("masterVendor/pageVendor", vendorAPI.pageVendor)
   );
   yield takeLatest(
     masterVendorActions.pnList,
@@ -95,6 +107,14 @@ export function* masterVendorSaga() {
     masterVendorActions.setOrderStatus,
     createRequestSaga("masterVendor/setOrderStatus", vendorAPI.setOrderStatus)
   );
+  yield takeLatest(
+    masterVendorActions.countOrder,
+    createRequestSaga("masterVendor/countOrder", vendorAPI.countOrder)
+  );
+  yield takeLatest(
+    masterVendorActions.pageOrder,
+    createRequestSaga("masterVendor/pageOrder", vendorAPI.pageOrder)
+  );
 }
 
 //* reducer
@@ -125,6 +145,14 @@ const masterVendor = createSlice({
     ...createAsyncReducers({
       actionName: "findAllByVendorId",
       reducerName: "findAllByVendorId",
+    })<any, DataForm, string>(),
+    ...createAsyncReducers({
+      actionName: "countVendor",
+      reducerName: "countVendor",
+    })<any, DataForm, string>(),
+    ...createAsyncReducers({
+      actionName: "pageVendor",
+      reducerName: "pageVendor",
     })<any, DataForm, string>(),
     ...createAsyncReducers({
       actionName: "pnList",
@@ -161,6 +189,14 @@ const masterVendor = createSlice({
     ...createAsyncReducers({
       actionName: "setOrderStatus",
       reducerName: "setOrderStatus",
+    })<any, DataForm, string>(),
+    ...createAsyncReducers({
+      actionName: "countOrder",
+      reducerName: "countOrder",
+    })<any, DataForm, string>(),
+    ...createAsyncReducers({
+      actionName: "pageOrder",
+      reducerName: "pageOrder",
     })<any, DataForm, string>(),
     ...createSingleReducers({
       actionName: "reset",

@@ -16,7 +16,7 @@ const OrderVendorDetailContainer = () => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { orderId } = useParams();
+  const { vendorPageNum, id, orderPageNum, orderId } = useParams();
 
   const onSubmit = (data: object) => {
     dispatch(
@@ -62,6 +62,9 @@ const OrderVendorDetailContainer = () => {
       setOrderStatus={setOrderStatus}
       onSubmit={onSubmit}
       navigate={navigate}
+      vendorPageNum={vendorPageNum}
+      id={id}
+      orderPageNum={orderPageNum}
       modalVisible={modalVisible}
       setModalVisible={setModalVisible}
     />

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "reducers/reducerHooks";
 import ColorEdit from "components/admin/color/colorEdit";
 import { masterColorActions } from "reducers/admin/masterColor";
@@ -12,6 +12,7 @@ const ColorEditContainer = () => {
     colorUpdateResult: state.masterColor.update,
   }));
   const dispatch = useAppDispatch();
+  const { colorPageNum } = useParams();
   const location = useLocation();
 
   const splitUrl = location.pathname.split("/");
@@ -35,7 +36,13 @@ const ColorEditContainer = () => {
   useEffect(() => {
     if (checkStatus(colorUpdateResult.status)) {
       dispatch(masterColorActions.reset("update"));
-      dispatch(masterColorActions.findAll(false));
+      dispatch(
+        masterColorActions.pageColor({
+          isDesc: false,
+          page: colorPageNum,
+          size: 10,
+        })
+      );
       setModalVisible(true);
     }
   }, [colorUpdateResult]);

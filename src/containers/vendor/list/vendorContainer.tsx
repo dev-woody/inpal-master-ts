@@ -5,17 +5,31 @@ import VendorList from "components/vendor/list/vendorList";
 import { useParams } from "react-router-dom";
 
 const VendorContainer = () => {
-  const { vendorList } = useAppSelector((state) => ({
-    vendorList: state.masterVendor.findAll,
+  const { countVendor, vendorList } = useAppSelector((store) => ({
+    countVendor: store.masterVendor.countVendor,
+    vendorList: store.masterVendor.pageVendor,
   }));
   const dispatch = useAppDispatch();
+  const { vendorPageNum } = useParams();
   useEffect(() => {
-    dispatch(masterVendorActions.findAll(false));
+    dispatch(
+      masterVendorActions.pageVendor({
+        isDesc: false,
+        page: vendorPageNum,
+        size: 10,
+      })
+    );
     return () => {
-      dispatch(masterVendorActions.reset("findAll"));
+      dispatch(masterVendorActions.reset("pageVendor"));
     };
   }, []);
-  return <VendorList vendorList={vendorList} />;
+  return (
+    <VendorList
+      countVendor={countVendor}
+      vendorList={vendorList}
+      vendorPageNum={vendorPageNum}
+    />
+  );
 };
 
 export default VendorContainer;

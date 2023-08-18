@@ -12,8 +12,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import PageHeader from "lib/pages/pageHeader";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { response } from "types/globalTypes";
 
 const ColorAddBlock = styled(Responsive)``;
@@ -59,17 +58,7 @@ const ColorAdd = ({
     },
   });
 
-  // useEffect(() => {
-  //   switch (colorAddresult.message) {
-  //     case "이미 등록된 색상 이름 입니다.\n최종 관리자에게 문의 하세요.":
-  //       setError(
-  //         "name",
-  //         { type: "focus", message: "이미 등록된 색상 이름입니다." },
-  //         { shouldFocus: true }
-  //       );
-  //       break;
-  //   }
-  // }, [errors]);
+  const { colorPageNum } = useParams();
 
   const navigate = useNavigate();
   return (
@@ -81,7 +70,7 @@ const ColorAdd = ({
               indicator={[
                 {
                   name: "색상 관리 /",
-                  url: "/admin/color",
+                  url: `/admin/color/${colorPageNum}`,
                 },
                 {
                   name: "색상코드 추가",
@@ -160,7 +149,7 @@ const ColorAdd = ({
           submitMsg="확인"
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
-          action={() => navigate("/admin/color")}
+          action={() => navigate(`/admin/color/0`)}
         />
       </ColorAddBlock>
     </>

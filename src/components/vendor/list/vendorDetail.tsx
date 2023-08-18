@@ -23,6 +23,7 @@ type detailProps = {
   onSubmit: (data: any) => void;
   onRegister: () => void;
   navigate: NavigateFunction;
+  vendorPageNum: string | undefined;
   id: string | undefined;
   modalVisible: boolean;
   setModalVisible: (status: boolean) => void;
@@ -34,6 +35,7 @@ const VendorDetail = ({
   onSubmit,
   onRegister,
   navigate,
+  vendorPageNum,
   id,
   modalVisible,
   setModalVisible,
@@ -64,7 +66,7 @@ const VendorDetail = ({
               indicator={[
                 {
                   name: "판매사 관리 /",
-                  url: "/vendor/list",
+                  url: `/vendor/list/${vendorPageNum}`,
                 },
                 {
                   name: "상세정보",
@@ -115,7 +117,7 @@ const VendorDetail = ({
                 <Button
                   onClick={() => {
                     if (typeof id === "string") {
-                      navigate(`/vendor/list/order/${id}`);
+                      navigate(`/vendor/list/${vendorPageNum}/order/${id}/0`);
                     }
                   }}
                 >
@@ -151,7 +153,7 @@ const VendorDetail = ({
                 needMarginTop
                 withInput
                 disabled={isSubmitting}
-                onClick={() => navigate("/vendor/list")}
+                onClick={() => navigate(`/vendor/list/${vendorPageNum}`)}
               >
                 뒤로가기
               </Button>

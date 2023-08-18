@@ -42,8 +42,6 @@ const CuponList = ({ cuponList, cuponColumns }: cuponListProps) => {
           content={cuponList.data}
           url="/admin/cupon/detail"
           moveKey={["base", "id"]}
-          pagenation
-          filter
         />
       </CuponListBlock>
     </>

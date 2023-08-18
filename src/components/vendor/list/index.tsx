@@ -7,10 +7,16 @@ import VendorOrderIndex from "../order";
 const VendorListIndex = () => {
   return (
     <Routes>
-      <Route path="/" element={<VendorContainer />} />
-      <Route path="/:id" element={<VendorDetailContainer />} />
-      <Route path="/:id/sellFees/*" element={<SellChargeIndex />} />
-      <Route path="/order/:id/*" element={<VendorOrderIndex />} />
+      <Route path="/:vendorPageNum" element={<VendorContainer />} />
+      <Route path="/:vendorPageNum/:id" element={<VendorDetailContainer />} />
+      <Route
+        path="/:vendorPageNum/:id/sellFees/*"
+        element={<SellChargeIndex />}
+      />
+      <Route
+        path="/:vendorPageNum/order/:id/:orderPageNum/*"
+        element={<VendorOrderIndex />}
+      />
     </Routes>
   );
 };

@@ -16,7 +16,7 @@ const VendorDetailContainer = () => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { vendorPageNum, id } = useParams();
 
   const onRegister = () => {
     dispatch(masterVendorActions.approve(id));
@@ -61,6 +61,7 @@ const VendorDetailContainer = () => {
       onSubmit={onSubmit}
       onRegister={onRegister}
       navigate={navigate}
+      vendorPageNum={vendorPageNum}
       id={id}
       modalVisible={modalVisible}
       setModalVisible={setModalVisible}

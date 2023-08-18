@@ -12,35 +12,18 @@ export const colorFindByName = async (name: string) => {
   });
 };
 
-export const colorRegister = async (
-  data: object
-  // XRgb: string,
-  // name: string,
-  // kind: string
-) => {
+export const colorRegister = async (data: object) => {
   return accessClient
     .post(`/master/color_code/register`, {
       ...data,
-      // XRgb,
-      // name,
-      // kind,
     })
     .then((res) => res);
 };
 
-export const colorUpdate = async (
-  data: object
-  // id: string,
-  // updateInfo: {
-  //   XRgb: string;
-  //   name: string;
-  // }
-) => {
+export const colorUpdate = async (data: object) => {
   return accessClient
     .post(`/master/color_code/update`, {
       ...data,
-      // id,
-      // updateInfo,
     })
     .then((res) => res);
 };
@@ -51,6 +34,20 @@ export const setOpenStatus = async (id: string, openStatus: string) => {
       params: {
         id,
         openStatus,
+      },
+    })
+    .then((res) => res);
+};
+
+export const countColor = async () => {
+  return await client.get(`/store/color_code/getAllCount`).then((res) => res);
+};
+
+export const pageColor = async (data: object) => {
+  return await client
+    .get(`/store/color_code/getPageByAll`, {
+      params: {
+        ...data,
       },
     })
     .then((res) => res);

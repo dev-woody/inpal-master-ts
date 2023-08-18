@@ -8,11 +8,20 @@ import { response } from "types/globalTypes";
 const VendorOrderBlock = styled(Responsive)``;
 
 type VendorOrderType = {
+  countOrder: response;
   orderList: response;
+  vendorPageNum: string | undefined;
   id: string | undefined;
+  orderPageNum: string | undefined;
 };
 
-const VendorOrder = ({ orderList, id }: VendorOrderType) => {
+const VendorOrder = ({
+  countOrder,
+  orderList,
+  vendorPageNum,
+  id,
+  orderPageNum,
+}: VendorOrderType) => {
   return (
     <>
       <VendorOrderBlock>
@@ -22,11 +31,11 @@ const VendorOrder = ({ orderList, id }: VendorOrderType) => {
               indicator={[
                 {
                   name: "판매사 관리 /",
-                  url: "/vendor/list",
+                  url: `/vendor/list/${vendorPageNum}`,
                 },
                 {
                   name: "상세정보 /",
-                  url: `/vendor/list/${id}`,
+                  url: `/vendor/list/${vendorPageNum}/${id}`,
                 },
                 {
                   name: "판매사 주문 관리",
@@ -41,9 +50,11 @@ const VendorOrder = ({ orderList, id }: VendorOrderType) => {
         <Table
           columns={vendorOrderColumns}
           content={orderList.data}
-          url={`/vendor/list/order/${id}`}
+          url={`/vendor/list/${vendorPageNum}/order/${id}/${orderPageNum}`}
+          nonPageUrl={`/vendor/list/${vendorPageNum}/order/${id}`}
           moveKey={["base", "id"]}
           pagenation
+          pageCount={countOrder.data}
           // filter
           // filterInput={
           //   <StyledSelect

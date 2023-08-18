@@ -7,11 +7,14 @@ import EvaluationDetailContainer from "containers/goods/item/evaluationDetailCon
 const GroupIndex = () => {
   return (
     <Routes>
-      <Route path="/" element={<GoodsGroupContainer />} />
-      <Route path="/:id/*" element={<GoodDetailContainer />} />
-      <Route path="/:id/item/:itemId" element={<GoodsItemDetailContainer />} />
+      <Route path="/:goodsGroupPageNum" element={<GoodsGroupContainer />} />
+      <Route path="/:goodsGroupPageNum/:id" element={<GoodDetailContainer />} />
       <Route
-        path="/:id/item/:itemId/:evaluationId"
+        path="/:goodsGroupPageNum/:id/item/:goodsItemPageNum/:itemId"
+        element={<GoodsItemDetailContainer />}
+      />
+      <Route
+        path="/:goodsGroupPageNum/:id/item/:goodsItemPageNum/:itemId/:evaluationId"
         element={<EvaluationDetailContainer />}
       />
       {/* <Route path="/option/:id/*" element={<GoodOptionDetailContainer />} /> */}

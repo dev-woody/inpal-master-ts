@@ -9,10 +9,12 @@ import { response } from "types/globalTypes";
 const ColorListBlock = styled(Responsive)``;
 
 type colorListProps = {
+  countColor: response;
   colorList: response;
+  colorPageNum: string | undefined;
 };
 
-const ColorList = ({ colorList }: colorListProps) => {
+const ColorList = ({ countColor, colorList, colorPageNum }: colorListProps) => {
   const navigate = useNavigate();
   return (
     <>
@@ -23,13 +25,15 @@ const ColorList = ({ colorList }: colorListProps) => {
               indicator={[
                 {
                   name: "색상 관리",
-                  url: "/admin/color",
+                  url: "",
                 },
               ]}
             />
           }
           extra={
-            <Button onClick={() => navigate("/admin/color/register")}>
+            <Button
+              onClick={() => navigate(`/admin/color/${colorPageNum}/register`)}
+            >
               색상코드 등록
             </Button>
           }
@@ -39,9 +43,11 @@ const ColorList = ({ colorList }: colorListProps) => {
         <Table
           columns={colorColumns}
           content={colorList.data}
-          url="/admin/color/detail"
+          url={`/admin/color/${colorPageNum}/detail`}
+          nonPageUrl={`/admin/color/${colorPageNum}/detail`}
           moveKey={["info", "name"]}
           pagenation
+          pageCount={countColor.data}
         />
       </ColorListBlock>
     </>

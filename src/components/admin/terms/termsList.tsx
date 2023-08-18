@@ -42,8 +42,6 @@ const TermsList = ({ termsList, termsColumns }: termsListProps) => {
           content={termsList.data}
           url="/admin/terms/detail"
           moveKey={["base", "id"]}
-          pagenation
-          filter
         />
       </TermsListBlock>
     </>

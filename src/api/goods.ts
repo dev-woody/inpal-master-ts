@@ -6,6 +6,22 @@ export const goodsGroupFindAll = async (isDesc: boolean) => {
     .then((res) => res);
 };
 
+export const countGoodsGroup = async () => {
+  return await client
+    .get(`/store/construction/good/group/getAllCount`)
+    .then((res) => res);
+};
+
+export const pageGoodsGroup = async (data: object) => {
+  return await client
+    .get(`/store/construction/good/group/getPageByAll`, {
+      params: {
+        ...data,
+      },
+    })
+    .then((res) => res);
+};
+
 export const searchByKeyword = async (keyword: string, isDesc: boolean) => {
   const res = await client.get(
     `/construction/common/good/group/searchByKeyword`,
@@ -62,6 +78,8 @@ export const setOptionStatus = async (
   return res;
 };
 
+//* item
+
 export const itemFindBygoodsGroupId = async (data: object) => {
   const res = await client.get(
     `/store/construction/good/item/findByGoodGroupId`,
@@ -97,4 +115,24 @@ export const setItemStatus = async (
     }
   );
   return res;
+};
+
+export const countGoodsItem = async (data: object) => {
+  return await client
+    .get(`/store/construction/good/item/getCountByGoodGroupId`, {
+      params: {
+        ...data,
+      },
+    })
+    .then((res) => res);
+};
+
+export const pageGoodsItem = async (data: object) => {
+  return await client
+    .get(`/store/construction/good/item/getPageByGoodGroupId`, {
+      params: {
+        ...data,
+      },
+    })
+    .then((res) => res);
 };

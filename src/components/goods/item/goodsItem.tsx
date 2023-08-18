@@ -4,7 +4,6 @@ import { Responsive } from "lib/styles";
 import { Table } from "lib/styles/tableStyle";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { testItemData } from "types/data.test";
 import { response } from "types/globalTypes";
 
 const GoodsItemBlock = styled(Responsive)``;
@@ -21,10 +20,9 @@ const GoodsItem = ({ itemList }: itemProps) => {
       <Table
         columns={itemColumns}
         content={itemList.data}
-        pagenation
         url={`/goods/group/${id}/item`}
         moveKey={["base", "id"]}
-        filter
+        pagenation
       />
     </GoodsItemBlock>
   );

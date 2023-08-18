@@ -6,7 +6,6 @@ import {
   ErrorMsg,
   Modal,
   Responsive,
-  StyledUpload,
 } from "lib/styles";
 import PageHeader from "lib/pages/pageHeader";
 import { StyledForm, StyledInput, Button } from "lib/styles";

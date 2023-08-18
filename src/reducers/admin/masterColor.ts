@@ -13,6 +13,8 @@ const initialState: ResponseData = {
   findAll: {},
   findByName: {},
   update: {},
+  countColor: {},
+  pageColor: {},
 };
 
 export function* masterColorSaga() {
@@ -31,6 +33,14 @@ export function* masterColorSaga() {
   yield takeLatest(
     masterColorActions.update,
     createRequestSaga("masterColor/update", colorAPI.colorUpdate)
+  );
+  yield takeLatest(
+    masterColorActions.countColor,
+    createRequestSaga("masterColor/countColor", colorAPI.countColor)
+  );
+  yield takeLatest(
+    masterColorActions.pageColor,
+    createRequestSaga("masterColor/pageColor", colorAPI.pageColor)
   );
 }
 
@@ -54,6 +64,14 @@ const masterColor = createSlice({
     ...createAsyncReducers({
       actionName: "update",
       reducerName: "update",
+    })<any, DataForm, string>(),
+    ...createAsyncReducers({
+      actionName: "countColor",
+      reducerName: "countColor",
+    })<any, DataForm, string>(),
+    ...createAsyncReducers({
+      actionName: "pageColor",
+      reducerName: "pageColor",
     })<any, DataForm, string>(),
     ...createSingleReducers({
       actionName: "reset",

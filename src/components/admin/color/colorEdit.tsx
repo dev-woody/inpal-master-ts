@@ -12,7 +12,7 @@ import { StyledForm, StyledInput, Button } from "lib/styles";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { response } from "types/globalTypes";
 
@@ -55,6 +55,8 @@ const ColorEdit = ({
     },
   });
 
+  const { colorPageNum } = useParams();
+
   useEffect(() => {
     setValue("name", colorFindByName.data?.info.name);
     setValue("rgb", colorFindByName.data?.info.rgb);
@@ -69,7 +71,7 @@ const ColorEdit = ({
               indicator={[
                 {
                   name: "색상 관리 /",
-                  url: "/admin/color",
+                  url: `/admin/color/${colorPageNum}`,
                 },
                 {
                   name: "상세조회",
@@ -123,7 +125,7 @@ const ColorEdit = ({
               type="button"
               needMarginTop
               withInput
-              onClick={() => navigate("/admin/color")}
+              onClick={() => navigate(`/admin/color/${colorPageNum}`)}
             >
               뒤로가기
             </Button>

@@ -34,12 +34,12 @@ export const setOpenStatus = async (data: object) => {
 
 export const findAll = async (isDesc: boolean) => {
   return accessClient
-    .get(`/master/service_use_info/findAll/${isDesc}`)
+    .get(`/store/service_use_info/findAll/${isDesc}`)
     .then((res) => res);
 };
 
 export const findById = async (id: string) => {
   return accessClient
-    .get(`/master/service_use_info/findById/${id}`)
+    .get(`/store/service_use_info/findById/${id}`)
     .then((res) => res);
 };

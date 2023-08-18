@@ -34,6 +34,20 @@ export const setBizStatus = async (data: object) => {
     .then((res) => res);
 };
 
+export const countVendor = async () => {
+  return await client.get(`/store/biz/vendor/getAllCount`).then((res) => res);
+};
+
+export const pageVendor = async (data: object) => {
+  return await client
+    .get(`/store/biz/vendor/getPageByAll`, {
+      params: {
+        ...data,
+      },
+    })
+    .then((res) => res);
+};
+
 //* productNum
 export const pnFindByVendorId = async (id: string) => {
   return accessClient
@@ -104,6 +118,22 @@ export const orderFindAll = async (isDesc: boolean) => {
 export const setOrderStatus = async (data: object) => {
   return accessClient
     .post(`/master/order/status/setOrderStatus`, { ...data })
+    .then((res) => res);
+};
+
+export const countOrder = async (id: string) => {
+  return await accessClient
+    .get(`/master/order/item/getCountByVendorId/${id}`)
+    .then((res) => res);
+};
+
+export const pageOrder = async (data: object) => {
+  return await accessClient
+    .get(`/master/order/item/getPageByVendorId`, {
+      params: {
+        ...data,
+      },
+    })
     .then((res) => res);
 };
 

@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { changeDays, changeOpenStatus } from "lib/functions/changeInput";
 import { response } from "types/globalTypes";
 import GoodsItemContainer from "containers/goods/item/goodsItemContainer";
-import { NavigateFunction } from "react-router-dom";
+import { NavigateFunction, useParams } from "react-router-dom";
 
 const GoodsGroupDetailBlock = styled(Responsive)``;
 
@@ -18,7 +18,7 @@ type groupDetailProps = {
 
 const GoodsGroupDetail = ({ groupDetail, navigate }: groupDetailProps) => {
   const data = groupDetail?.data;
-
+  const { goodsGroupPageNum } = useParams();
   const {
     register,
     handleSubmit,
@@ -42,7 +42,7 @@ const GoodsGroupDetail = ({ groupDetail, navigate }: groupDetailProps) => {
               indicator={[
                 {
                   name: "상품그룹 관리 /",
-                  url: "/goods/group",
+                  url: `/goods/group/${goodsGroupPageNum}`,
                 },
                 {
                   name: "상세정보",
@@ -71,7 +71,7 @@ const GoodsGroupDetail = ({ groupDetail, navigate }: groupDetailProps) => {
           />
           <DescriptionContent
             label="제조사"
-            content={data?.info.basic.info.manufacturer.info.nameKr}
+            content={data?.info.basic.info.manufacturer.info.basic.info.nameKr}
           />
           <DescriptionContent
             label="속성"
@@ -138,30 +138,10 @@ const GoodsGroupDetail = ({ groupDetail, navigate }: groupDetailProps) => {
           />
           <DescriptionContent
             label="판매상태"
-            content={
-              changeOpenStatus(data?.info.openStatus)
-              // <StyledSelect
-              //   placeholder={changeOpenStatus(data?.info.openStatus) || ""}
-              //   optionList={sellStatusOption}
-              //   label="status"
-              //   register={register}
-              //   setValue={setValue}
-              // />
-            }
+            content={changeOpenStatus(data?.info.openStatus)}
           />
         </Description>
-        {/* <Button
-            type="submit"
-            status="primary"
-            disabled={isSubmitting}
-            needMarginTop
-            withInput
-          >
-            수정
-          </Button>
-        </form> */}
       </GoodsGroupDetailBlock>
-      {/* <OptionIndex /> */}
       <GoodsItemContainer />
     </Fragment>
   );

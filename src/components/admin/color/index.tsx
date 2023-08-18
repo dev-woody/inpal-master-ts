@@ -6,9 +6,15 @@ import { Routes, Route } from "react-router-dom";
 const ColorIndex = () => {
   return (
     <Routes>
-      <Route path="/" element={<ColorListContainer />} />
-      <Route path="/register" element={<ColorRegisterContainer />} />
-      <Route path="/detail/:name" element={<ColorEditContainer />} />
+      <Route path="/:colorPageNum" element={<ColorListContainer />} />
+      <Route
+        path="/:colorPageNum/register"
+        element={<ColorRegisterContainer />}
+      />
+      <Route
+        path="/:colorPageNum/detail/:name"
+        element={<ColorEditContainer />}
+      />
     </Routes>
   );
 };

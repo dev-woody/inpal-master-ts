@@ -4,22 +4,33 @@ import { useAppSelector, useAppDispatch } from "reducers/reducerHooks";
 import GoodsGroup from "components/goods/group/goodsGroup";
 import { ColumnsType } from "lib/columns/columnsList";
 import { changeDays, changeOpenStatus } from "lib/functions/changeInput";
-import { StyledToggle } from "lib/styles";
 import { masterGoodsGroupActions } from "reducers/goods/goodsGroup";
 
 const GoodsGroupContainer = () => {
-  const { goodsGroup } = useAppSelector((state) => ({
-    goodsGroup: state.masterGoodsGroup.findAll,
+  const { countGoodsGroup, goodsGroup } = useAppSelector((store) => ({
+    countGoodsGroup: store.masterGoodsGroup.countGoodsGroup,
+    goodsGroup: store.masterGoodsGroup.pageGoodsGroup,
   }));
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { goodsGroupPageNum } = useParams();
 
   useEffect(() => {
-    dispatch(masterGoodsGroupActions.findAll(false));
-    return () => {
-      dispatch(masterGoodsGroupActions.reset("findAll"));
-    };
+    dispatch(masterGoodsGroupActions.countGoodsGroup({}));
   }, []);
+
+  useEffect(() => {
+    dispatch(
+      masterGoodsGroupActions.pageGoodsGroup({
+        isDesc: false,
+        page: goodsGroupPageNum,
+        size: 10,
+      })
+    );
+    return () => {
+      dispatch(masterGoodsGroupActions.reset("pageGoodsGroup"));
+    };
+  }, [goodsGroupPageNum]);
 
   const groupColumns: ColumnsType[] = [
     {
@@ -53,26 +64,16 @@ const GoodsGroupContainer = () => {
       title: "판매상태",
       dataIndex: "info",
       render: (info) => changeOpenStatus(info.openStatus),
-      // render: (info: any, contentList: any) => {
-      //   const action = () => {
-      //     onSetStatus({
-      //       vendorId: contentList.info.vendorId,
-      //       goodGroupId: contentList.base.id,
-      //       openStatus: info.openStatus == "OPEN" ? "close" : "open",
-      //     });
-      //   };
-      //   return (
-      //     <StyledToggle
-      //       data={info.openStatus}
-      //       openStatus="OPEN"
-      //       action={action}
-      //     />
-      //   );
-      // },
     },
   ];
 
-  return <GoodsGroup goodsGroup={goodsGroup} groupColumns={groupColumns} />;
+  return (
+    <GoodsGroup
+      countGoodsGroup={countGoodsGroup}
+      goodsGroup={goodsGroup}
+      groupColumns={groupColumns}
+    />
+  );
 };
 
 export default GoodsGroupContainer;

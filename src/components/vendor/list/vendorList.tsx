@@ -8,10 +8,16 @@ import { response } from "types/globalTypes";
 const VendorBlockList = styled(Responsive)``;
 
 type VendorListType = {
+  countVendor: response;
   vendorList: response;
+  vendorPageNum: string | undefined;
 };
 
-const VendorList = ({ vendorList }: VendorListType) => {
+const VendorList = ({
+  countVendor,
+  vendorList,
+  vendorPageNum,
+}: VendorListType) => {
   return (
     <>
       <VendorBlockList>
@@ -32,9 +38,11 @@ const VendorList = ({ vendorList }: VendorListType) => {
         <Table
           columns={vendorAllListColumns}
           content={vendorList.data}
-          url="/vendor/list"
+          url={`/vendor/list/${vendorPageNum}`}
+          nonPageUrl={`/vendor/list`}
           moveKey={["base", "id"]}
           pagenation
+          pageCount={countVendor.data}
           // filter
         />
       </VendorBlockList>

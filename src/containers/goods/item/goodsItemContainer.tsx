@@ -5,22 +5,27 @@ import GoodsItem from "components/goods/item/goodsItem";
 import { masterGoodsItemActions } from "reducers/goods/goodsItem";
 
 const GoodsItemContainer = () => {
-  const { itemList } = useAppSelector((state) => ({
-    itemList: state.masterGoodsItem.findByGoodsGroupId,
+  const { countGoodsItem, itemList } = useAppSelector((store) => ({
+    countGoodsItem: store.masterGoodsItem.countGoodsItem,
+    itemList: store.masterGoodsItem.pageGoodsItem,
   }));
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { goodsGroupPageNum, id, pageGoodsItem } = useParams();
+
+  useEffect(() => {
+    dispatch(masterGoodsItemActions.countGoodsItem({ goodsGroupId: id }));
+  }, []);
 
   useEffect(() => {
     dispatch(
-      masterGoodsItemActions.findByGoodsGroupId({
+      masterGoodsItemActions.pageGoodsItem({
         goodGroupId: id,
         isDesc: false,
       })
     );
     return () => {
-      dispatch(masterGoodsItemActions.reset("findByGoodsGroupId"));
+      dispatch(masterGoodsItemActions.reset("pageGoodsItem"));
     };
   }, []);
 

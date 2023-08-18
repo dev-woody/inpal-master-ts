@@ -30,6 +30,9 @@ type orderDetailProps = {
   setOrderStatus: response;
   onSubmit: (data: object) => void;
   navigate: NavigateFunction;
+  vendorPageNum: string | undefined;
+  id: string | undefined;
+  orderPageNum: string | undefined;
   modalVisible: boolean;
   setModalVisible: (status: boolean) => void;
 };
@@ -45,12 +48,13 @@ const VendorOrderDetail = ({
   setOrderStatus,
   onSubmit,
   navigate,
+  vendorPageNum,
+  id,
+  orderPageNum,
   modalVisible,
   setModalVisible,
 }: orderDetailProps) => {
   const data = orderInfo?.data?.info;
-
-  const { id } = useParams();
 
   const {
     register,
@@ -80,15 +84,15 @@ const VendorOrderDetail = ({
               indicator={[
                 {
                   name: "판매사 관리 /",
-                  url: "/vendor/list",
+                  url: `/vendor/list/${vendorPageNum}`,
                 },
                 {
                   name: "상세정보 /",
-                  url: `/vendor/list/${id}`,
+                  url: `/vendor/list/${vendorPageNum}/${id}`,
                 },
                 {
                   name: "판매사 주문 관리 /",
-                  url: `/vendor/list/order/${id}`,
+                  url: `/vendor/list/${vendorPageNum}/order/${id}/${orderPageNum}`,
                 },
                 {
                   name: "상세정보",
@@ -271,7 +275,11 @@ const VendorOrderDetail = ({
           doNothing
         />
         <Button
-          onClick={() => navigate(`/vendor/list/order/${id}`)}
+          onClick={() =>
+            navigate(
+              `/vendor/list/${vendorPageNum}/order/${id}/${orderPageNum}`
+            )
+          }
           type="button"
           withInput
           needMarginTop

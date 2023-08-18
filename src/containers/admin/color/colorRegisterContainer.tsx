@@ -3,6 +3,7 @@ import { useAppSelector, useAppDispatch } from "reducers/reducerHooks";
 import ColorAdd from "components/admin/color/colorAdd";
 import { masterColorActions } from "reducers/admin/masterColor";
 import { checkStatus } from "types/globalTypes";
+import { useParams } from "react-router-dom";
 
 const ColorRegisterContainer = () => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
@@ -10,6 +11,7 @@ const ColorRegisterContainer = () => {
     colorAddresult: state.masterColor.register,
   }));
   const dispatch = useAppDispatch();
+  const { colorPageNum } = useParams();
 
   const onSubmit = (data: any) => {
     console.log(data);
@@ -25,7 +27,13 @@ const ColorRegisterContainer = () => {
   useEffect(() => {
     if (checkStatus(colorAddresult.status)) {
       dispatch(masterColorActions.reset("register"));
-      dispatch(masterColorActions.findAll(false));
+      dispatch(
+        masterColorActions.pageColor({
+          isDesc: false,
+          page: colorPageNum,
+          size: 10,
+        })
+      );
       setModalVisible(true);
     }
   }, [colorAddresult]);

@@ -45,7 +45,7 @@ const ManagerMaster = ({ masterList, user }: masterProps) => {
           content={masterList.data}
           url="/admin/master/detail"
           moveKey={["info", "signInfo", "userId"]}
-          pagenation
+          // pagenation
         />
       </ManagerBlock>
     </>
