@@ -20,6 +20,9 @@ const SellChargeList = ({
   navigate,
   vendorId,
 }: SellChargeProps) => {
+  const { pageNum, isDesc } = JSON.parse(
+    sessionStorage.getItem("vendorPageInfo") || ""
+  );
   return (
     <>
       <SellChargeListBlock>
@@ -29,7 +32,7 @@ const SellChargeList = ({
               indicator={[
                 {
                   name: "판매사 관리 /",
-                  url: "/vendor/list",
+                  url: `/vendor/list?pageNum=${pageNum}&isDesc=${isDesc}`,
                 },
                 {
                   name: "상세정보 /",
@@ -67,7 +70,7 @@ const SellChargeList = ({
             typeof vendorId === "string" && vendorId
           }/sellFees/detail`}
           moveKey={["base", "id"]}
-          pagenation
+          // pagenation
         />
       </SellChargeListBlock>
     </>

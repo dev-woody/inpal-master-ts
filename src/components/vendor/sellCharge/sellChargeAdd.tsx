@@ -56,6 +56,10 @@ const SellChargeAdd = ({
       masterCharge: "",
     },
   });
+
+  const { pageNum, isDesc } = JSON.parse(
+    sessionStorage.getItem("vendorPageInfo") || ""
+  );
   return (
     <>
       <SellChargeAddBlock>
@@ -65,7 +69,7 @@ const SellChargeAdd = ({
               indicator={[
                 {
                   name: "판매사 관리 /",
-                  url: "/vendor/list",
+                  url: `/vendor/list?pageNum=${pageNum}&isDesc=${isDesc}`,
                 },
                 {
                   name: "상세정보 /",
@@ -77,7 +81,7 @@ const SellChargeAdd = ({
                 },
                 {
                   name: "수수료 등록",
-                  url: `/vendor/list/${vendorId}/sellFees/register`,
+                  url: ``,
                 },
               ]}
             />
@@ -125,15 +129,25 @@ const SellChargeAdd = ({
             />
           </Description>
           <ErrorMsg>{registerResult.message}</ErrorMsg>
-          <Button
-            type="submit"
-            needMarginTop
-            disabled={isSubmitting}
-            status="primary"
-            withInput
-          >
-            등록
-          </Button>
+          <div>
+            <Button
+              onClick={() => navigate(`/vendor/list/${vendorId}/sellFees`)}
+              type="button"
+              withInput
+              needMarginTop
+            >
+              뒤로가기
+            </Button>
+            <Button
+              type="submit"
+              needMarginTop
+              disabled={isSubmitting}
+              status="primary"
+              withInput
+            >
+              등록
+            </Button>
+          </div>
         </StyledForm>
         <Modal
           title="단위 등록"

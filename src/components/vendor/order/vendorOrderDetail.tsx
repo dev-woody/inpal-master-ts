@@ -30,9 +30,7 @@ type orderDetailProps = {
   setOrderStatus: response;
   onSubmit: (data: object) => void;
   navigate: NavigateFunction;
-  vendorPageNum: string | undefined;
   id: string | undefined;
-  orderPageNum: string | undefined;
   modalVisible: boolean;
   setModalVisible: (status: boolean) => void;
 };
@@ -48,9 +46,7 @@ const VendorOrderDetail = ({
   setOrderStatus,
   onSubmit,
   navigate,
-  vendorPageNum,
   id,
-  orderPageNum,
   modalVisible,
   setModalVisible,
 }: orderDetailProps) => {
@@ -70,6 +66,13 @@ const VendorOrderDetail = ({
     },
   });
 
+  const vendorPageInfo = JSON.parse(
+    sessionStorage.getItem("vendorPageInfo") || ""
+  );
+  const orderPageInfo = JSON.parse(
+    sessionStorage.getItem("orderPageInfo") || ""
+  );
+
   useEffect(() => {
     setValue("description", "");
     setValue("orderStatus", data?.orderStatus);
@@ -84,15 +87,15 @@ const VendorOrderDetail = ({
               indicator={[
                 {
                   name: "판매사 관리 /",
-                  url: `/vendor/list/${vendorPageNum}`,
+                  url: `/vendor/list?pageNum=${vendorPageInfo.pageNum}&isDesc=${vendorPageInfo.isDesc}`,
                 },
                 {
                   name: "상세정보 /",
-                  url: `/vendor/list/${vendorPageNum}/${id}`,
+                  url: `/vendor/list/${id}`,
                 },
                 {
                   name: "판매사 주문 관리 /",
-                  url: `/vendor/list/${vendorPageNum}/order/${id}/${orderPageNum}`,
+                  url: `/vendor/list/${id}/order?pageNum=${orderPageInfo.pageNum}&isDesc=${orderPageInfo.isDesc}`,
                 },
                 {
                   name: "상세정보",
@@ -272,12 +275,15 @@ const VendorOrderDetail = ({
         <Table
           columns={vendorOrderLogColumns}
           content={orderLog?.data}
+          //! 기록도 페이징처리 해야함.
+          // pagenation
+          // pageCount={countOrder.data}
           doNothing
         />
         <Button
           onClick={() =>
             navigate(
-              `/vendor/list/${vendorPageNum}/order/${id}/${orderPageNum}`
+              `/vendor/list/${id}/order?pageNum=${orderPageInfo.pageNum}&isDesc=${orderPageInfo.isDesc}`
             )
           }
           type="button"

@@ -58,7 +58,7 @@ const ColorAdd = ({
     },
   });
 
-  const { colorPageNum } = useParams();
+  const pageInfo = JSON.parse(sessionStorage.getItem("colorPageInfo") || "");
 
   const navigate = useNavigate();
   return (
@@ -70,7 +70,7 @@ const ColorAdd = ({
               indicator={[
                 {
                   name: "색상 관리 /",
-                  url: `/admin/color/${colorPageNum}`,
+                  url: `/admin/color?pageNum=${pageInfo.pageNum}&isDesc=${pageInfo.isDesc}`,
                 },
                 {
                   name: "색상코드 추가",
@@ -133,15 +133,29 @@ const ColorAdd = ({
             />
           </Description>
           <ErrorMsg>{colorAddresult.message}</ErrorMsg>
-          <Button
-            type="submit"
-            status="primary"
-            needMarginTop
-            withInput
-            disabled={isSubmitting}
-          >
-            색상 등록
-          </Button>
+          <div>
+            <Button
+              type="button"
+              needMarginTop
+              withInput
+              onClick={() =>
+                navigate(
+                  `/admin/color?pageNum=${pageInfo.pageNum}&isDesc=${pageInfo.isDesc}`
+                )
+              }
+            >
+              뒤로가기
+            </Button>
+            <Button
+              type="submit"
+              status="primary"
+              needMarginTop
+              withInput
+              disabled={isSubmitting}
+            >
+              색상 등록
+            </Button>
+          </div>
         </StyledForm>
         <Modal
           title="색상 추가"
@@ -149,7 +163,11 @@ const ColorAdd = ({
           submitMsg="확인"
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
-          action={() => navigate(`/admin/color/0`)}
+          action={() =>
+            navigate(
+              `/admin/color?pageNum=${pageInfo.pageNum}&isDesc=${pageInfo.isDesc}`
+            )
+          }
         />
       </ColorAddBlock>
     </>

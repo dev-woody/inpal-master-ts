@@ -51,7 +51,7 @@ const ManufacturerList = ({
           content={manufacturerList}
           url="/code/manufacturer/detail"
           moveKey={["base", "id"]}
-          pagenation
+          // pagenation
           filter
           filterInput={
             <>

@@ -4,24 +4,25 @@ import { Table } from "lib/styles/tableStyle";
 import { vendorOrderColumns } from "lib/columns/columnsList";
 import PageHeader from "lib/pages/pageHeader";
 import { response } from "types/globalTypes";
+import { useSearchParams } from "react-router-dom";
 
 const VendorOrderBlock = styled(Responsive)``;
 
 type VendorOrderType = {
   countOrder: response;
   orderList: response;
-  vendorPageNum: string | undefined;
   id: string | undefined;
-  orderPageNum: string | undefined;
 };
 
-const VendorOrder = ({
-  countOrder,
-  orderList,
-  vendorPageNum,
-  id,
-  orderPageNum,
-}: VendorOrderType) => {
+const VendorOrder = ({ countOrder, orderList, id }: VendorOrderType) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const newPageNum = Number(searchParams.get("pageNum") || "0");
+  const vendorPageInfo = JSON.parse(
+    sessionStorage.getItem("vendorPageInfo") || ""
+  );
+  const { pageNum, isDesc } = JSON.parse(
+    sessionStorage.getItem("orderPageInfo") || ""
+  );
   return (
     <>
       <VendorOrderBlock>
@@ -31,15 +32,15 @@ const VendorOrder = ({
               indicator={[
                 {
                   name: "판매사 관리 /",
-                  url: `/vendor/list/${vendorPageNum}`,
+                  url: `/vendor/list?pageNum=${vendorPageInfo.pageNum}&isDesc=${vendorPageInfo.isDesc}`,
                 },
                 {
                   name: "상세정보 /",
-                  url: `/vendor/list/${vendorPageNum}/${id}`,
+                  url: `/vendor/list/${id}`,
                 },
                 {
                   name: "판매사 주문 관리",
-                  url: "",
+                  url: `?pageNum=${pageNum}&isDesc=${isDesc}`,
                 },
               ]}
             />
@@ -50,8 +51,14 @@ const VendorOrder = ({
         <Table
           columns={vendorOrderColumns}
           content={orderList.data}
-          url={`/vendor/list/${vendorPageNum}/order/${id}/${orderPageNum}`}
-          nonPageUrl={`/vendor/list/${vendorPageNum}/order/${id}`}
+          url={`/vendor/list/${id}/order`}
+          searchParams={searchParams}
+          setSearchParams={(page: number) =>
+            setSearchParams({
+              pageNum: String(newPageNum + page),
+              isDesc: isDesc,
+            })
+          }
           moveKey={["base", "id"]}
           pagenation
           pageCount={countOrder.data}

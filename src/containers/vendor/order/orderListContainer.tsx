@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "reducers/reducerHooks";
 import VendorOrder from "components/vendor/order/vendorOrder";
 import { masterVendorActions } from "reducers/vendor/masterVendor";
@@ -9,33 +9,32 @@ const OrderListContainer = () => {
     orderList: store.masterVendor.pageOrder,
   }));
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const { vendorPageNum, id, orderPageNum } = useParams();
+  const { id } = useParams();
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
     dispatch(masterVendorActions.countOrder(id));
   }, []);
 
   useEffect(() => {
+    sessionStorage.setItem(
+      "orderPageInfo",
+      JSON.stringify({
+        pageNum: searchParams.get("pageNum"),
+        isDesc: searchParams.get("isDesc"),
+      })
+    );
     dispatch(
       masterVendorActions.pageOrder({
         vendorId: id,
-        isDesc: true,
+        page: searchParams.get("pageNum"),
+        isDesc: searchParams.get("isDesc"),
         size: 10,
-        page: orderPageNum,
       })
     );
-  }, [orderPageNum]);
+  }, [searchParams.get("pageNum"), searchParams.get("isDesc")]);
 
-  return (
-    <VendorOrder
-      countOrder={countOrder}
-      orderList={orderList}
-      vendorPageNum={vendorPageNum}
-      id={id}
-      orderPageNum={orderPageNum}
-    />
-  );
+  return <VendorOrder countOrder={countOrder} orderList={orderList} id={id} />;
 };
 
 export default OrderListContainer;

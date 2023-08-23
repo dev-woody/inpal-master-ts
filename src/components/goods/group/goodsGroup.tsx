@@ -2,7 +2,7 @@ import { ColumnsType } from "lib/columns/columnsList";
 import PageHeader from "lib/pages/pageHeader";
 import { BreadCrumb, Responsive, StyledSelect } from "lib/styles";
 import { Table } from "lib/styles/tableStyle";
-import { useParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import { response } from "types/globalTypes";
 
@@ -19,7 +19,11 @@ const GoodsGroup = ({
   goodsGroup,
   groupColumns,
 }: groupProps) => {
-  const { goodsGroupPageNum } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const newPageNum = Number(searchParams.get("pageNum") || "0");
+  const { pageNum, isDesc } = JSON.parse(
+    sessionStorage.getItem("groupPageInfo") || ""
+  );
   return (
     <>
       <GoodsGroupBlock>
@@ -29,7 +33,7 @@ const GoodsGroup = ({
               indicator={[
                 {
                   name: "상품그룹 관리",
-                  url: "/goods/group",
+                  url: `/goods/group?pageNum=${pageNum}&isDesc=${isDesc}`,
                 },
               ]}
             />
@@ -40,11 +44,18 @@ const GoodsGroup = ({
         <Table
           columns={groupColumns}
           content={goodsGroup?.data}
-          url={`/goods/group/${goodsGroupPageNum}`}
-          nonPageUrl={`/goods/group`}
+          url={`/goods/group`}
+          searchParams={searchParams}
+          setSearchParams={(page: number) =>
+            setSearchParams({
+              pageNum: String(newPageNum + page),
+              isDesc: isDesc,
+            })
+          }
           moveKey={["base", "id"]}
           pagenation
           pageCount={countGoodsGroup.data}
+          //! 클릭시 리스트로 조회 할 수 있도록 변경하기
         />
       </GoodsGroupBlock>
     </>

@@ -51,7 +51,7 @@ const PropertyList = ({
           content={propertyList.data}
           url="/code/property/detail"
           moveKey={["base", "id"]}
-          pagenation
+          // pagenation
           filter
           filterInput={
             <>

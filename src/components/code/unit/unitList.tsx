@@ -53,7 +53,7 @@ const UnitList = ({
           content={unitList.data}
           url="/code/unit/detail"
           moveKey={["base", "id"]}
-          pagenation
+          // pagenation
           filter
           filterInput={
             <>

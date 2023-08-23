@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "reducers/reducerHooks";
 import { masterVendorActions } from "reducers/vendor/masterVendor";
 import VendorList from "components/vendor/list/vendorList";
-import { useParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 const VendorContainer = () => {
   const { countVendor, vendorList } = useAppSelector((store) => ({
@@ -10,26 +10,33 @@ const VendorContainer = () => {
     vendorList: store.masterVendor.pageVendor,
   }));
   const dispatch = useAppDispatch();
-  const { vendorPageNum } = useParams();
+  const [searchParams] = useSearchParams();
+
   useEffect(() => {
+    dispatch(masterVendorActions.countVendor({}));
+  }, []);
+
+  useEffect(() => {
+    sessionStorage.setItem(
+      "vendorPageInfo",
+      JSON.stringify({
+        pageNum: searchParams.get("pageNum"),
+        isDesc: searchParams.get("isDesc"),
+      })
+    );
     dispatch(
       masterVendorActions.pageVendor({
-        isDesc: false,
-        page: vendorPageNum,
+        isDesc: searchParams.get("isDesc"),
+        page: searchParams.get("pageNum"),
         size: 10,
       })
     );
     return () => {
       dispatch(masterVendorActions.reset("pageVendor"));
     };
-  }, []);
-  return (
-    <VendorList
-      countVendor={countVendor}
-      vendorList={vendorList}
-      vendorPageNum={vendorPageNum}
-    />
-  );
+  }, [searchParams.get("pageNum"), searchParams.get("isDesc")]);
+
+  return <VendorList countVendor={countVendor} vendorList={vendorList} />;
 };
 
 export default VendorContainer;

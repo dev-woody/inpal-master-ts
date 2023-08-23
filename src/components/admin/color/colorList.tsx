@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { BreadCrumb, Button, Responsive } from "lib/styles";
 import { Table } from "lib/styles/tableStyle";
 import PageHeader from "lib/pages/pageHeader";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { colorColumns } from "lib/columns/columnsList";
 import { response } from "types/globalTypes";
 
@@ -11,11 +11,16 @@ const ColorListBlock = styled(Responsive)``;
 type colorListProps = {
   countColor: response;
   colorList: response;
-  colorPageNum: string | undefined;
 };
 
-const ColorList = ({ countColor, colorList, colorPageNum }: colorListProps) => {
+const ColorList = ({ countColor, colorList }: colorListProps) => {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const newPageNum = Number(searchParams.get("pageNum") || "0");
+  const { pageNum, isDesc } = JSON.parse(
+    sessionStorage.getItem("colorPageInfo") || ""
+  );
   return (
     <>
       <ColorListBlock>
@@ -25,14 +30,16 @@ const ColorList = ({ countColor, colorList, colorPageNum }: colorListProps) => {
               indicator={[
                 {
                   name: "색상 관리",
-                  url: "",
+                  url: `?pageNum=${pageNum}&isDesc=${isDesc}`,
                 },
               ]}
             />
           }
           extra={
             <Button
-              onClick={() => navigate(`/admin/color/${colorPageNum}/register`)}
+              onClick={() => {
+                navigate(`/admin/color/register`);
+              }}
             >
               색상코드 등록
             </Button>
@@ -43,8 +50,14 @@ const ColorList = ({ countColor, colorList, colorPageNum }: colorListProps) => {
         <Table
           columns={colorColumns}
           content={colorList.data}
-          url={`/admin/color/${colorPageNum}/detail`}
-          nonPageUrl={`/admin/color/${colorPageNum}/detail`}
+          url={`/admin/color/detail`}
+          searchParams={searchParams}
+          setSearchParams={(page: number) =>
+            setSearchParams({
+              pageNum: String(newPageNum + page),
+              isDesc: isDesc,
+            })
+          }
           moveKey={["info", "name"]}
           pagenation
           pageCount={countColor.data}

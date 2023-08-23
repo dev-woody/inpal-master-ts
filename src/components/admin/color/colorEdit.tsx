@@ -55,7 +55,9 @@ const ColorEdit = ({
     },
   });
 
-  const { colorPageNum } = useParams();
+  const { pageNum, isDesc } = JSON.parse(
+    sessionStorage.getItem("vendorPageInfo") || ""
+  );
 
   useEffect(() => {
     setValue("name", colorFindByName.data?.info.name);
@@ -71,7 +73,7 @@ const ColorEdit = ({
               indicator={[
                 {
                   name: "색상 관리 /",
-                  url: `/admin/color/${colorPageNum}`,
+                  url: `/admin/color?pageNum=${pageNum}&isDesc=${isDesc}`,
                 },
                 {
                   name: "상세조회",
@@ -125,7 +127,9 @@ const ColorEdit = ({
               type="button"
               needMarginTop
               withInput
-              onClick={() => navigate(`/admin/color/${colorPageNum}`)}
+              onClick={() =>
+                navigate(`/admin/color?pageNum=${pageNum}&isDesc=${isDesc}`)
+              }
             >
               뒤로가기
             </Button>
@@ -134,7 +138,7 @@ const ColorEdit = ({
               status="primary"
               withInput
               needMarginTop
-              // disabled={isSubmitting}
+              disabled={isSubmitting}
             >
               수정
             </Button>
@@ -146,7 +150,6 @@ const ColorEdit = ({
           submitMsg="확인"
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
-          // action={() => navigate(`/admin/color`)}
         />
       </ColorEditBlock>
     </>

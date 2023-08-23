@@ -2,6 +2,7 @@ import { vendorAllListColumns } from "lib/columns/columnsList";
 import PageHeader from "lib/pages/pageHeader";
 import { BreadCrumb, Responsive } from "lib/styles";
 import { Table } from "lib/styles/tableStyle";
+import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import { response } from "types/globalTypes";
 
@@ -10,14 +11,15 @@ const VendorBlockList = styled(Responsive)``;
 type VendorListType = {
   countVendor: response;
   vendorList: response;
-  vendorPageNum: string | undefined;
 };
 
-const VendorList = ({
-  countVendor,
-  vendorList,
-  vendorPageNum,
-}: VendorListType) => {
+const VendorList = ({ countVendor, vendorList }: VendorListType) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const newPageNum = Number(searchParams.get("pageNum") || "0");
+  const { pageNum, isDesc } = JSON.parse(
+    sessionStorage.getItem("vendorPageInfo") || ""
+  );
   return (
     <>
       <VendorBlockList>
@@ -27,7 +29,7 @@ const VendorList = ({
               indicator={[
                 {
                   name: "판매사 관리",
-                  url: "/vendor/list",
+                  url: `?pageNum=${pageNum}&isDesc=${isDesc}`,
                 },
               ]}
             />
@@ -38,8 +40,14 @@ const VendorList = ({
         <Table
           columns={vendorAllListColumns}
           content={vendorList.data}
-          url={`/vendor/list/${vendorPageNum}`}
-          nonPageUrl={`/vendor/list`}
+          url={`/vendor/list`}
+          searchParams={searchParams}
+          setSearchParams={(page: number) =>
+            setSearchParams({
+              pageNum: String(newPageNum + page),
+              isDesc: isDesc,
+            })
+          }
           moveKey={["base", "id"]}
           pagenation
           pageCount={countVendor.data}

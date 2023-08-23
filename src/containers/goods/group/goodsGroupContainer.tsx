@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "reducers/reducerHooks";
 import GoodsGroup from "components/goods/group/goodsGroup";
 import { ColumnsType } from "lib/columns/columnsList";
@@ -13,24 +13,31 @@ const GoodsGroupContainer = () => {
   }));
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { goodsGroupPageNum } = useParams();
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
     dispatch(masterGoodsGroupActions.countGoodsGroup({}));
   }, []);
 
   useEffect(() => {
+    sessionStorage.setItem(
+      "groupPageInfo",
+      JSON.stringify({
+        pageNum: searchParams.get("pageNum"),
+        isDesc: searchParams.get("isDesc"),
+      })
+    );
     dispatch(
       masterGoodsGroupActions.pageGoodsGroup({
-        isDesc: false,
-        page: goodsGroupPageNum,
+        page: searchParams.get("pageNum"),
+        isDesc: searchParams.get("isDesc"),
         size: 10,
       })
     );
     return () => {
       dispatch(masterGoodsGroupActions.reset("pageGoodsGroup"));
     };
-  }, [goodsGroupPageNum]);
+  }, [searchParams.get("pageNum"), searchParams.get("isDesc")]);
 
   const groupColumns: ColumnsType[] = [
     {

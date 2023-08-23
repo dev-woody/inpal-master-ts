@@ -40,22 +40,16 @@ const VendorDetail = ({
   modalVisible,
   setModalVisible,
 }: detailProps) => {
-  const basicInfo = vendor?.vendorInfo?.basicInfo;
-  const productList = basicInfo?.sellProducts;
-  const allProductList = () => {
-    let listName = [];
-    for (let i = 0; i < productList?.length; i++) {
-      listName.push(productList[i].product.name);
-    }
-    return listName.join(", ");
-  };
-
   const {
     register,
     handleSubmit,
     setValue,
     formState: { isSubmitting },
   } = useForm();
+
+  const { pageNum, isDesc } = JSON.parse(
+    sessionStorage.getItem("vendorPageInfo") || ""
+  );
 
   return (
     <Fragment>
@@ -66,7 +60,7 @@ const VendorDetail = ({
               indicator={[
                 {
                   name: "판매사 관리 /",
-                  url: `/vendor/list/${vendorPageNum}`,
+                  url: `/vendor/list?pageNum=${pageNum}&isDesc=${isDesc}`,
                 },
                 {
                   name: "상세정보",
@@ -117,7 +111,9 @@ const VendorDetail = ({
                 <Button
                   onClick={() => {
                     if (typeof id === "string") {
-                      navigate(`/vendor/list/${vendorPageNum}/order/${id}/0`);
+                      navigate(
+                        `/vendor/list/${id}/order?pageNum=0&isDesc=false`
+                      );
                     }
                   }}
                 >
@@ -153,7 +149,9 @@ const VendorDetail = ({
                 needMarginTop
                 withInput
                 disabled={isSubmitting}
-                onClick={() => navigate(`/vendor/list/${vendorPageNum}`)}
+                onClick={() =>
+                  navigate(`/vendor/list?pageNum=${pageNum}&isDesc=${isDesc}`)
+                }
               >
                 뒤로가기
               </Button>

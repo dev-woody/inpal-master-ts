@@ -172,7 +172,8 @@ export const Table = (props: propsTypes) => {
     columns,
     content,
     url,
-    nonPageUrl,
+    searchParams,
+    setSearchParams,
     moveKey,
     pagenation,
     pageCount,
@@ -184,7 +185,7 @@ export const Table = (props: propsTypes) => {
     filterInput,
   } = props;
   const navigate = useNavigate();
-  const nowPage = Number(window.location.pathname.split("/").at(-1));
+  const nowPage = Number(searchParams?.get("pageNum") || "0");
   const [isDesc, setIsDesc] = useState<boolean>(false);
   const [currPage, setCurrPage] = useState(nowPage);
   const [selectedRow, setSelectedRow] = useState<string>("");
@@ -223,7 +224,7 @@ export const Table = (props: propsTypes) => {
       <PageNationBlock>
         <PageNationButton
           onClick={() => {
-            navigate(nonPageUrl + `/${nowPage - 1}`);
+            setSearchParams(-1);
             // setCurrPage(nowPage - 2);
           }}
           disabled={nowPage === 0}
@@ -237,7 +238,7 @@ export const Table = (props: propsTypes) => {
                 key={i}
                 isFocus={nowPage === i && pageCount > limit}
                 disabled={pageCount <= limit}
-                onClick={() => navigate(nonPageUrl + `/${i}`)}
+                onClick={() => setSearchParams(-(nowPage - i))}
               >
                 {i + 1}
               </PageNationButton>
@@ -250,7 +251,7 @@ export const Table = (props: propsTypes) => {
         )}
         <PageNationButton
           onClick={() => {
-            navigate(nonPageUrl + `/${nowPage + 1}`);
+            setSearchParams(1);
             // setCurrPage(nowPage);
           }}
           disabled={nowPage + 1 === numPages}

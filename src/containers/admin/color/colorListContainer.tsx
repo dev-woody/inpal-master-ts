@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "reducers/reducerHooks";
 import ColorList from "components/admin/color/colorList";
 import { masterColorActions } from "reducers/admin/masterColor";
-import { useParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 const ColorListContainer = () => {
   const { countColor, colorList } = useAppSelector((store) => ({
@@ -10,32 +10,33 @@ const ColorListContainer = () => {
     colorList: store.masterColor.pageColor,
   }));
   const dispatch = useAppDispatch();
-  const { colorPageNum } = useParams();
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
     dispatch(masterColorActions.countColor({}));
   }, []);
 
   useEffect(() => {
+    sessionStorage.setItem(
+      "colorPageInfo",
+      JSON.stringify({
+        pageNum: searchParams.get("pageNum"),
+        isDesc: searchParams.get("isDesc"),
+      })
+    );
     dispatch(
       masterColorActions.pageColor({
-        isDesc: false,
-        page: colorPageNum,
+        isDesc: searchParams.get("isDesc"),
+        page: searchParams.get("pageNum"),
         size: 10,
       })
     );
     return () => {
       dispatch(masterColorActions.reset("pageColor"));
     };
-  }, [colorPageNum]);
+  }, [searchParams.get("pageNum"), searchParams.get("isDesc")]);
 
-  return (
-    <ColorList
-      countColor={countColor}
-      colorList={colorList}
-      colorPageNum={colorPageNum}
-    />
-  );
+  return <ColorList countColor={countColor} colorList={colorList} />;
 };
 
 export default ColorListContainer;

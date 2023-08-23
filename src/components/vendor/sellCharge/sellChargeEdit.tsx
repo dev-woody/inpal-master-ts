@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import {
+  BreadCrumb,
   Button,
   Description,
   DescriptionContent,
@@ -62,76 +63,108 @@ const SellChargeEdit = ({
     setValue("charge", data?.productNumInfo?.masterCharge);
   }, [sellChargeDetail]);
 
+  const { pageNum, isDesc } = JSON.parse(
+    sessionStorage.getItem("vendorPageInfo") || ""
+  );
+
   return (
-    <SellChargeEditBlock>
-      <PageHeader title="판매 수수료 조회" />
-      <StyledForm
-        onSubmit={handleSubmit(
-          (data) => onSubmit(data),
-          (errors) => console.log(errors)
-        )}
-      >
-        <Description>
-          <DescriptionContent
-            label="품목명"
-            content={data?.productNumInfo?.product?.info?.nameKr}
-          />
-          <DescriptionContent
-            label="판매 수수료"
-            content={
-              <StyledInput
-                align="vertical"
-                placeholder="판매 수수료"
-                label="charge"
-                register={register}
-                errors={errors}
-                status={errors.charge}
-              />
-            }
-          />
-          <DescriptionContent
-            label="등록일"
-            content={changeDays(data?.base?.createdAt)}
-          />
-          <DescriptionContent
-            label="수정일"
-            content={changeDays(data?.base?.updatedAt)}
-          />
-        </Description>
-        <ErrorMsg>{updateResult.message}</ErrorMsg>
-        <div>
-          <Button
-            type="button"
-            needMarginTop
-            withInput
-            onClick={() => navigate(`/vendor/list/${vendorId}/sellFees`)}
-          >
-            뒤로가기
-          </Button>
-          <Button
-            type="submit"
-            status="primary"
-            needMarginTop
-            disabled={isSubmitting}
-            withInput
-          >
-            확인
-          </Button>
-        </div>
-      </StyledForm>
-      <Modal
-        title="판매 수수료 수정"
-        msg="판매 수수료 수정을 완료하였습니다."
-        submitMsg="확인"
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-        // action={() => {
-        //   if (typeof vendorId === "string") {
-        //     navigate(`/vendor/list/${vendorId}/sellFees`);
-        //   }
-        // }}
-      />
-    </SellChargeEditBlock>
+    <>
+      <SellChargeEditBlock>
+        <PageHeader
+          breadCrumb={
+            <BreadCrumb
+              indicator={[
+                {
+                  name: "판매사 관리 /",
+                  url: `/vendor/list?pageNum=${pageNum}&isDesc=${isDesc}`,
+                },
+                {
+                  name: "상세정보 /",
+                  url: `/vendor/list/${vendorId}`,
+                },
+                {
+                  name: "판매 수수료 /",
+                  url: `/vendor/list/${vendorId}/sellFees`,
+                },
+                {
+                  name: "수수료 조회",
+                  url: ``,
+                },
+              ]}
+            />
+          }
+        />
+      </SellChargeEditBlock>
+      <SellChargeEditBlock>
+        <PageHeader title="판매 수수료 조회" />
+        <StyledForm
+          onSubmit={handleSubmit(
+            (data) => onSubmit(data),
+            (errors) => console.log(errors)
+          )}
+        >
+          <Description>
+            <DescriptionContent
+              label="품목명"
+              content={data?.productNumInfo?.product?.info?.nameKr}
+            />
+            <DescriptionContent
+              label="판매 수수료"
+              content={
+                <StyledInput
+                  align="vertical"
+                  placeholder="판매 수수료"
+                  label="charge"
+                  register={register}
+                  errors={errors}
+                  status={errors.charge}
+                />
+              }
+            />
+            <DescriptionContent
+              label="등록일"
+              content={changeDays(data?.base?.createdAt)}
+            />
+            <DescriptionContent
+              label="수정일"
+              content={changeDays(data?.base?.updatedAt)}
+            />
+          </Description>
+          <ErrorMsg>{updateResult.message}</ErrorMsg>
+          <div>
+            <Button
+              type="button"
+              needMarginTop
+              withInput
+              onClick={() => navigate(`/vendor/list/${vendorId}/sellFees`)}
+            >
+              뒤로가기
+            </Button>
+            <Button
+              type="submit"
+              status="primary"
+              needMarginTop
+              disabled={isSubmitting}
+              withInput
+            >
+              확인
+            </Button>
+          </div>
+        </StyledForm>
+        <Modal
+          title="판매 수수료 수정"
+          msg="판매 수수료 수정을 완료하였습니다."
+          submitMsg="확인"
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+          // action={() => {
+          //   if (typeof vendorId === "string") {
+          //     navigate(`/vendor/list/${vendorId}/sellFees`);
+          //   }
+          // }}
+        />
+      </SellChargeEditBlock>
+    </>
   );
 };
 
