@@ -2,7 +2,7 @@ import { itemColumns } from "lib/columns/columnsList";
 import PageHeader from "lib/pages/pageHeader";
 import { Responsive } from "lib/styles";
 import { Table } from "lib/styles/tableStyle";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import { response } from "types/globalTypes";
 
@@ -10,10 +10,14 @@ const GoodsItemBlock = styled(Responsive)``;
 
 type itemProps = {
   itemList: response;
+  countGoodsItem: response;
 };
 
-const GoodsItem = ({ itemList }: itemProps) => {
+const GoodsItem = ({ itemList, countGoodsItem }: itemProps) => {
   const { id } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const newPageNum = Number(searchParams.get("pageNum") || "0");
+  const { isDesc } = JSON.parse(sessionStorage.getItem("itemPageInfo") || "{}");
   return (
     <GoodsItemBlock>
       <PageHeader title="상품아이템 조회" />
@@ -21,8 +25,16 @@ const GoodsItem = ({ itemList }: itemProps) => {
         columns={itemColumns}
         content={itemList.data}
         url={`/goods/group/${id}/item`}
+        searchParams={searchParams}
+        setSearchParams={(page: number) =>
+          setSearchParams({
+            pageNum: String(newPageNum + page),
+            isDesc: isDesc,
+          })
+        }
         moveKey={["base", "id"]}
         pagenation
+        pageCount={countGoodsItem.data}
       />
     </GoodsItemBlock>
   );

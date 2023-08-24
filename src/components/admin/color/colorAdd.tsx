@@ -58,7 +58,7 @@ const ColorAdd = ({
     },
   });
 
-  const pageInfo = JSON.parse(sessionStorage.getItem("colorPageInfo") || "");
+  const pageInfo = JSON.parse(sessionStorage.getItem("colorPageInfo") || "{}");
 
   const navigate = useNavigate();
   return (

@@ -18,7 +18,12 @@ type groupDetailProps = {
 
 const GoodsGroupDetail = ({ groupDetail, navigate }: groupDetailProps) => {
   const data = groupDetail?.data;
-  const { goodsGroupPageNum } = useParams();
+  const { pageNum, isDesc } = JSON.parse(
+    sessionStorage.getItem("groupPageInfo") || "{}"
+  );
+  const itemPageInfo = JSON.parse(
+    sessionStorage.getItem("itemPageInfo") || "{}"
+  );
   const {
     register,
     handleSubmit,
@@ -42,11 +47,11 @@ const GoodsGroupDetail = ({ groupDetail, navigate }: groupDetailProps) => {
               indicator={[
                 {
                   name: "상품그룹 관리 /",
-                  url: `/goods/group/${goodsGroupPageNum}`,
+                  url: `/goods/group?pageNum=${pageNum}&isDesc=${isDesc}`,
                 },
                 {
-                  name: "상세정보",
-                  url: "",
+                  name: "상세정보 및 수정",
+                  url: `?pageNum=${itemPageInfo.pageNum}&isDesc=${itemPageInfo.isDesc}`,
                 },
               ]}
             />

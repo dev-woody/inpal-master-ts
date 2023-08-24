@@ -103,7 +103,7 @@ const DealerDetail = ({
                 ) : (
                   <StyledSelect
                     align="vertical"
-                    placeholder={changeStatus(data?.bizStatus) || ""}
+                    placeholder={changeStatus(data?.bizStatus) || "{}"}
                     optionList={statusOption}
                     label="bizStatus"
                     register={register}

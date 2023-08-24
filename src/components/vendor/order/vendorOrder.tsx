@@ -18,10 +18,10 @@ const VendorOrder = ({ countOrder, orderList, id }: VendorOrderType) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const newPageNum = Number(searchParams.get("pageNum") || "0");
   const vendorPageInfo = JSON.parse(
-    sessionStorage.getItem("vendorPageInfo") || ""
+    sessionStorage.getItem("vendorPageInfo") || "{}"
   );
   const { pageNum, isDesc } = JSON.parse(
-    sessionStorage.getItem("orderPageInfo") || ""
+    sessionStorage.getItem("orderPageInfo") || "{}"
   );
   return (
     <>

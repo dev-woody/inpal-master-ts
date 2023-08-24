@@ -19,7 +19,7 @@ const ColorList = ({ countColor, colorList }: colorListProps) => {
 
   const newPageNum = Number(searchParams.get("pageNum") || "0");
   const { pageNum, isDesc } = JSON.parse(
-    sessionStorage.getItem("colorPageInfo") || ""
+    sessionStorage.getItem("colorPageInfo") || "{}"
   );
   return (
     <>

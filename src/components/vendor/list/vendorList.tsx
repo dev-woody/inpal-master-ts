@@ -18,7 +18,7 @@ const VendorList = ({ countVendor, vendorList }: VendorListType) => {
 
   const newPageNum = Number(searchParams.get("pageNum") || "0");
   const { pageNum, isDesc } = JSON.parse(
-    sessionStorage.getItem("vendorPageInfo") || ""
+    sessionStorage.getItem("vendorPageInfo") || "{}"
   );
   return (
     <>

@@ -1,17 +1,9 @@
 import { Description, DescriptionContent } from "lib/styles/descriptionStyles";
 import PageHeader from "lib/pages/pageHeader";
 import { BreadCrumb, Button, Responsive, Table } from "lib/styles";
-import { StyledSelect } from "lib/styles";
 import styled from "styled-components";
-import { testItemData } from "types/data.test";
-import {
-  changeDays,
-  changeOpenStatus,
-  changeSellStatus,
-} from "lib/functions/changeInput";
-import { useForm } from "react-hook-form";
-import { sellStatusOption } from "lib/columns/statusColumns";
-import { NavigateFunction } from "react-router-dom";
+import { changeDays, changeSellStatus } from "lib/functions/changeInput";
+import { NavigateFunction, useSearchParams } from "react-router-dom";
 import { response } from "types/globalTypes";
 import { ColumnsType } from "lib/columns/columnsList";
 
@@ -20,6 +12,7 @@ const GoodsItemDetailBlock = styled(Responsive)``;
 type itemDetailProps = {
   itemInfo: response;
   evaluationList: response;
+  countReview: response;
   evaluationColumn: ColumnsType[];
   navigate: NavigateFunction;
   id: string | undefined;
@@ -29,13 +22,16 @@ type itemDetailProps = {
 const GoodsItemDetail = ({
   itemInfo,
   evaluationList,
+  countReview,
   evaluationColumn,
   navigate,
   id,
   itemId,
 }: itemDetailProps) => {
   const data = itemInfo.data;
-  const { register, handleSubmit, setValue } = useForm();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const newPageNum = Number(searchParams.get("pageNum") || "0");
+  const { isDesc } = JSON.parse(sessionStorage.getItem("itemPageInfo") || "{}");
 
   const priceNumsCol: ColumnsType[] = [
     {
@@ -61,6 +57,10 @@ const GoodsItemDetail = ({
         info.specNum.info.spec.info.unit.info.nameEn,
     },
   ];
+
+  const groupPageInfo = JSON.parse(
+    sessionStorage.getItem("groupPageInfo") || "{}"
+  );
   return (
     <>
       <GoodsItemDetailBlock>
@@ -70,7 +70,7 @@ const GoodsItemDetail = ({
               indicator={[
                 {
                   name: "상품그룹 관리 /",
-                  url: "/goods/group",
+                  url: `/goods/group?pageNum=${groupPageInfo.pageNum}&isDesc=${groupPageInfo.isDesc}`,
                 },
                 {
                   name: "상세정보 및 수정 /",
@@ -139,8 +139,16 @@ const GoodsItemDetail = ({
           columns={evaluationColumn}
           content={evaluationList?.data}
           url={`/goods/group/${id}/item/${itemId}`}
+          searchParams={searchParams}
+          setSearchParams={(page: number) =>
+            setSearchParams({
+              pageNum: String(newPageNum + page),
+              isDesc: isDesc,
+            })
+          }
           moveKey={["base", "id"]}
           pagenation
+          pageCount={countReview.data}
         />
         <Button
           type="button"

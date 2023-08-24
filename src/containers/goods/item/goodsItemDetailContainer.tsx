@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "reducers/reducerHooks";
 import GoodsItemDetail from "components/goods/item/goodsItemDetail";
 import { masterGoodsItemActions } from "reducers/goods/goodsItem";
@@ -9,16 +14,17 @@ import { masterGoodsEvaluationActions } from "reducers/goods/goodsEvaluation";
 import { StyledToggle } from "lib/styles";
 
 const GoodsItemDetailContainer = () => {
-  const { itemInfo, evaluationList, setOpenStatus } = useAppSelector(
-    (store) => ({
+  const { itemInfo, countReview, evaluationList, setOpenStatus } =
+    useAppSelector((store) => ({
       itemInfo: store.masterGoodsItem.findById,
-      evaluationList: store.masterGoodsEvaluation.findByGoodItemId,
+      countReview: store.masterGoodsEvaluation.countReview,
+      evaluationList: store.masterGoodsEvaluation.pageReview,
       setOpenStatus: store.masterGoodsEvaluation.setOpenStatus,
-    })
-  );
+    }));
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { id, itemId } = useParams();
+  const [searchParams] = useSearchParams();
 
   const onSetStatus = (data: any) => {
     dispatch(masterGoodsEvaluationActions.setOpenStatus({ ...data }));
@@ -69,9 +75,11 @@ const GoodsItemDetailContainer = () => {
   useEffect(() => {
     if (checkStatus(setOpenStatus.status)) {
       dispatch(
-        masterGoodsEvaluationActions.findByGoodItemId({
+        masterGoodsEvaluationActions.pageReview({
           goodItemId: itemId,
-          isDesc: false,
+          page: searchParams.get("pageNum"),
+          isDesc: searchParams.get("isDesc"),
+          size: 10,
         })
       );
       dispatch(masterGoodsEvaluationActions.reset("setOpenStatus"));
@@ -80,18 +88,29 @@ const GoodsItemDetailContainer = () => {
 
   useEffect(() => {
     if (checkStatus(itemInfo.status)) {
+      sessionStorage.setItem(
+        "reviewPageInfo",
+        JSON.stringify({
+          pageNum: searchParams.get("pageNum"),
+          isDesc: searchParams.get("isDesc"),
+        })
+      );
       dispatch(
-        masterGoodsEvaluationActions.findByGoodItemId({
+        masterGoodsEvaluationActions.pageReview({
           goodItemId: itemId,
-          isDesc: false,
+          page: searchParams.get("pageNum"),
+          isDesc: searchParams.get("isDesc"),
+          size: 10,
         })
       );
       dispatch(masterGoodsEvaluationActions.reset("itemInfo"));
     }
-  }, [itemInfo]);
+  }, [itemInfo, searchParams.get("pageNum"), searchParams.get("isDesc")]);
 
   useEffect(() => {
+    navigate(`?pageNum=0&isDesc=false`);
     dispatch(masterGoodsItemActions.findById(itemId));
+    dispatch(masterGoodsEvaluationActions.countReview(itemId));
     return () => {
       dispatch(masterGoodsItemActions.reset("findById"));
     };
@@ -100,6 +119,7 @@ const GoodsItemDetailContainer = () => {
   return (
     <GoodsItemDetail
       itemInfo={itemInfo}
+      countReview={countReview}
       evaluationList={evaluationList}
       evaluationColumn={evaluationColumn}
       navigate={navigate}

@@ -67,10 +67,10 @@ const VendorOrderDetail = ({
   });
 
   const vendorPageInfo = JSON.parse(
-    sessionStorage.getItem("vendorPageInfo") || ""
+    sessionStorage.getItem("vendorPageInfo") || "{}"
   );
   const orderPageInfo = JSON.parse(
-    sessionStorage.getItem("orderPageInfo") || ""
+    sessionStorage.getItem("orderPageInfo") || "{}"
   );
 
   useEffect(() => {

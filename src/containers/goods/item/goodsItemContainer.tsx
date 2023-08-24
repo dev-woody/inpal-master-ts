@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "reducers/reducerHooks";
 import GoodsItem from "components/goods/item/goodsItem";
 import { masterGoodsItemActions } from "reducers/goods/goodsItem";
@@ -11,25 +11,35 @@ const GoodsItemContainer = () => {
   }));
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { goodsGroupPageNum, id, pageGoodsItem } = useParams();
+  const { id } = useParams();
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    dispatch(masterGoodsItemActions.countGoodsItem({ goodsGroupId: id }));
+    dispatch(masterGoodsItemActions.countGoodsItem({ goodGroupId: id }));
   }, []);
 
   useEffect(() => {
+    sessionStorage.setItem(
+      "itemPageInfo",
+      JSON.stringify({
+        pageNum: searchParams.get("pageNum"),
+        isDesc: searchParams.get("isDesc"),
+      })
+    );
     dispatch(
       masterGoodsItemActions.pageGoodsItem({
         goodGroupId: id,
-        isDesc: false,
+        page: searchParams.get("pageNum"),
+        isDesc: searchParams.get("isDesc"),
+        size: 10,
       })
     );
     return () => {
       dispatch(masterGoodsItemActions.reset("pageGoodsItem"));
     };
-  }, []);
+  }, [searchParams.get("pageNum"), searchParams.get("isDesc")]);
 
-  return <GoodsItem itemList={itemList} />;
+  return <GoodsItem itemList={itemList} countGoodsItem={countGoodsItem} />;
 };
 
 export default GoodsItemContainer;

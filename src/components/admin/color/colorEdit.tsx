@@ -56,7 +56,7 @@ const ColorEdit = ({
   });
 
   const { pageNum, isDesc } = JSON.parse(
-    sessionStorage.getItem("vendorPageInfo") || ""
+    sessionStorage.getItem("vendorPageInfo") || "{}"
   );
 
   useEffect(() => {

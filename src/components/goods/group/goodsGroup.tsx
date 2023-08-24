@@ -22,7 +22,7 @@ const GoodsGroup = ({
   const [searchParams, setSearchParams] = useSearchParams();
   const newPageNum = Number(searchParams.get("pageNum") || "0");
   const { pageNum, isDesc } = JSON.parse(
-    sessionStorage.getItem("groupPageInfo") || ""
+    sessionStorage.getItem("groupPageInfo") || "{}"
   );
   return (
     <>
@@ -55,7 +55,6 @@ const GoodsGroup = ({
           moveKey={["base", "id"]}
           pagenation
           pageCount={countGoodsGroup.data}
-          //! 클릭시 리스트로 조회 할 수 있도록 변경하기
         />
       </GoodsGroupBlock>
     </>

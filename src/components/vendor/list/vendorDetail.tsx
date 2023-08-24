@@ -48,7 +48,7 @@ const VendorDetail = ({
   } = useForm();
 
   const { pageNum, isDesc } = JSON.parse(
-    sessionStorage.getItem("vendorPageInfo") || ""
+    sessionStorage.getItem("vendorPageInfo") || "{}"
   );
 
   return (

@@ -11,6 +11,8 @@ import createAsyncReducers, {
 const initialState: ResponseData = {
   findById: {},
   findByGoodItemId: {},
+  countReview: {},
+  pageReview: {},
   setOpenStatus: {},
 };
 
@@ -27,6 +29,20 @@ export function* masterGoodsEvaluationSaga() {
     createRequestSaga(
       "masterGoodsEvaluation/findByGoodItemId",
       goodsEvaluationAPI.findByGoodItemId
+    )
+  );
+  yield takeLatest(
+    masterGoodsEvaluationActions.countReview,
+    createRequestSaga(
+      "masterGoodsEvaluation/countReview",
+      goodsEvaluationAPI.countReview
+    )
+  );
+  yield takeLatest(
+    masterGoodsEvaluationActions.pageReview,
+    createRequestSaga(
+      "masterGoodsEvaluation/pageReview",
+      goodsEvaluationAPI.pageReview
     )
   );
   yield takeLatest(
@@ -50,6 +66,14 @@ const masterGoodsEvaluation = createSlice({
     ...createAsyncReducers({
       actionName: "findByGoodItemId",
       reducerName: "findByGoodItemId",
+    })<any, DataForm, string>(),
+    ...createAsyncReducers({
+      actionName: "countReview",
+      reducerName: "countReview",
+    })<any, DataForm, string>(),
+    ...createAsyncReducers({
+      actionName: "pageReview",
+      reducerName: "pageReview",
     })<any, DataForm, string>(),
     ...createAsyncReducers({
       actionName: "setOpenStatus",
