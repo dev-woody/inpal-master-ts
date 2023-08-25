@@ -5,6 +5,7 @@ import {
   changeStatus,
   changeTextCut,
   changeSellStatus,
+  priceToString,
 } from "lib/functions/changeInput";
 import { Button } from "lib/styles";
 import { Link } from "react-router-dom";
@@ -586,7 +587,7 @@ export const vendorOrderColumns: ColumnsType[] = [
   {
     title: "주문금액",
     dataIndex: "info",
-    render: (info) => info.payTotal + "원",
+    render: (info) => priceToString(info.payTotal) + "원",
   },
   {
     title: "주문상태",

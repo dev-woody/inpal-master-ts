@@ -5,6 +5,7 @@ import { vendorOrderColumns } from "lib/columns/columnsList";
 import PageHeader from "lib/pages/pageHeader";
 import { response } from "types/globalTypes";
 import { useSearchParams } from "react-router-dom";
+import { deliveryStatusOption } from "lib/columns/statusColumns";
 
 const VendorOrderBlock = styled(Responsive)``;
 
@@ -12,9 +13,15 @@ type VendorOrderType = {
   countOrder: response;
   orderList: response;
   id: string | undefined;
+  onSelect: (status: string) => void;
 };
 
-const VendorOrder = ({ countOrder, orderList, id }: VendorOrderType) => {
+const VendorOrder = ({
+  countOrder,
+  orderList,
+  id,
+  onSelect,
+}: VendorOrderType) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const newPageNum = Number(searchParams.get("pageNum") || "0");
   const vendorPageInfo = JSON.parse(
@@ -62,14 +69,14 @@ const VendorOrder = ({ countOrder, orderList, id }: VendorOrderType) => {
           moveKey={["base", "id"]}
           pagenation
           pageCount={countOrder.data}
-          // filter
-          // filterInput={
-          //   <StyledSelect
-          //     placeholder="주문 상태별"
-          //     optionList={[]}
-          //     actions={function () {}}
-          //   />
-          // }
+          filter
+          filterInput={
+            <StyledSelect
+              placeholder="주문 상태별"
+              optionList={deliveryStatusOption}
+              actions={(status: string) => onSelect(status)}
+            />
+          }
         />
       </VendorOrderBlock>
     </>

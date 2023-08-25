@@ -2,7 +2,11 @@ import { Description, DescriptionContent } from "lib/styles/descriptionStyles";
 import PageHeader from "lib/pages/pageHeader";
 import { BreadCrumb, Button, Responsive, Table } from "lib/styles";
 import styled from "styled-components";
-import { changeDays, changeSellStatus } from "lib/functions/changeInput";
+import {
+  changeDays,
+  changeSellStatus,
+  priceToString,
+} from "lib/functions/changeInput";
 import { NavigateFunction, useSearchParams } from "react-router-dom";
 import { response } from "types/globalTypes";
 import { ColumnsType } from "lib/columns/columnsList";
@@ -42,12 +46,12 @@ const GoodsItemDetail = ({
     {
       title: "정상가",
       dataIndex: "info",
-      render: (info) => info.price + "원",
+      render: (info) => priceToString(info.price) + "원",
     },
     {
       title: "할인가",
       dataIndex: "info",
-      render: (info) => info.salePrice + "원",
+      render: (info) => priceToString(info.salePrice) + "원",
     },
     {
       title: "사양",

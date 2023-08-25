@@ -12,6 +12,10 @@ const OrderListContainer = () => {
   const { id } = useParams();
   const [searchParams] = useSearchParams();
 
+  const onSelect = (status: string) => {
+    console.log(status);
+  };
+
   useEffect(() => {
     dispatch(masterVendorActions.countOrder(id));
   }, []);
@@ -34,7 +38,14 @@ const OrderListContainer = () => {
     );
   }, [searchParams.get("pageNum"), searchParams.get("isDesc")]);
 
-  return <VendorOrder countOrder={countOrder} orderList={orderList} id={id} />;
+  return (
+    <VendorOrder
+      countOrder={countOrder}
+      orderList={orderList}
+      id={id}
+      onSelect={onSelect}
+    />
+  );
 };
 
 export default OrderListContainer;

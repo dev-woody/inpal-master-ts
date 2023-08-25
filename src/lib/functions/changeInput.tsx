@@ -88,6 +88,10 @@ export function changeDeliveryStatus(status: string | undefined) {
   }
 }
 
+export function priceToString(price: number) {
+  return price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 export function changePostPhone(phone: string) {
   return phone.replace(/\-/g, "");
 }

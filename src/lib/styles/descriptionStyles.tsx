@@ -50,7 +50,7 @@ const DescriptionLabel = styled.div`
     switch (props.span) {
       case "12":
         return css`
-          width: 100%;
+          width: 100% !important;
           border-left: 0 !important;
 
           &:nth-last-child(2) {
