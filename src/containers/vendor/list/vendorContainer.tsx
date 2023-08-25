@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "reducers/reducerHooks";
 import { masterVendorActions } from "reducers/vendor/masterVendor";
 import VendorList from "components/vendor/list/vendorList";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const VendorContainer = () => {
   const { countVendor, vendorList } = useAppSelector((store) => ({
@@ -10,6 +10,7 @@ const VendorContainer = () => {
     vendorList: store.masterVendor.pageVendor,
   }));
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
@@ -35,6 +36,10 @@ const VendorContainer = () => {
       dispatch(masterVendorActions.reset("pageVendor"));
     };
   }, [searchParams.get("pageNum"), searchParams.get("isDesc")]);
+
+  useEffect(() => {
+    navigate(`?pageNum=0&isDesc=false`);
+  }, []);
 
   return <VendorList countVendor={countVendor} vendorList={vendorList} />;
 };

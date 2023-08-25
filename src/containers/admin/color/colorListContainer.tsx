@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "reducers/reducerHooks";
 import ColorList from "components/admin/color/colorList";
 import { masterColorActions } from "reducers/admin/masterColor";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const ColorListContainer = () => {
   const { countColor, colorList } = useAppSelector((store) => ({
@@ -10,6 +10,7 @@ const ColorListContainer = () => {
     colorList: store.masterColor.pageColor,
   }));
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
@@ -35,6 +36,10 @@ const ColorListContainer = () => {
       dispatch(masterColorActions.reset("pageColor"));
     };
   }, [searchParams.get("pageNum"), searchParams.get("isDesc")]);
+
+  useEffect(() => {
+    navigate(`?pageNum=0&isDesc=false`);
+  }, []);
 
   return <ColorList countColor={countColor} colorList={colorList} />;
 };

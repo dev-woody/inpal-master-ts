@@ -39,6 +39,10 @@ const GoodsGroupContainer = () => {
     };
   }, [searchParams.get("pageNum"), searchParams.get("isDesc")]);
 
+  useEffect(() => {
+    navigate(`?pageNum=0&isDesc=false`);
+  }, []);
+
   const groupColumns: ColumnsType[] = [
     {
       title: "번호",

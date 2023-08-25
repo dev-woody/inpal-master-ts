@@ -153,15 +153,14 @@ const Sidebar = ({ activeUrl, visible }: sideBarProps) => {
   const nowURL = window.location.pathname;
   const [isOpen, setIsOpen] = useState<string>();
   const [isSelect, setIsSelect] = useState<string>();
-  const mainMenu = window.location.pathname;
   useEffect(() => {
     for (let i = 0; i < sidebarList.length; i++) {
-      if (mainMenu.startsWith(sidebarList[i].url)) {
+      if (nowURL.startsWith(sidebarList[i].url)) {
         setIsSelect(sidebarList[i].name);
         setIsOpen(sidebarList[i].name);
       }
     }
-  }, [mainMenu]);
+  }, [nowURL]);
   return (
     <SidebarBlock visible={visible}>
       <SidebarOnOff>

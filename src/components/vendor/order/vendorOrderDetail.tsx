@@ -35,11 +35,6 @@ type orderDetailProps = {
   setModalVisible: (status: boolean) => void;
 };
 
-const schema = yup.object({
-  orderStatus: yup.string().required("주문상태를 선택해주세요."),
-  description: yup.string(),
-});
-
 const VendorOrderDetail = ({
   orderInfo,
   orderLog,
@@ -52,11 +47,17 @@ const VendorOrderDetail = ({
 }: orderDetailProps) => {
   const data = orderInfo?.data?.info;
 
+  const schema = yup.object({
+    orderStatus: yup.string().required("주문상태를 선택해주세요."),
+    description: yup.string(),
+  });
+
   const {
     register,
     handleSubmit,
     setValue,
     getValues,
+    setError,
     formState: { isSubmitting, errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -73,9 +74,17 @@ const VendorOrderDetail = ({
     sessionStorage.getItem("orderPageInfo") || "{}"
   );
 
+  // useEffect(() => {
+  //   data?.orderStatus === getValues("orderStatus") &&
+  //     setError("orderStatus", {
+  //       type: "required",
+  //       message: "주문상태를 변경해주세요.",
+  //     });
+  // }, [handleSubmit]);
+
   useEffect(() => {
     setValue("description", "");
-    setValue("orderStatus", data?.orderStatus);
+    // setValue("orderStatus", data?.orderStatus);
   }, [orderInfo]);
 
   return (
@@ -152,7 +161,9 @@ const VendorOrderDetail = ({
             type="submit"
             status="primary"
             needMarginTop
-            disabled={isSubmitting}
+            disabled={
+              isSubmitting || data?.orderStatus === getValues("orderStatus")
+            }
             withInput
             style={{ marginBottom: "1rem" }}
           >

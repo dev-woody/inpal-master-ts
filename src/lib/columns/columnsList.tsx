@@ -65,7 +65,7 @@ export const sidebarList: sideListType[] = [
       {
         icon: <FaPalette />,
         menuName: "색상관리",
-        url: "/color?pageNum=0&isDesc=false",
+        url: "/color",
       },
       {
         icon: <FaTicketAlt />,
@@ -129,7 +129,7 @@ export const sidebarList: sideListType[] = [
       {
         icon: <FaBoxes />,
         menuName: "상품그룹 조회",
-        url: "/group?pageNum=0&isDesc=false",
+        url: "/group",
       },
       {
         icon: <FaChartBar />,
@@ -146,7 +146,7 @@ export const sidebarList: sideListType[] = [
       {
         icon: <FaUserAlt />,
         menuName: "판매사 조회",
-        url: "/list?pageNum=0&isDesc=false",
+        url: "/list",
       },
       {
         icon: <FaReceipt />,
