@@ -104,3 +104,38 @@ export const regexPasswd =
 
 export const regexEmail =
   /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+
+export function changeDeliveryStatusList(status: string | undefined) {
+  switch (status) {
+    case "ALL":
+      return "전체조회";
+    case "PAYMENT_WAIT":
+      return "입금대기중";
+    case "PAYMENT_COMPLETE":
+      return "결제완료";
+    case "ITEM_READY":
+      return "배송대기중";
+    case "DELIVERY_START":
+      return "배송처리";
+    case "DELIVERY_END":
+      return "배송완료";
+    case "CANCEL_REQUEST":
+      return "주문취소요청";
+    case "CANCEL_COMPLETE":
+      return "주문취소완료";
+    case "EXCHANGE_REQUEST":
+      return "교환요청";
+    case "EXCHANGE_COMPLETE":
+      return "교환요청완료";
+    case "RETURN_REQUEST":
+      return "반품요청";
+    case "RETURN_COMPLETE":
+      return "반품요청완료";
+    case "REFUND_REQUEST":
+      return "환불요청";
+    case "REFUND_COMPLETE":
+      return "환불요청완료";
+    case "CONFIRM":
+      return "구매확정";
+  }
+}

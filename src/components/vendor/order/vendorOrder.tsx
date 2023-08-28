@@ -5,7 +5,8 @@ import { vendorOrderColumns } from "lib/columns/columnsList";
 import PageHeader from "lib/pages/pageHeader";
 import { response } from "types/globalTypes";
 import { useSearchParams } from "react-router-dom";
-import { deliveryStatusOption } from "lib/columns/statusColumns";
+import { deliveryStatusOptionList } from "lib/columns/statusColumns";
+import { changeDeliveryStatusList } from "lib/functions/changeInput";
 
 const VendorOrderBlock = styled(Responsive)``;
 
@@ -27,7 +28,7 @@ const VendorOrder = ({
   const vendorPageInfo = JSON.parse(
     sessionStorage.getItem("vendorPageInfo") || "{}"
   );
-  const { pageNum, isDesc } = JSON.parse(
+  const { pageNum, isDesc, status } = JSON.parse(
     sessionStorage.getItem("orderPageInfo") || "{}"
   );
   return (
@@ -64,6 +65,7 @@ const VendorOrder = ({
             setSearchParams({
               pageNum: String(newPageNum + page),
               isDesc: isDesc,
+              status: status,
             })
           }
           moveKey={["base", "id"]}
@@ -72,8 +74,8 @@ const VendorOrder = ({
           filter
           filterInput={
             <StyledSelect
-              placeholder="주문 상태별"
-              optionList={deliveryStatusOption}
+              placeholder={changeDeliveryStatusList(status) || "주문 상태별"}
+              optionList={deliveryStatusOptionList}
               actions={(status: string) => onSelect(status)}
             />
           }

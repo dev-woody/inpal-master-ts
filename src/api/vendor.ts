@@ -137,6 +137,24 @@ export const pageOrder = async (data: object) => {
     .then((res) => res);
 };
 
+export const countOrderVendorId = async (data: object) => {
+  return await accessClient
+    .get(`/master/order/item/getCountByVendorIdAndOrderStatus`, {
+      params: { ...data },
+    })
+    .then((res) => res);
+};
+
+export const pageOrderVendorId = async (data: object) => {
+  return await accessClient
+    .get(`/master/order/item/getPageByVendorIdAndOrderStatus`, {
+      params: {
+        ...data,
+      },
+    })
+    .then((res) => res);
+};
+
 // export const orderFindById = async (id: string) => {
 //   return accessClient
 //     .get(`/master/construction/vendor/order/findById/${id}`)

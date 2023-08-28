@@ -7,8 +7,6 @@ import {
   changeSellStatus,
   priceToString,
 } from "lib/functions/changeInput";
-import { Button } from "lib/styles";
-import { Link } from "react-router-dom";
 
 import {
   FaUserCog,

@@ -35,7 +35,6 @@ const VendorDetail = ({
   onSubmit,
   onRegister,
   navigate,
-  vendorPageNum,
   id,
   modalVisible,
   setModalVisible,
@@ -112,7 +111,7 @@ const VendorDetail = ({
                   onClick={() => {
                     if (typeof id === "string") {
                       navigate(
-                        `/vendor/list/${id}/order?pageNum=0&isDesc=false`
+                        `/vendor/list/${id}/order?pageNum=0&isDesc=false&status=ALL`
                       );
                     }
                   }}

@@ -271,17 +271,17 @@ export const Table = (props: propsTypes) => {
     );
   };
 
-  useEffect(() => {
-    const allListChecked =
-      content &&
-      content.length !== 0 &&
-      content
-        .map((dataList: any) => dataList.isChecked)
-        .filter((list: boolean) => list === false);
-    if (content && allListChecked.length === 0) {
-      setAllCheck(true);
-    } else setAllCheck(false);
-  }, [content]);
+  // useEffect(() => {
+  //   const allListChecked =
+  //     content &&
+  //     content.length !== 0 &&
+  //     content
+  //       ?.map((dataList: any) => dataList.isChecked)
+  //       .filter((list: boolean) => list === false);
+  //   if (content && allListChecked.length === 0) {
+  //     setAllCheck(true);
+  //   } else setAllCheck(false);
+  // }, [content]);
 
   useEffect(() => {
     setSelectedRow("");

@@ -6,7 +6,7 @@ export type response = {
   success: boolean;
   data: any;
   message: string;
-  isReset: boolean;
+  isReset?: boolean;
   status: "idle" | "success" | "fail";
 };
 

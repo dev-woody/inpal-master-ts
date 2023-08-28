@@ -108,7 +108,7 @@ const VendorOrderDetail = ({
                 },
                 {
                   name: "판매사 주문 관리 /",
-                  url: `/vendor/list/${id}/order?pageNum=${orderPageInfo.pageNum}&isDesc=${orderPageInfo.isDesc}`,
+                  url: `/vendor/list/${id}/order?pageNum=${orderPageInfo.pageNum}&isDesc=${orderPageInfo.isDesc}&status=${orderPageInfo.status}`,
                 },
                 {
                   name: "상세정보",
@@ -303,7 +303,7 @@ const VendorOrderDetail = ({
         <Button
           onClick={() =>
             navigate(
-              `/vendor/list/${id}/order?pageNum=${orderPageInfo.pageNum}&isDesc=${orderPageInfo.isDesc}`
+              `/vendor/list/${id}/order?pageNum=${orderPageInfo.pageNum}&isDesc=${orderPageInfo.isDesc}&status=${orderPageInfo.status}`
             )
           }
           type="button"

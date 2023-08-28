@@ -30,6 +30,8 @@ const initialState: ResponseData = {
   setOrderStatus: {},
   countOrder: {},
   pageOrder: {},
+  countOrderVendorId: {},
+  pageOrderVendorId: {},
 };
 
 export function* masterVendorSaga() {
@@ -115,6 +117,20 @@ export function* masterVendorSaga() {
     masterVendorActions.pageOrder,
     createRequestSaga("masterVendor/pageOrder", vendorAPI.pageOrder)
   );
+  yield takeLatest(
+    masterVendorActions.countOrderVendorId,
+    createRequestSaga(
+      "masterVendor/countOrderVendorId",
+      vendorAPI.countOrderVendorId
+    )
+  );
+  yield takeLatest(
+    masterVendorActions.pageOrderVendorId,
+    createRequestSaga(
+      "masterVendor/pageOrderVendorId",
+      vendorAPI.pageOrderVendorId
+    )
+  );
 }
 
 //* reducer
@@ -197,6 +213,14 @@ const masterVendor = createSlice({
     ...createAsyncReducers({
       actionName: "pageOrder",
       reducerName: "pageOrder",
+    })<any, DataForm, string>(),
+    ...createAsyncReducers({
+      actionName: "countOrderVendorId",
+      reducerName: "countOrderVendorId",
+    })<any, DataForm, string>(),
+    ...createAsyncReducers({
+      actionName: "pageOrderVendorId",
+      reducerName: "pageOrderVendorId",
     })<any, DataForm, string>(),
     ...createSingleReducers({
       actionName: "reset",
