@@ -13,7 +13,6 @@ const GoodDetailContainer = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    navigate("?pageNum=0&isDesc=false");
     dispatch(masterGoodsGroupActions.findById(id));
     return () => {
       dispatch(masterGoodsGroupActions.reset("findById"));

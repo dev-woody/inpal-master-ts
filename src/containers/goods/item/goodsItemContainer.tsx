@@ -22,22 +22,26 @@ const GoodsItemContainer = () => {
     sessionStorage.setItem(
       "itemPageInfo",
       JSON.stringify({
-        pageNum: searchParams.get("pageNum"),
-        isDesc: searchParams.get("isDesc"),
+        n: searchParams.get("n"),
+        d: searchParams.get("d"),
       })
     );
     dispatch(
       masterGoodsItemActions.pageGoodsItem({
         goodGroupId: id,
-        page: searchParams.get("pageNum"),
-        isDesc: searchParams.get("isDesc"),
+        page: searchParams.get("n"),
+        isDesc: searchParams.get("d"),
         size: 10,
       })
     );
     return () => {
       dispatch(masterGoodsItemActions.reset("pageGoodsItem"));
     };
-  }, [searchParams.get("pageNum"), searchParams.get("isDesc")]);
+  }, [searchParams.get("n"), searchParams.get("d")]);
+
+  useEffect(() => {
+    navigate(`?n=0&d=false`);
+  }, []);
 
   return <GoodsItem itemList={itemList} countGoodsItem={countGoodsItem} />;
 };

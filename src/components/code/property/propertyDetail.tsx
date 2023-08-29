@@ -44,6 +44,7 @@ const PropertyDetail = ({
   modalVisible,
   setModalVisible,
 }: propertyProps) => {
+  const { p, d } = JSON.parse(sessionStorage.getItem("property") || "{}");
   const {
     register,
     handleSubmit,
@@ -75,7 +76,7 @@ const PropertyDetail = ({
               indicator={[
                 {
                   name: "상품속성 관리 /",
-                  url: "/code/property",
+                  url: `/code/property?p=${p}&d=${d}`,
                 },
                 {
                   name: "상품속성 수정",
@@ -144,7 +145,7 @@ const PropertyDetail = ({
               type="button"
               needMarginTop
               withInput
-              onClick={() => navigate("/code/property")}
+              onClick={() => navigate(`/code/property?p=${p}&d=${d}`)}
             >
               뒤로가기
             </Button>

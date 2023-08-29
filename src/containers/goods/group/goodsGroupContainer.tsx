@@ -23,24 +23,24 @@ const GoodsGroupContainer = () => {
     sessionStorage.setItem(
       "groupPageInfo",
       JSON.stringify({
-        pageNum: searchParams.get("pageNum"),
-        isDesc: searchParams.get("isDesc"),
+        n: searchParams.get("n"),
+        d: searchParams.get("d"),
       })
     );
     dispatch(
       masterGoodsGroupActions.pageGoodsGroup({
-        page: searchParams.get("pageNum"),
-        isDesc: searchParams.get("isDesc"),
+        page: searchParams.get("n"),
+        isDesc: searchParams.get("d"),
         size: 10,
       })
     );
     return () => {
       dispatch(masterGoodsGroupActions.reset("pageGoodsGroup"));
     };
-  }, [searchParams.get("pageNum"), searchParams.get("isDesc")]);
+  }, [searchParams.get("n"), searchParams.get("d")]);
 
   useEffect(() => {
-    navigate(`?pageNum=0&isDesc=false`);
+    navigate(`?n=0&d=false`);
   }, []);
 
   const groupColumns: ColumnsType[] = [

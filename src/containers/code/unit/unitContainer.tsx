@@ -1,6 +1,6 @@
 import UnitList from "components/code/unit/unitList";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "reducers/reducerHooks";
 import { masterProductActions } from "reducers/product/masterProduct";
 import { masterUnitActions } from "reducers/product/masterUnit";
@@ -13,15 +13,12 @@ const UnitContainer = () => {
     productList: state.masterProduct.findAll,
     unitList: state.masterUnit.findAllByProductId,
   }));
-  const [productId, setProductId] = useState<string>("");
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const onSelect = (id: string) => {
-    setProductId(id);
-    dispatch(
-      masterUnitActions.findAllByProductId({ productId: id, isDesc: false })
-    );
+    setSearchParams({ p: btoa(id), d: searchParams.get("d") || btoa("false") });
   };
 
   useEffect(() => {
@@ -32,6 +29,29 @@ const UnitContainer = () => {
       dispatch(masterProductActions.reset("findAll"));
     };
   }, []);
+
+  useEffect(() => {
+    if (searchParams.get("p") === btoa("none")) {
+      return;
+    } else {
+      sessionStorage.setItem(
+        "unit",
+        JSON.stringify({ p: searchParams.get("p"), d: searchParams.get("d") })
+      );
+      dispatch(
+        masterUnitActions.findAllByProductId({
+          productId: atob(searchParams.get("p") || btoa("")),
+          isDesc: atob(searchParams.get("d") || btoa("false")),
+        })
+      );
+    }
+  }, [searchParams.get("p"), searchParams.get("d")]);
+
+  useEffect(() => {
+    if ((searchParams.get("p") || searchParams.get("d")) === null) {
+      navigate(`?p=${btoa("none")}&d=${btoa("false")}`);
+    }
+  }, [searchParams.get("p"), searchParams.get("d")]);
 
   const unitColumns: ColumnsType[] = [
     {
@@ -52,13 +72,13 @@ const UnitContainer = () => {
     {
       title: "생성일",
       dataIndex: "base",
-      isDesc: true,
+      // isDesc: true,
       render: (base) => changeDays(base.createdAt),
     },
     {
       title: "수정일",
       dataIndex: "base",
-      isDesc: true,
+      // isDesc: true,
       render: (base) => changeDays(base.updatedAt),
     },
   ];

@@ -5,6 +5,7 @@ import { masterPropertyActions } from "reducers/product/masterProperty";
 import PropertyList from "components/code/property/propertyList";
 import { changeDays } from "lib/functions/changeInput";
 import { ColumnsType } from "lib/columns/columnsList";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const PropertyContainer = () => {
   const { propertyList, productList } = useAppSelector((state) => ({
@@ -12,11 +13,11 @@ const PropertyContainer = () => {
     propertyList: state.masterProperty.findAllByProductId,
   }));
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const onSelect = (id: string) => {
-    dispatch(
-      masterPropertyActions.findAllByProductId({ productId: id, isDesc: false })
-    );
+    setSearchParams({ p: btoa(id), d: searchParams.get("d") || btoa("false") });
   };
 
   useEffect(() => {
@@ -27,6 +28,29 @@ const PropertyContainer = () => {
       dispatch(masterPropertyActions.reset("findAllByProductId"));
     };
   }, []);
+
+  useEffect(() => {
+    if (searchParams.get("p") === btoa("none")) {
+      return;
+    } else {
+      sessionStorage.setItem(
+        "property",
+        JSON.stringify({ p: searchParams.get("p"), d: searchParams.get("d") })
+      );
+      dispatch(
+        masterPropertyActions.findAllByProductId({
+          productId: atob(searchParams.get("p") || btoa("")),
+          isDesc: atob(searchParams.get("d") || btoa("false")),
+        })
+      );
+    }
+  }, [searchParams.get("p"), searchParams.get("d")]);
+
+  useEffect(() => {
+    if ((searchParams.get("p") || searchParams.get("d")) === null) {
+      navigate(`?p=${btoa("none")}&d=${btoa("false")}`);
+    }
+  }, [searchParams.get("p"), searchParams.get("d")]);
 
   const propertyListColumns: ColumnsType[] = [
     {

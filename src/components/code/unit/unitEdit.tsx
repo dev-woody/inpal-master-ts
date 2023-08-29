@@ -51,6 +51,7 @@ const UnitEdit = ({
   navigate,
   id,
 }: UnitUpdateProps) => {
+  const { p, d } = JSON.parse(sessionStorage.getItem("unit") || "{}");
   const {
     register,
     handleSubmit,
@@ -80,7 +81,7 @@ const UnitEdit = ({
               indicator={[
                 {
                   name: "단위 관리 /",
-                  url: "/code/unit",
+                  url: `/code/unit?p=${p}&d=${d}`,
                 },
                 {
                   name: "상세 조회",
@@ -167,7 +168,7 @@ const UnitEdit = ({
               type="button"
               needMarginTop
               withInput
-              onClick={() => navigate("/code/unit")}
+              onClick={() => navigate(`/code/unit?p=${p}&d=${d}`)}
             >
               뒤로가기
             </Button>

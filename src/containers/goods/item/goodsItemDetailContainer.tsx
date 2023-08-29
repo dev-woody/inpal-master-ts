@@ -91,24 +91,24 @@ const GoodsItemDetailContainer = () => {
       sessionStorage.setItem(
         "reviewPageInfo",
         JSON.stringify({
-          pageNum: searchParams.get("pageNum"),
-          isDesc: searchParams.get("isDesc"),
+          n: searchParams.get("n"),
+          d: searchParams.get("d"),
         })
       );
       dispatch(
         masterGoodsEvaluationActions.pageReview({
           goodItemId: itemId,
-          page: searchParams.get("pageNum"),
-          isDesc: searchParams.get("isDesc"),
+          page: searchParams.get("n"),
+          isDesc: searchParams.get("d"),
           size: 10,
         })
       );
       dispatch(masterGoodsEvaluationActions.reset("itemInfo"));
     }
-  }, [itemInfo, searchParams.get("pageNum"), searchParams.get("isDesc")]);
+  }, [itemInfo, searchParams.get("n"), searchParams.get("d")]);
 
   useEffect(() => {
-    navigate(`?pageNum=0&isDesc=false`);
+    navigate(`?n=0&d=false`);
     dispatch(masterGoodsItemActions.findById(itemId));
     dispatch(masterGoodsEvaluationActions.countReview(itemId));
     return () => {

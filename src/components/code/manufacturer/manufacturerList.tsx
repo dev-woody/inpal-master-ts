@@ -48,7 +48,7 @@ const ManufacturerList = ({
       <ManufacturerListBlock>
         <Table
           columns={manufacturerListColumns}
-          content={manufacturerList}
+          content={manufacturerList?.data}
           url="/code/manufacturer/detail"
           moveKey={["base", "id"]}
           // pagenation

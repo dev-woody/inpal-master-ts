@@ -29,7 +29,7 @@ const OrderListContainer = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const onSelect = (status: string) => {
-    setSearchParams({ pageNum: "0", isDesc: "false", status: status });
+    setSearchParams({ n: "0", d: "false", s: status });
   };
 
   useEffect(() => {
@@ -39,27 +39,27 @@ const OrderListContainer = () => {
       dispatch(
         masterVendorActions.countOrderVendorId({
           vendorId: id,
-          orderStatus: searchParams.get("status"),
+          orderStatus: searchParams.get("s"),
         })
       );
     }
-  }, [searchParams.get("status")]);
+  }, [searchParams.get("s")]);
 
   useEffect(() => {
-    if (searchParams.get("status") === "ALL") {
+    if (searchParams.get("s") === "ALL") {
       sessionStorage.setItem(
         "orderPageInfo",
         JSON.stringify({
-          pageNum: searchParams.get("pageNum"),
-          isDesc: searchParams.get("isDesc"),
-          status: searchParams.get("status"),
+          n: searchParams.get("n"),
+          d: searchParams.get("d"),
+          s: searchParams.get("s"),
         })
       );
       dispatch(
         masterVendorActions.pageOrder({
           vendorId: id,
-          page: searchParams.get("pageNum"),
-          isDesc: searchParams.get("isDesc"),
+          page: searchParams.get("n"),
+          isDesc: searchParams.get("d"),
           size: 10,
         })
       );
@@ -67,26 +67,22 @@ const OrderListContainer = () => {
       sessionStorage.setItem(
         "orderPageInfo",
         JSON.stringify({
-          pageNum: searchParams.get("pageNum"),
-          isDesc: searchParams.get("isDesc"),
-          status: searchParams.get("status"),
+          n: searchParams.get("n"),
+          d: searchParams.get("d"),
+          s: searchParams.get("s"),
         })
       );
       dispatch(
         masterVendorActions.pageOrderVendorId({
           vendorId: id,
-          page: searchParams.get("pageNum"),
-          isDesc: searchParams.get("isDesc"),
-          orderStatus: searchParams.get("status"),
+          page: searchParams.get("n"),
+          isDesc: searchParams.get("d"),
+          orderStatus: searchParams.get("s"),
           size: 10,
         })
       );
     }
-  }, [
-    searchParams.get("pageNum"),
-    searchParams.get("isDesc"),
-    searchParams.get("status"),
-  ]);
+  }, [searchParams.get("n"), searchParams.get("d"), searchParams.get("s")]);
 
   useEffect(() => {
     setOrderItems(orderList);

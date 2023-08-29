@@ -13,6 +13,7 @@ const initialState: ResponseData = {
   setOpenStatus: {},
   basicInfo: {},
   detailPage: {},
+  findAll: {},
   findById: {},
   findAllByProductId: {},
 };
@@ -39,6 +40,10 @@ export function* masterManufacturerSaga() {
       "masterManufacturer/detailPage",
       manufacturerAPI.detailPage
     )
+  );
+  yield takeLatest(
+    masterManufacturerActions.findAll,
+    createRequestSaga("masterManufacturer/findAll", manufacturerAPI.findAll)
   );
   yield takeLatest(
     masterManufacturerActions.findById,
@@ -73,6 +78,10 @@ const masterManufacturer = createSlice({
     ...createAsyncReducers({
       actionName: "detailPage",
       reducerName: "detailPage",
+    })<any, DataForm, string>(),
+    ...createAsyncReducers({
+      actionName: "findAll",
+      reducerName: "findAll",
     })<any, DataForm, string>(),
     ...createAsyncReducers({
       actionName: "findById",

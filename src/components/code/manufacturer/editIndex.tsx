@@ -7,6 +7,7 @@ import PageHeader from "lib/pages/pageHeader";
 const ManufacturerEditIndexBlock = styled(Responsive)``;
 
 const ManufacturerEditIndex = () => {
+  const { p, d } = JSON.parse(sessionStorage.getItem("manufacturer") || "{}");
   return (
     <>
       <ManufacturerEditIndexBlock>
@@ -16,7 +17,7 @@ const ManufacturerEditIndex = () => {
               indicator={[
                 {
                   name: "제조사 관리 /",
-                  url: "/code/manufacturer",
+                  url: `/code/manufacturer?p=${p}&d=${d}`,
                 },
                 {
                   name: "제조사 수정",
