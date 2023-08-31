@@ -136,3 +136,25 @@ export const pageGoodsItem = async (data: object) => {
     })
     .then((res) => res);
 };
+
+//* 품목 조회
+
+export const countGroupProduct = async (data: object) => {
+  return await client
+    .get(`/store/construction/good/group/getCountByProductId`, {
+      params: {
+        ...data,
+      },
+    })
+    .then((res) => res);
+};
+
+export const pageGroupProduct = async (data: object) => {
+  return await client
+    .get(`/store/construction/good/group/getPageByProductId`, {
+      params: {
+        ...data,
+      },
+    })
+    .then((res) => res);
+};

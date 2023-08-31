@@ -1,6 +1,6 @@
 import { sidebarList } from "lib/columns/columnsList";
 import styled, { css } from "styled-components";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 type ItemProps = {
@@ -153,14 +153,15 @@ const Sidebar = ({ activeUrl, visible }: sideBarProps) => {
   const nowURL = window.location.pathname;
   const [isOpen, setIsOpen] = useState<string>();
   const [isSelect, setIsSelect] = useState<string>();
+  const mainMenu = window.location.pathname;
   useEffect(() => {
     for (let i = 0; i < sidebarList.length; i++) {
-      if (nowURL.startsWith(sidebarList[i].url)) {
+      if (mainMenu.startsWith(sidebarList[i].url)) {
         setIsSelect(sidebarList[i].name);
         setIsOpen(sidebarList[i].name);
       }
     }
-  }, [nowURL]);
+  }, [mainMenu]);
   return (
     <SidebarBlock visible={visible}>
       <SidebarOnOff>
@@ -206,7 +207,8 @@ const Sidebar = ({ activeUrl, visible }: sideBarProps) => {
                       key={index}
                       onClick={() => {
                         if (nowURL === `${list.url}${subMenu.url}`) {
-                          window.location.reload();
+                          navigate(`${list.url}${subMenu.url}`);
+                          navigate(0);
                         } else {
                           navigate(`${list.url}${subMenu.url}`);
                         }

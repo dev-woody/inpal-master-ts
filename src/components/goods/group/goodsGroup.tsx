@@ -10,20 +10,32 @@ const GoodsGroupBlock = styled(Responsive)``;
 
 type groupProps = {
   countGoodsGroup: response;
+  productList: response;
   goodsGroup: response;
   groupColumns: ColumnsType[];
+  onSelect: (id: string) => void;
 };
 
 const GoodsGroup = ({
   countGoodsGroup,
+  productList,
   goodsGroup,
   groupColumns,
+  onSelect,
 }: groupProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const newPageNum = Number(searchParams.get("pageNum") || "0");
-  const { pageNum, isDesc } = JSON.parse(
+  const newPageNum = Number(atob(searchParams.get("n") || btoa("0")));
+  const { n, d, p } = JSON.parse(
     sessionStorage.getItem("groupPageInfo") || "{}"
   );
+  const newProductList = productList?.data?.map((item: any) => {
+    return { name: item.info.nameKr, id: item.base.id };
+  });
+
+  newProductList?.unshift({
+    name: "전체조회",
+    id: "ALL",
+  });
   return (
     <>
       <GoodsGroupBlock>
@@ -33,7 +45,7 @@ const GoodsGroup = ({
               indicator={[
                 {
                   name: "상품그룹 관리",
-                  url: `/goods/group?pageNum=${pageNum}&isDesc=${isDesc}`,
+                  url: `/goods/group?n=${n}&d=${d}&p=${p}`,
                 },
               ]}
             />
@@ -48,13 +60,22 @@ const GoodsGroup = ({
           searchParams={searchParams}
           setSearchParams={(page: number) =>
             setSearchParams({
-              pageNum: String(newPageNum + page),
-              isDesc: isDesc,
+              n: btoa(String(newPageNum + page)),
+              d: d,
+              p: p,
             })
           }
           moveKey={["base", "id"]}
           pagenation
           pageCount={countGoodsGroup.data}
+          filter
+          filterInput={
+            <StyledSelect
+              placeholder="품목별 조회"
+              optionList={newProductList}
+              actions={(id: string) => onSelect(id)}
+            />
+          }
         />
       </GoodsGroupBlock>
     </>

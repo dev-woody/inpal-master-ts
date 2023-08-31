@@ -46,9 +46,7 @@ const VendorDetail = ({
     formState: { isSubmitting },
   } = useForm();
 
-  const { pageNum, isDesc } = JSON.parse(
-    sessionStorage.getItem("vendorPageInfo") || "{}"
-  );
+  const { n, d } = JSON.parse(sessionStorage.getItem("vendorPageInfo") || "{}");
 
   return (
     <Fragment>
@@ -59,7 +57,7 @@ const VendorDetail = ({
               indicator={[
                 {
                   name: "판매사 관리 /",
-                  url: `/vendor/list?pageNum=${pageNum}&isDesc=${isDesc}`,
+                  url: `/vendor/list?n=${n}&d=${d}`,
                 },
                 {
                   name: "상세정보",
@@ -111,7 +109,27 @@ const VendorDetail = ({
                   onClick={() => {
                     if (typeof id === "string") {
                       navigate(
-                        `/vendor/list/${id}/order?pageNum=0&isDesc=false&status=ALL`
+                        `/vendor/list/${id}/order?n=${btoa("0")}&d=${btoa(
+                          "false"
+                        )}&s=${btoa("ALL")}`
+                      );
+                    }
+                  }}
+                >
+                  상세보기
+                </Button>
+              }
+            />
+            <DescriptionContent
+              label="상품 관리"
+              content={
+                <Button
+                  onClick={() => {
+                    if (typeof id === "string") {
+                      navigate(
+                        `/vendor/list/${id}/order?n=${btoa("0")}&d=${btoa(
+                          "false"
+                        )}&s=${btoa("ALL")}`
                       );
                     }
                   }}
@@ -148,9 +166,7 @@ const VendorDetail = ({
                 needMarginTop
                 withInput
                 disabled={isSubmitting}
-                onClick={() =>
-                  navigate(`/vendor/list?pageNum=${pageNum}&isDesc=${isDesc}`)
-                }
+                onClick={() => navigate(`/vendor/list?n=${n}&d=${d}`)}
               >
                 뒤로가기
               </Button>

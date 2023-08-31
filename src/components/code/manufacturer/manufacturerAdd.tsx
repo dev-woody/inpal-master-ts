@@ -41,7 +41,10 @@ const schema = yup.object({
   nameKr: yup.string().required("제조사명을 입력해주세요."),
   nameEn: yup.string().required("영문명을 입력해주세요."),
   country: yup.string().required("제조국가를 입력해주세요."),
-  logoImageInfo: yup.object({}),
+  logoImageInfo: yup
+    .object()
+    .typeError("로고 이미지를 등록해주세요.")
+    .required("로고 이미지를 등록해주세요."),
   imageNumInfos: yup
     .array()
     .of(
@@ -50,7 +53,7 @@ const schema = yup.object({
         imageInfo: yup.object({ id: yup.string() }),
       })
     )
-    .min(1)
+    .min(1, "최소 1개의 이미지를 등록해주세요.")
     .max(10),
   password: yup.string().required("비밀번호를 입력해주세요."),
 });
@@ -81,7 +84,7 @@ const ManufacturerAdd = ({
       nameEn: "",
       isDomestic: "",
       country: "",
-      logoImageInfo: [],
+      logoImageInfo: "",
       imageNumInfos: [],
       password: "",
     },
@@ -192,7 +195,6 @@ const ManufacturerAdd = ({
                   readOnly
                   placeholder="로고이미지"
                   label="logoImageInfo"
-                  fullWidth
                   isBox
                   maxLength="1"
                   register={register}
@@ -221,7 +223,6 @@ const ManufacturerAdd = ({
                   readOnly
                   placeholder="상세페이지"
                   label="imageNumInfos"
-                  fullWidth
                   isBox
                   maxLength="10"
                   register={register}

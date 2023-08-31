@@ -22,7 +22,7 @@ const EvaluationDetail = ({
   navigate,
 }: EvaluationDetailProps) => {
   const { id, itemId } = useParams();
-  const { pageNum, isDesc } = JSON.parse(
+  const { n, d, p } = JSON.parse(
     sessionStorage.getItem("groupPageInfo") || "{}"
   );
   return (
@@ -33,8 +33,8 @@ const EvaluationDetail = ({
             <BreadCrumb
               indicator={[
                 {
-                  name: "상품그룹관리 /",
-                  url: `/goods/group?pageNum=${pageNum}&isDesc=${isDesc}`,
+                  name: "상품그룹 관리 /",
+                  url: `/goods/group?n=${n}&d=${d}&p=${p}`,
                 },
                 {
                   name: "상세정보 및 수정 /",

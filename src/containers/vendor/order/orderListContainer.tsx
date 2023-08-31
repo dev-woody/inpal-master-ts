@@ -29,24 +29,24 @@ const OrderListContainer = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const onSelect = (status: string) => {
-    setSearchParams({ n: "0", d: "false", s: status });
+    setSearchParams({ n: btoa("0"), d: btoa("false"), s: btoa(status) });
   };
 
   useEffect(() => {
-    if (searchParams.get("status") === "ALL") {
+    if (atob(searchParams.get("s") || "ALL") === "ALL") {
       dispatch(masterVendorActions.countOrder(id));
     } else {
       dispatch(
         masterVendorActions.countOrderVendorId({
           vendorId: id,
-          orderStatus: searchParams.get("s"),
+          orderStatus: atob(searchParams.get("s") || btoa("ALL")),
         })
       );
     }
   }, [searchParams.get("s")]);
 
   useEffect(() => {
-    if (searchParams.get("s") === "ALL") {
+    if (atob(searchParams.get("s") || "ALL") === "ALL") {
       sessionStorage.setItem(
         "orderPageInfo",
         JSON.stringify({
@@ -58,8 +58,8 @@ const OrderListContainer = () => {
       dispatch(
         masterVendorActions.pageOrder({
           vendorId: id,
-          page: searchParams.get("n"),
-          isDesc: searchParams.get("d"),
+          page: atob(searchParams.get("n") || btoa("0")),
+          isDesc: atob(searchParams.get("d") || btoa("false")),
           size: 10,
         })
       );
@@ -75,9 +75,9 @@ const OrderListContainer = () => {
       dispatch(
         masterVendorActions.pageOrderVendorId({
           vendorId: id,
-          page: searchParams.get("n"),
-          isDesc: searchParams.get("d"),
-          orderStatus: searchParams.get("s"),
+          page: atob(searchParams.get("n") || btoa("0")),
+          isDesc: atob(searchParams.get("d") || btoa("false")),
+          orderStatus: atob(searchParams.get("s") || btoa("ALL")),
           size: 10,
         })
       );

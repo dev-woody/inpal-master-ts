@@ -5,43 +5,124 @@ import GoodsGroup from "components/goods/group/goodsGroup";
 import { ColumnsType } from "lib/columns/columnsList";
 import { changeDays, changeOpenStatus } from "lib/functions/changeInput";
 import { masterGoodsGroupActions } from "reducers/goods/goodsGroup";
+import { masterProductActions } from "reducers/product/masterProduct";
+import { checkStatus } from "types/globalTypes";
 
 const GoodsGroupContainer = () => {
-  const { countGoodsGroup, goodsGroup } = useAppSelector((store) => ({
+  const {
+    countGoodsGroup,
+    goodsGroup,
+    productList,
+    countGroupProduct,
+    pageGroupProduct,
+  } = useAppSelector((store) => ({
+    productList: store.masterProduct.findAll,
     countGoodsGroup: store.masterGoodsGroup.countGoodsGroup,
     goodsGroup: store.masterGoodsGroup.pageGoodsGroup,
+    countGroupProduct: store.masterGoodsGroup.countGroupProduct,
+    pageGroupProduct: store.masterGoodsGroup.pageGroupProduct,
   }));
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [count, setCount] = useState<any>({ data: {} });
+  const [page, setPage] = useState<any>({ data: {} });
+
+  const onSelect = (id: string) => {
+    setSearchParams({
+      n: btoa("0"),
+      d: btoa("false"),
+      p: btoa(id),
+    });
+  };
 
   useEffect(() => {
-    dispatch(masterGoodsGroupActions.countGoodsGroup({}));
+    dispatch(masterProductActions.findAll(false));
   }, []);
 
   useEffect(() => {
-    sessionStorage.setItem(
-      "groupPageInfo",
-      JSON.stringify({
-        n: searchParams.get("n"),
-        d: searchParams.get("d"),
-      })
-    );
-    dispatch(
-      masterGoodsGroupActions.pageGoodsGroup({
-        page: searchParams.get("n"),
-        isDesc: searchParams.get("d"),
-        size: 10,
-      })
-    );
+    if (atob(searchParams.get("p") || "ALL") === "ALL") {
+      dispatch(masterGoodsGroupActions.countGoodsGroup({}));
+    } else {
+      dispatch(
+        masterGoodsGroupActions.countGroupProduct({
+          productId: atob(searchParams.get("p") || btoa("ALL")),
+        })
+      );
+    }
+  }, [searchParams.get("p")]);
+
+  useEffect(() => {
+    if (atob(searchParams.get("p") || "ALL") === "ALL") {
+      sessionStorage.setItem(
+        "groupPageInfo",
+        JSON.stringify({
+          n: searchParams.get("n"),
+          d: searchParams.get("d"),
+          p: searchParams.get("p"),
+        })
+      );
+      dispatch(
+        masterGoodsGroupActions.pageGoodsGroup({
+          page: atob(searchParams.get("n") || btoa("0")),
+          isDesc: atob(searchParams.get("d") || btoa("false")),
+          size: 10,
+        })
+      );
+    } else {
+      sessionStorage.setItem(
+        "groupPageInfo",
+        JSON.stringify({
+          n: searchParams.get("n"),
+          d: searchParams.get("d"),
+          p: searchParams.get("p"),
+        })
+      );
+      dispatch(
+        masterGoodsGroupActions.pageGroupProduct({
+          page: atob(searchParams.get("n") || btoa("0")),
+          isDesc: atob(searchParams.get("d") || btoa("false")),
+          productId: atob(searchParams.get("p") || btoa("ALL")),
+          size: 10,
+        })
+      );
+    }
     return () => {
       dispatch(masterGoodsGroupActions.reset("pageGoodsGroup"));
     };
-  }, [searchParams.get("n"), searchParams.get("d")]);
+  }, [searchParams.get("n"), searchParams.get("d"), searchParams.get("p")]);
 
   useEffect(() => {
-    navigate(`?n=0&d=false`);
-  }, []);
+    if (
+      (searchParams.get("n") ||
+        searchParams.get("d") ||
+        searchParams.get("p")) === null
+    ) {
+      navigate(`?n=${btoa("0")}&d=${btoa("false")}&p=${btoa("ALL")}`);
+    }
+  }, [searchParams.get("n"), searchParams.get("d"), searchParams.get("p")]);
+
+  useEffect(() => {
+    if (checkStatus(countGoodsGroup.status)) {
+      setCount(countGoodsGroup);
+      dispatch(masterGoodsGroupActions.reset("countGroupProduct"));
+    }
+    if (checkStatus(countGroupProduct.status)) {
+      setCount(countGroupProduct);
+      dispatch(masterGoodsGroupActions.reset("countGoodsGroup"));
+    }
+  }, [countGoodsGroup, countGroupProduct]);
+
+  useEffect(() => {
+    if (checkStatus(goodsGroup.status)) {
+      setPage(goodsGroup);
+      dispatch(masterGoodsGroupActions.reset("pageGroupProduct"));
+    }
+    if (checkStatus(pageGroupProduct.status)) {
+      setPage(pageGroupProduct);
+      dispatch(masterGoodsGroupActions.reset("goodsGroup"));
+    }
+  }, [goodsGroup, pageGroupProduct]);
 
   const groupColumns: ColumnsType[] = [
     {
@@ -80,9 +161,11 @@ const GoodsGroupContainer = () => {
 
   return (
     <GoodsGroup
-      countGoodsGroup={countGoodsGroup}
-      goodsGroup={goodsGroup}
+      productList={productList}
+      countGoodsGroup={count}
+      goodsGroup={page}
       groupColumns={groupColumns}
+      onSelect={onSelect}
     />
   );
 };

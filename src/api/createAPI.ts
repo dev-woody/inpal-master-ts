@@ -4,6 +4,7 @@ export const client = axios.create({
   // withCredentials: true,
   headers: {
     "Content-Type": "application/json; charset=utf-8",
+    validateStatus: false,
   },
 });
 
@@ -11,6 +12,7 @@ export const accessClient = axios.create({
   headers: {
     "Content-Type": "application/json",
     Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+    validateStatus: false,
   },
 });
 

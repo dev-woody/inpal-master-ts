@@ -29,8 +29,8 @@ const GoodsItemContainer = () => {
     dispatch(
       masterGoodsItemActions.pageGoodsItem({
         goodGroupId: id,
-        page: searchParams.get("n"),
-        isDesc: searchParams.get("d"),
+        page: atob(searchParams.get("n") || btoa("0")),
+        isDesc: atob(searchParams.get("d") || btoa("false")),
         size: 10,
       })
     );
@@ -40,7 +40,7 @@ const GoodsItemContainer = () => {
   }, [searchParams.get("n"), searchParams.get("d")]);
 
   useEffect(() => {
-    navigate(`?n=0&d=false`);
+    navigate(`?n=${btoa("0")}&d=${btoa("false")}`);
   }, []);
 
   return <GoodsItem itemList={itemList} countGoodsItem={countGoodsItem} />;

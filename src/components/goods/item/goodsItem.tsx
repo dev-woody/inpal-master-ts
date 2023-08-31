@@ -16,8 +16,8 @@ type itemProps = {
 const GoodsItem = ({ itemList, countGoodsItem }: itemProps) => {
   const { id } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
-  const newPageNum = Number(searchParams.get("pageNum") || "0");
-  const { isDesc } = JSON.parse(sessionStorage.getItem("itemPageInfo") || "{}");
+  const newPageNum = Number(atob(searchParams.get("n") || btoa("0")));
+  const { d } = JSON.parse(sessionStorage.getItem("itemPageInfo") || "{}");
   return (
     <GoodsItemBlock>
       <PageHeader title="상품아이템 조회" />
@@ -28,8 +28,8 @@ const GoodsItem = ({ itemList, countGoodsItem }: itemProps) => {
         searchParams={searchParams}
         setSearchParams={(page: number) =>
           setSearchParams({
-            pageNum: String(newPageNum + page),
-            isDesc: isDesc,
+            n: btoa(String(newPageNum + page)),
+            d: d,
           })
         }
         moveKey={["base", "id"]}

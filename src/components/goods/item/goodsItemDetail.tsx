@@ -34,8 +34,8 @@ const GoodsItemDetail = ({
 }: itemDetailProps) => {
   const data = itemInfo.data;
   const [searchParams, setSearchParams] = useSearchParams();
-  const newPageNum = Number(searchParams.get("pageNum") || "0");
-  const { isDesc } = JSON.parse(sessionStorage.getItem("itemPageInfo") || "{}");
+  const newPageNum = Number(atob(searchParams.get("n") || btoa("0")));
+  const { d } = JSON.parse(sessionStorage.getItem("itemPageInfo") || "{}");
 
   const priceNumsCol: ColumnsType[] = [
     {
@@ -74,7 +74,7 @@ const GoodsItemDetail = ({
               indicator={[
                 {
                   name: "상품그룹 관리 /",
-                  url: `/goods/group?pageNum=${groupPageInfo.pageNum}&isDesc=${groupPageInfo.isDesc}`,
+                  url: `/goods/group?n=${groupPageInfo.n}&d=${groupPageInfo.d}&p=${groupPageInfo.p}`,
                 },
                 {
                   name: "상세정보 및 수정 /",
@@ -146,8 +146,8 @@ const GoodsItemDetail = ({
           searchParams={searchParams}
           setSearchParams={(page: number) =>
             setSearchParams({
-              pageNum: String(newPageNum + page),
-              isDesc: isDesc,
+              n: btoa(String(newPageNum + page)),
+              d: d,
             })
           }
           moveKey={["base", "id"]}

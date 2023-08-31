@@ -27,8 +27,8 @@ const VendorContainer = () => {
     );
     dispatch(
       masterVendorActions.pageVendor({
-        isDesc: searchParams.get("isDesc"),
-        page: searchParams.get("pageNum"),
+        page: atob(searchParams.get("n") || btoa("0")),
+        isDesc: atob(searchParams.get("d") || btoa("false")),
         size: 10,
       })
     );
@@ -38,8 +38,10 @@ const VendorContainer = () => {
   }, [searchParams.get("n"), searchParams.get("d")]);
 
   useEffect(() => {
-    navigate(`?n=0&d=false`);
-  }, []);
+    if ((searchParams.get("n") || searchParams.get("d")) === null) {
+      navigate(`?n=${btoa("0")}&d=${btoa("false")}`);
+    }
+  }, [searchParams.get("n"), searchParams.get("d")]);
 
   return <VendorList countVendor={countVendor} vendorList={vendorList} />;
 };

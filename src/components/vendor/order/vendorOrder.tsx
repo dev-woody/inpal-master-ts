@@ -24,11 +24,11 @@ const VendorOrder = ({
   onSelect,
 }: VendorOrderType) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const newPageNum = Number(searchParams.get("pageNum") || "0");
+  const newPageNum = Number(atob(searchParams.get("n") || btoa("0")));
   const vendorPageInfo = JSON.parse(
     sessionStorage.getItem("vendorPageInfo") || "{}"
   );
-  const { pageNum, isDesc, status } = JSON.parse(
+  const { n, d, s } = JSON.parse(
     sessionStorage.getItem("orderPageInfo") || "{}"
   );
   return (
@@ -40,7 +40,7 @@ const VendorOrder = ({
               indicator={[
                 {
                   name: "판매사 관리 /",
-                  url: `/vendor/list?pageNum=${vendorPageInfo.pageNum}&isDesc=${vendorPageInfo.isDesc}`,
+                  url: `/vendor/list?n=${vendorPageInfo.n}&d=${vendorPageInfo.d}&p=${vendorPageInfo.p}`,
                 },
                 {
                   name: "상세정보 /",
@@ -48,7 +48,7 @@ const VendorOrder = ({
                 },
                 {
                   name: "판매사 주문 관리",
-                  url: `?pageNum=${pageNum}&isDesc=${isDesc}`,
+                  url: `?n=${n}&d=${d}`,
                 },
               ]}
             />
@@ -63,9 +63,9 @@ const VendorOrder = ({
           searchParams={searchParams}
           setSearchParams={(page: number) =>
             setSearchParams({
-              pageNum: String(newPageNum + page),
-              isDesc: isDesc,
-              status: status,
+              n: btoa(String(newPageNum + page)),
+              d: d,
+              s: s,
             })
           }
           moveKey={["base", "id"]}
@@ -74,7 +74,10 @@ const VendorOrder = ({
           filter
           filterInput={
             <StyledSelect
-              placeholder={changeDeliveryStatusList(status) || "주문 상태별"}
+              placeholder={
+                changeDeliveryStatusList(atob(s || btoa("ALL"))) ||
+                "주문 상태별"
+              }
               optionList={deliveryStatusOptionList}
               actions={(status: string) => onSelect(status)}
             />

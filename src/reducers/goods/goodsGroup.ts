@@ -13,6 +13,8 @@ const initialState: ResponseData = {
   findById: {},
   countGoodsGroup: {},
   pageGoodsGroup: {},
+  countGroupProduct: {},
+  pageGroupProduct: {},
 };
 
 export function* masterGoodsGroupSaga() {
@@ -38,6 +40,20 @@ export function* masterGoodsGroupSaga() {
       goodsAPI.pageGoodsGroup
     )
   );
+  yield takeLatest(
+    masterGoodsGroupActions.countGroupProduct,
+    createRequestSaga(
+      "masterGoodsGroup/countGroupProduct",
+      goodsAPI.countGroupProduct
+    )
+  );
+  yield takeLatest(
+    masterGoodsGroupActions.pageGroupProduct,
+    createRequestSaga(
+      "masterGoodsGroup/pageGroupProduct",
+      goodsAPI.pageGroupProduct
+    )
+  );
 }
 
 //* reducer
@@ -60,6 +76,14 @@ const masterGoodsGroup = createSlice({
     ...createAsyncReducers({
       actionName: "pageGoodsGroup",
       reducerName: "pageGoodsGroup",
+    })<any, DataForm, string>(),
+    ...createAsyncReducers({
+      actionName: "countGroupProduct",
+      reducerName: "countGroupProduct",
+    })<any, DataForm, string>(),
+    ...createAsyncReducers({
+      actionName: "pageGroupProduct",
+      reducerName: "pageGroupProduct",
     })<any, DataForm, string>(),
     ...createSingleReducers({
       actionName: "reset",

@@ -1,13 +1,12 @@
 import { Fragment } from "react";
 import { Description, DescriptionContent } from "lib/styles/descriptionStyles";
 import PageHeader from "lib/pages/pageHeader";
-import { BreadCrumb, Button, Responsive, StyledSelect } from "lib/styles";
+import { BreadCrumb, Button, Responsive } from "lib/styles";
 import styled from "styled-components";
-import { useForm } from "react-hook-form";
 import { changeDays, changeOpenStatus } from "lib/functions/changeInput";
 import { response } from "types/globalTypes";
 import GoodsItemContainer from "containers/goods/item/goodsItemContainer";
-import { NavigateFunction, useParams } from "react-router-dom";
+import { NavigateFunction } from "react-router-dom";
 
 const GoodsGroupDetailBlock = styled(Responsive)``;
 
@@ -18,26 +17,12 @@ type groupDetailProps = {
 
 const GoodsGroupDetail = ({ groupDetail, navigate }: groupDetailProps) => {
   const data = groupDetail?.data;
-  const { pageNum, isDesc } = JSON.parse(
+  const { n, d, p } = JSON.parse(
     sessionStorage.getItem("groupPageInfo") || "{}"
   );
   const itemPageInfo = JSON.parse(
     sessionStorage.getItem("itemPageInfo") || "{}"
   );
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { isSubmitting },
-  } = useForm();
-
-  const CategoryList = () => {
-    const List1st =
-      data?.info.basic.info.handleCategorys.info.handleCategory1sts.map(
-        (item1st: any) => item1st.info.category.info.description
-      );
-    return List1st;
-  };
   return (
     <Fragment>
       <GoodsGroupDetailBlock>
@@ -47,11 +32,11 @@ const GoodsGroupDetail = ({ groupDetail, navigate }: groupDetailProps) => {
               indicator={[
                 {
                   name: "상품그룹 관리 /",
-                  url: `/goods/group?pageNum=${pageNum}&isDesc=${isDesc}`,
+                  url: `/goods/group?n=${n}&d=${d}&p=${p}`,
                 },
                 {
                   name: "상세정보 및 수정",
-                  url: `?pageNum=${itemPageInfo.pageNum}&isDesc=${itemPageInfo.isDesc}`,
+                  url: `?n=${itemPageInfo.n}&d=${itemPageInfo.d}`,
                 },
               ]}
             />
@@ -59,7 +44,6 @@ const GoodsGroupDetail = ({ groupDetail, navigate }: groupDetailProps) => {
         />
       </GoodsGroupDetailBlock>
       <GoodsGroupDetailBlock>
-        {/* <form onSubmit={handleSubmit((data) => onSetSellStatus({ data }))}> */}
         <Description>
           <DescriptionContent label="코드" content={data?.info.code} />
           <DescriptionContent
