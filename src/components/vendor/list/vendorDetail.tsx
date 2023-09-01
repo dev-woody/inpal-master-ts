@@ -125,13 +125,14 @@ const VendorDetail = ({
               content={
                 <Button
                   onClick={() => {
-                    if (typeof id === "string") {
-                      navigate(
-                        `/vendor/list/${id}/order?n=${btoa("0")}&d=${btoa(
-                          "false"
-                        )}&s=${btoa("ALL")}`
-                      );
-                    }
+                    alert("준비중인 기능입니다.");
+                    // if (typeof id === "string") {
+                    //   navigate(
+                    //     `/vendor/list/${id}/order?n=${btoa("0")}&d=${btoa(
+                    //       "false"
+                    //     )}&s=${btoa("ALL")}`
+                    //   );
+                    // }
                   }}
                 >
                   상세보기
