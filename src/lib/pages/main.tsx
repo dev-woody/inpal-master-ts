@@ -47,7 +47,7 @@ const Main = () => {
   const [url, setUrl] = useState<string[]>([]);
   const navigate = useNavigate();
   const location = useLocation();
-  const localStorageGet = localStorage.getItem("user");
+  const localStorageGet = localStorage.getItem("masterUser");
   const localData = localStorageGet && JSON.parse(localStorageGet);
 
   // useEffect(() => {

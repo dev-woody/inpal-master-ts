@@ -44,7 +44,7 @@ accessClient.interceptors.response.use(
           return accessClient.request(originalRequest);
         }
       } catch (error) {
-        localStorage.removeItem("user");
+        localStorage.removeItem("masterUser");
         localStorage.removeItem("access_token");
         localStorage.removeItem("refresh_token");
         console.log(error);

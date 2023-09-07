@@ -8,7 +8,7 @@ import { IconContext } from "react-icons";
 
 function loadUser() {
   try {
-    const user = localStorage.getItem("user");
+    const user = localStorage.getItem("masterUser");
     if (!user) return;
     store.dispatch(userActions.saveUser(JSON.parse(user)));
   } catch (e) {

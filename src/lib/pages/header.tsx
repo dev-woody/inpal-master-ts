@@ -70,7 +70,7 @@ const UserSection = styled.div`
 
 const Header = ({ visible, setVisible }: headerProps) => {
   const navigate = useNavigate();
-  const localStorageGet = localStorage.getItem("user");
+  const localStorageGet = localStorage.getItem("masterUser");
   const localData = localStorageGet && JSON.parse(localStorageGet);
 
   function logout() {

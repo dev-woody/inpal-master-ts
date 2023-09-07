@@ -25,7 +25,7 @@ function SignInContainer() {
         "refresh_token",
         isSignIn.data.tokenInfo.refreshToken
       );
-      localStorage.setItem("user", JSON.stringify(isSignIn.data.adminInfo));
+      localStorage.setItem("masterUser", JSON.stringify(isSignIn.data.adminInfo));
       navigate("/");
     }
   }, [isSignIn]);

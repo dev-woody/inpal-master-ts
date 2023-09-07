@@ -12,7 +12,7 @@ const PrivateRouter = ({
   children,
   authentication,
 }: authorityProps): React.ReactElement | null => {
-  const localStorageGet = localStorage.getItem("user");
+  const localStorageGet = localStorage.getItem("masterUser");
   const user = localStorageGet && JSON.parse(localStorageGet);
   if (authentication) {
     return user === null ? <Navigate to="/signIn" /> : <Outlet />;

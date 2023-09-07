@@ -19,10 +19,7 @@ yarn start
 
 ### `09.07 Update`
 
-### 1. 판매사 조회에서 판매사별 상품조회 추가
+### localStorage user -> masterUser
 
-상품 리스트에 영향이 가는지 확인할 것
+vendor와 중복되기 때문에 로그인 인식이 되어 변경함
 
-### .etc
-
-기타 버그 수정
