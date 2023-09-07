@@ -55,8 +55,8 @@ const ColorEdit = ({
     },
   });
 
-  const { pageNum, isDesc } = JSON.parse(
-    sessionStorage.getItem("vendorPageInfo") || "{}"
+  const { n, d } = JSON.parse(
+    sessionStorage.getItem("colorPageInfo") || "{}"
   );
 
   useEffect(() => {
@@ -73,7 +73,7 @@ const ColorEdit = ({
               indicator={[
                 {
                   name: "색상 관리 /",
-                  url: `/admin/color?pageNum=${pageNum}&isDesc=${isDesc}`,
+                  url: `/admin/color?n=${n}&d=${d}`,
                 },
                 {
                   name: "상세조회",
@@ -128,7 +128,7 @@ const ColorEdit = ({
               needMarginTop
               withInput
               onClick={() =>
-                navigate(`/admin/color?pageNum=${pageNum}&isDesc=${isDesc}`)
+                navigate(`/admin/color?n=${n}&d=${d}`)
               }
             >
               뒤로가기

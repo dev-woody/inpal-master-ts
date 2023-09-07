@@ -27,8 +27,8 @@ const ColorListContainer = () => {
     );
     dispatch(
       masterColorActions.pageColor({
-        isDesc: searchParams.get("isDesc"),
-        page: searchParams.get("pageNum"),
+        isDesc:  atob(searchParams.get("d") || btoa("false")),
+        page: atob(searchParams.get("n") || btoa("0")),
         size: 10,
       })
     );
@@ -37,9 +37,12 @@ const ColorListContainer = () => {
     };
   }, [searchParams.get("n"), searchParams.get("d")]);
 
+
   useEffect(() => {
-    navigate(`?n=0&d=false`);
-  }, []);
+    if ((searchParams.get("n") || searchParams.get("d")) === null) {
+      navigate(`?n=${btoa("0")}&d=${btoa("false")}`);
+    }
+  }, [searchParams.get("n"), searchParams.get("d")]);
 
   return <ColorList countColor={countColor} colorList={colorList} />;
 };

@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import PageHeader from "lib/pages/pageHeader";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { response } from "types/globalTypes";
 
 const ColorAddBlock = styled(Responsive)``;
@@ -70,7 +70,7 @@ const ColorAdd = ({
               indicator={[
                 {
                   name: "색상 관리 /",
-                  url: `/admin/color?pageNum=${pageInfo.pageNum}&isDesc=${pageInfo.isDesc}`,
+                  url: `/admin/color?n=${pageInfo.n}&d=${pageInfo.d}`,
                 },
                 {
                   name: "색상코드 추가",
@@ -140,7 +140,7 @@ const ColorAdd = ({
               withInput
               onClick={() =>
                 navigate(
-                  `/admin/color?pageNum=${pageInfo.pageNum}&isDesc=${pageInfo.isDesc}`
+                  `/admin/color?n=${pageInfo.n}&d=${pageInfo.d}`
                 )
               }
             >
@@ -165,7 +165,7 @@ const ColorAdd = ({
           setModalVisible={setModalVisible}
           action={() =>
             navigate(
-              `/admin/color?pageNum=${pageInfo.pageNum}&isDesc=${pageInfo.isDesc}`
+              `/admin/color?n=${pageInfo.n}&d=${pageInfo.d}`
             )
           }
         />

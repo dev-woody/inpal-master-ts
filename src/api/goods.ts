@@ -22,6 +22,23 @@ export const pageGoodsGroup = async (data: object) => {
     .then((res) => res);
 };
 
+
+export const countGoodsGroupVendor = async (data: object) => {
+  return await client
+    .get(`/store/construction/good/group/getCountByVendorId`,{params: {...data}})
+    .then((res) => res);
+};
+
+export const pageGoodsGroupVendor = async (data: object) => {
+  return await client
+    .get(`/store/construction/good/group/getPageByVendorId`, {
+      params: {
+        ...data,
+      },
+    })
+    .then((res) => res);
+};
+
 export const searchByKeyword = async (keyword: string, isDesc: boolean) => {
   const res = await client.get(
     `/construction/common/good/group/searchByKeyword`,

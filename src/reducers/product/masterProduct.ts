@@ -13,6 +13,7 @@ const initialState: ResponseData = {
   findAll: {},
   findById: {},
   update: {},
+  setOpenStatus: {}
 };
 
 export function* masterProductSaga() {
@@ -31,6 +32,10 @@ export function* masterProductSaga() {
   yield takeLatest(
     masterProductActions.update,
     createRequestSaga("masterProduct/update", productAPI.update)
+  );
+  yield takeLatest(
+    masterProductActions.setOpenStatus,
+    createRequestSaga("masterProduct/setOpenStatus", productAPI.setOpenStatus)
   );
 }
 
@@ -54,6 +59,10 @@ const masterProduct = createSlice({
     ...createAsyncReducers({
       actionName: "update",
       reducerName: "update",
+    })<any, DataForm, string>(),
+    ...createAsyncReducers({
+      actionName: "setOpenStatus",
+      reducerName: "setOpenStatus",
     })<any, DataForm, string>(),
     ...createSingleReducers({
       actionName: "reset",

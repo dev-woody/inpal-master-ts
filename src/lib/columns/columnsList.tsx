@@ -186,7 +186,12 @@ export const sidebarList: sideListType[] = [
   },
 ];
 
-export const masterAllListColumns = [
+export const masterAllListColumns: ColumnsType[] = [
+  {
+    title: "번호",
+    dataIndex: "",
+    render: (_, __, index) => index,
+  },
   {
     title: "아이디",
     dataIndex: "info",

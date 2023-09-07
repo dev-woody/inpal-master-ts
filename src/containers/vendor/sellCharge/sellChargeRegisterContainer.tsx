@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { masterProductActions } from "reducers/product/masterProduct";
 import { useAppSelector, useAppDispatch } from "reducers/reducerHooks";
 import { masterVendorActions } from "reducers/vendor/masterVendor";
-import { sellChargeRegisterActions } from "reducers/vendor/sellCharge/register";
 import { checkStatus } from "types/globalTypes";
 
 const SellChargeRegisterContainer = () => {

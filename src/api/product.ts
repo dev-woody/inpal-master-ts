@@ -19,3 +19,7 @@ export const findAll = async (isDesc: boolean) => {
 export const findById = async (id: string) => {
   return client.get(`/store/product/findById/${id}`).then((res) => res);
 };
+
+export const setOpenStatus = async (data: object) => {
+  return accessClient.post(`/master/product/setOpenStatus`, {},{params: {...data}}).then((res) => res);
+};

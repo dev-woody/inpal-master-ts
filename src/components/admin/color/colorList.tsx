@@ -16,9 +16,8 @@ type colorListProps = {
 const ColorList = ({ countColor, colorList }: colorListProps) => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-
-  const newPageNum = Number(searchParams.get("pageNum") || "0");
-  const { pageNum, isDesc } = JSON.parse(
+  const newPageNum = Number(atob(searchParams.get("n") || btoa("0")));
+  const { n, d } = JSON.parse(
     sessionStorage.getItem("colorPageInfo") || "{}"
   );
   return (
@@ -30,7 +29,7 @@ const ColorList = ({ countColor, colorList }: colorListProps) => {
               indicator={[
                 {
                   name: "색상 관리",
-                  url: `?pageNum=${pageNum}&isDesc=${isDesc}`,
+                  url: `/admin/color?n=${n}&d=${d}`,
                 },
               ]}
             />
@@ -54,8 +53,8 @@ const ColorList = ({ countColor, colorList }: colorListProps) => {
           searchParams={searchParams}
           setSearchParams={(page: number) =>
             setSearchParams({
-              pageNum: String(newPageNum + page),
-              isDesc: isDesc,
+              n: btoa(String(newPageNum + page)),
+              d: d,
             })
           }
           moveKey={["info", "name"]}

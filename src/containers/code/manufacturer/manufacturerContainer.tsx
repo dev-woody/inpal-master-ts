@@ -106,7 +106,7 @@ const ManufacturerContainer = () => {
       render: (info, contentList: any) => {
         const action = () => {
           onSetStatus({
-            id: contentList.id,
+            id: contentList.base?.id,
             openStatus: info?.openStatus === "OPEN" ? "close" : "open",
           });
         };

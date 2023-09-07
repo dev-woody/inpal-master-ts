@@ -40,7 +40,7 @@ export const findById = async (id: string) => {
 
 export const setOpenStatus = async (data: object) => {
   return accessClient
-    .get(`/master/product/manufacturer/setOpenStatus`, {
+    .post(`/master/product/manufacturer/setOpenStatus`,{}, {
       params: {
         ...data,
       },

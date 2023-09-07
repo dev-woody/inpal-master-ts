@@ -28,32 +28,6 @@ import paymentFindById, {
   paymentFindByIdSaga,
 } from "./vendor/payment/findById";
 
-//* sellCharge
-import sellChargeFindByVId, {
-  sellChargeFindByVIdSaga,
-} from "./vendor/sellCharge/findByVId";
-import sellChargeFindById, {
-  sellChargeFindByIdSaga,
-} from "./vendor/sellCharge/findById";
-import sellChargeRegister, {
-  sellChargeRegisterSaga,
-} from "./vendor/sellCharge/register";
-import sellChargeUpdate, {
-  sellChargeUpdateSaga,
-} from "./vendor/sellCharge/update";
-
-//* minPoint
-import minPointFindById, {
-  minPointFindByIdSaga,
-} from "./vendor/minPoint/findById";
-import minPointFindByVId, {
-  minPointFindByVIdSaga,
-} from "./vendor/minPoint/findByVId";
-import minPointRegister, {
-  minPointRegisterSaga,
-} from "./vendor/minPoint/register";
-import minPointUpdate, { minPointUpdateSaga } from "./vendor/minPoint/update";
-
 //* dealer
 import dealerOrderFindAll, {
   dealerOrderFindAllSaga,
@@ -64,11 +38,6 @@ import orderFindByDealerId, {
 import dealerOrderFindById, {
   dealerOrderFindByIdSaga,
 } from "./dealer/order/findById";
-
-//*  goods
-import optionSetSellStatus, {
-  optionSetSellStatusSaga,
-} from "./goods/option/setSellStatus";
 
 // * saga
 const sagaMiddleware = createSagaMiddleware();
@@ -91,22 +60,10 @@ function* rootSaga() {
     fork(masterDealerSaga),
     //* vendor
     fork(paymentFindByIdSaga),
-    //* sellCharge
-    fork(sellChargeFindByVIdSaga),
-    fork(sellChargeFindByIdSaga),
-    fork(sellChargeRegisterSaga),
-    fork(sellChargeUpdateSaga),
-    //* minPoint
-    fork(minPointFindByIdSaga),
-    fork(minPointFindByVIdSaga),
-    fork(minPointRegisterSaga),
-    fork(minPointUpdateSaga),
     //* dealer
     fork(dealerOrderFindAllSaga),
     fork(orderFindByDealerIdSaga),
     fork(dealerOrderFindByIdSaga),
-    //* goods
-    fork(optionSetSellStatusSaga),
   ]);
 }
 
@@ -131,22 +88,10 @@ const rootReducer = combineReducers({
   masterDealer: masterDealer.reducer,
   //* vendor
   paymentFindById: paymentFindById.reducer,
-  //* sellCharge
-  sellChargeFindByVId: sellChargeFindByVId.reducer,
-  sellChargeFindById: sellChargeFindById.reducer,
-  sellChargeRegister: sellChargeRegister.reducer,
-  sellChargeUpdate: sellChargeUpdate.reducer,
-  //* minPoint
-  minPointFindById: minPointFindById.reducer,
-  minPointFindByVId: minPointFindByVId.reducer,
-  minPointRegister: minPointRegister.reducer,
-  minPointUpdate: minPointUpdate.reducer,
   //* dealer
   dealerOrderFindAll: dealerOrderFindAll.reducer,
   orderFindByDealerId: orderFindByDealerId.reducer,
   dealerOrderFindById: dealerOrderFindById.reducer,
-  //* goods
-  optionSetSellStatus: optionSetSellStatus.reducer,
 });
 
 export const store = configureStore({

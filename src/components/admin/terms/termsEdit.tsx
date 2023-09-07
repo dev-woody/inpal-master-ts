@@ -6,7 +6,6 @@ import {
   ErrorMsg,
   Modal,
   Responsive,
-  StyledSelect,
 } from "lib/styles";
 import PageHeader from "lib/pages/pageHeader";
 import { StyledForm, StyledInput, Button } from "lib/styles";
@@ -14,7 +13,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { response } from "types/globalTypes";
 
 const TermsEditBlock = styled(Responsive)``;
@@ -91,6 +90,8 @@ const TermsEdit = ({
                   align="vertical"
                   placeholder="약관 내용"
                   label="info"
+                  fullWidth={true}
+                  type="textarea"
                   register={register}
                   errors={errors}
                   status={errors.info}

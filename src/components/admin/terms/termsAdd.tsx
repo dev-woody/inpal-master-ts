@@ -13,7 +13,6 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import PageHeader from "lib/pages/pageHeader";
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { response } from "types/globalTypes";
 
@@ -119,6 +118,8 @@ const TermsAdd = ({
                   align="vertical"
                   placeholder="약관 내용"
                   label="info"
+                  fullWidth={true}
+                  type="textarea"
                   register={register}
                   errors={errors}
                   status={errors.info}

@@ -4,16 +4,22 @@ import { masterProductActions } from "reducers/product/masterProduct";
 import ProductList from "components/code/product/productList";
 import { ColumnsType } from "lib/columns/columnsList";
 import { changeDays } from "lib/functions/changeInput";
+import { StyledToggle } from "lib/styles";
 
 const ProductContainer = () => {
-  const { productList } = useAppSelector((state) => ({
+  const { productList, setOpenStatus } = useAppSelector((state) => ({
     productList: state.masterProduct.findAll,
+    setOpenStatus: state.masterProduct.setOpenStatus,
   }));
   const dispatch = useAppDispatch();
 
-  // useEffect(() => {
-  //   dispatch(masterProductActions.findAll(false));
-  // }, [setOpenStatus]);
+  const onSetStatus = (data: object) => {
+    dispatch(masterProductActions.setOpenStatus({ ...data }));
+  };
+
+  useEffect(() => {
+    dispatch(masterProductActions.findAll(false));
+  }, [setOpenStatus]);
 
   useEffect(() => {
     dispatch(masterProductActions.reset("findAll"));
@@ -49,6 +55,26 @@ const ProductContainer = () => {
       dataIndex: "base",
       isDesc: true,
       render: (base) => changeDays(base.createdAt),
+    },
+    {
+      title: "판매상태",
+      dataIndex: "info",
+      isDesc: true,
+      render: (info,contentList: any) => {
+        const action = () => {
+          onSetStatus({
+            id: contentList.base?.id,
+            openStatus: info?.openStatus === "OPEN" ? "close" : "open",
+          });
+        };
+        return (
+          <StyledToggle
+            data={info?.openStatus}
+            openStatus="OPEN"
+            action={action}
+          />
+        );
+      },
     },
   ];
 
