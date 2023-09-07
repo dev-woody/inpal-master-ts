@@ -22,4 +22,5 @@ yarn start
 ### localStorage user -> masterUser
 
 vendor와 중복되기 때문에 로그인 인식이 되어 변경함
+input type 설정 추가
 
