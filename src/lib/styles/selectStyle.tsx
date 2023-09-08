@@ -5,6 +5,7 @@ import { propsTypes } from "types/globalTypes";
 import { ErrorMsg } from "./globalStyles";
 import { BiChevronDown } from "react-icons/bi";
 import { ErrorMessage } from "@hookform/error-message";
+import { priceToString } from "lib/functions/changeInput";
 
 type styledSelectTyps = {
   isOpen?: boolean;
@@ -60,6 +61,7 @@ const SelectedBlock = styled.div`
   display: flex;
   justify-content: space-between;
   transition: 0s;
+  margin: 0.25rem 0;
 
   &:hover {
     border: 1px solid #faad14;
@@ -171,7 +173,8 @@ const OptionsLabelText = styled.div`
 `;
 
 const MultipleItem = styled.div`
-  background-color: #fadb14;
+  background-color: #faad14;
+  color: #fff;
   padding: 0 0.5rem;
   border-radius: 0.25rem;
 
@@ -199,11 +202,12 @@ export const StyledSelect = (props: propsTypes) => {
     disable,
     ...rest
   } = props;
-
+  //todo 중복선택 방지
   const [isOpen, setIsOpen] = useState(false);
   const [isTitle, setIsTitle] = useState<string>("");
   const [isheight, setIsHeight] = useState<any>(0);
   const [isMultiple, setIsMultiple] = useState<{ [key: string]: string }[]>([]);
+  const newList = isMultiple.map((item) => item.id);
   const ref: any = useRef();
   const selectMenu: any = useRef();
   const OptionItems = ({ keyName, id }: { keyName: string; id: string }) => {
@@ -216,10 +220,16 @@ export const StyledSelect = (props: propsTypes) => {
         }
         if (label && multiple) {
           const newArray = JSON.parse(JSON.stringify(isMultiple));
-          newArray.push({ productId: id, keyName: keyName });
+          newArray.push({ id: id, keyName: keyName });
+          const selectedItemInfos = newArray.map(
+            (selectedItemInfo: any, index: number) => {
+              return { id: selectedItemInfo.id, num: index };
+            }
+          );
           setIsMultiple(newArray);
+          setValue(label, selectedItemInfos);
         } else if (label) {
-          setValue(label, id);
+          setValue(label, id, keyName);
         }
       }
     };
@@ -236,7 +246,8 @@ export const StyledSelect = (props: propsTypes) => {
     e.preventDefault();
     e.stopPropagation();
     const id = e.currentTarget;
-    setIsMultiple(isMultiple.filter((list) => list.productId !== id.id));
+    setIsMultiple(isMultiple.filter((list) => list.id !== id.id));
+    setIsTitle(placeholder);
   };
 
   useEffect(() => {
@@ -257,12 +268,6 @@ export const StyledSelect = (props: propsTypes) => {
       setIsTitle(placeholder);
     }
   }, [placeholder, getValues]);
-
-  useEffect(() => {
-    if (multiple) {
-      setValue(label, isMultiple);
-    }
-  }, [isMultiple]);
 
   useEffect(() => {
     const optionHeight = ref.current.getBoundingClientRect().height;
@@ -297,14 +302,14 @@ export const StyledSelect = (props: propsTypes) => {
         >
           <div style={{ display: "flex" }}>
             {isMultiple.length > 0 ? (
-              isMultiple.map((product) => {
+              isMultiple.map((item) => {
                 return (
                   <MultipleItem
-                    key={product.productId}
-                    id={product.productId}
+                    key={item.id}
+                    id={item.id}
                     onClick={onMultipleClick}
                   >
-                    {product.keyName}
+                    {item.keyName}
                   </MultipleItem>
                 );
               })
@@ -332,13 +337,44 @@ export const StyledSelect = (props: propsTypes) => {
           >
             <OptionItemList ref={ref}>
               {optionList && optionList.length > 0 ? (
-                optionList?.map((list: any, index: number) => (
+                optionList.length === newList.length ? (
                   <OptionItems
                     key={index}
-                    keyName={list.name || list.desc || list.info.nameKr}
-                    id={list.id || list.base.id}
+                    keyName={"데이터가 없습니다."}
+                    id=""
                   />
-                ))
+                ) : (
+                  optionList.map((list: any, index: number) => {
+                    if (!newList.includes(list.id || list.base.id)) {
+                      return (
+                        <OptionItems
+                          key={index}
+                          keyName={
+                            label === "deliveryId"
+                              ? priceToString(list.info.basicFee) +
+                                "원 /" +
+                                priceToString(list.info.freeCondition) +
+                                "원"
+                              : label === "specNumId" ? 
+                              priceToString(list?.info?.spec?.info?.quantity) + " " +
+                              list.info?.spec?.info.unit.info.nameKr :
+                                list.name ||
+                                list.desc ||
+                                list.info.property ||
+                                list.info.nameKr ||
+                                list.info.name ||
+                                list.info.basic?.info.nameKr ||
+                                list.id || 
+                                priceToString(list?.info?.quantity) + " " +
+                                list.info.unit.info.nameKr ||
+                                list.info.code
+                          }
+                          id={list.id || list.base.id}
+                        />
+                      );
+                    }
+                  })
+                )
               ) : (
                 <OptionItems key={index} keyName={"데이터가 없습니다."} id="" />
               )}

@@ -17,10 +17,9 @@ yarn start
 
 ## 패치노트
 
-### `09.07 Update`
+### `09.08 Update`
 
-### localStorage user -> masterUser
+### 에러수정
 
-vendor와 중복되기 때문에 로그인 인식이 되어 변경함
-input type 설정 추가
-
+판매사처럼 등록시에 에러메시지 관리하기
+브라우저 에러 핸들링하기
