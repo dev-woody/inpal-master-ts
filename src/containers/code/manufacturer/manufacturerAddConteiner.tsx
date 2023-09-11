@@ -19,7 +19,7 @@ const ManufacturerAddContainer = () => {
   const [inputData, setInputData] = useState<any>();
 
   const onCheckPassword = (password: string) => {
-    const userId = JSON.parse(localStorage.getItem("user") || "").signInfo
+    const userId = JSON.parse(localStorage.getItem("masterUser") || "").signInfo
       .userId;
     dispatch(masterAdminActions.checkPass({ userId, password }));
   };

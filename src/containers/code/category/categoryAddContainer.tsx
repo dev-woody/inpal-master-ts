@@ -16,20 +16,20 @@ const CategoryAddContainer = ({
   isCategoryAdd: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
-  const { checkPassword, categoryRegister } = useAppSelector((state) => ({
-    checkPassword: state.masterAdmin.checkPass,
-    categoryRegister: state.masterCategory.register,
+  const { checkPassword, categoryRegister } = useAppSelector((store) => ({
+    checkPassword: store.masterAdmin.checkPass,
+    categoryRegister: store.masterCategory.register,
   }));
   const dispatch = useAppDispatch();
   const [inputData, setInputData] = useState<any>();
 
   const onCheckPassword = ({ password }: any) => {
-    const userId = JSON.parse(localStorage.getItem("user") || "").signInfo
+    const userId = JSON.parse(localStorage.getItem("masterUser") || "").signInfo
       .userId;
     dispatch(masterAdminActions.checkPass({ userId, password }));
   };
 
-  const onSubmit = (data: DataObj<string>) => {
+  const onSubmit = (data: any) => {
     setInputData(data);
     onCheckPassword({ password: data.password });
   };

@@ -19,7 +19,7 @@ const UnitRegisterContainer = () => {
   const [inputData, setInputData] = useState<DataObj<string>>();
 
   const onCheckPassword = (password: string) => {
-    const userId = JSON.parse(localStorage.getItem("user") || "").signInfo
+    const userId = JSON.parse(localStorage.getItem("masterUser") || "").signInfo
       .userId;
     dispatch(masterAdminActions.checkPass({ userId, password }));
   };

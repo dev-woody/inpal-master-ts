@@ -19,7 +19,7 @@ const CategoryEditContainer = () => {
   const dispatch = useAppDispatch();
 
   const onCheckPassword = ({ password }: any) => {
-    const userId = JSON.parse(localStorage.getItem("user") || "").signInfo
+    const userId = JSON.parse(localStorage.getItem("masterUser") || "").signInfo
       .userId;
     dispatch(masterAdminActions.checkPass({ userId, password }));
   };
